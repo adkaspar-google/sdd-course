@@ -120,6 +120,12 @@ def render_segment(slide: dict[str, str], wav_path: pathlib.Path) -> pathlib.Pat
     SEGMENTS_DIR.mkdir(parents=True, exist_ok=True)
     png_path = PNG_DIR / f"slide-{slide['num']}.png"
     seg_path = SEGMENTS_DIR / f"seg-{slide['num']}.mp4"
+    if (
+        seg_path.exists()
+        and seg_path.stat().st_size > 10000
+        and seg_path.stat().st_mtime >= max(png_path.stat().st_mtime, wav_path.stat().st_mtime)
+    ):
+        return seg_path
     dur = get_audio_duration(wav_path) + 0.6
 
     cmd = [

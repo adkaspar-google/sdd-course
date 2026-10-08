@@ -96,3 +96,32 @@ When a feature is too large for a single Pull Request (`> 400` LOC):
 3. **Strict Separation of Design and Implementation:** Never modify application source code (`src/`) or check off `- [x]` in `tasks.md` during Proposal or Design phases (`/opsx:explore`, `/opsx:new`, `/opsx:ff`, `/conductor:newTrack`).
 4. **Truthful Same-PR Task Accounting:** Mark a task `- [x]` **only** after its implementation code and passing tests are verified in the current PR/CL—never speculatively or for follow-up PRs.
 5. **VCS Move Provenance (`git mv` / `hg mv`):** When archiving changes into `openspec/changes/archive/YYYY-MM-DD-<id>/`, preserve Git rename history so reviewers see a clean move diff rather than a file deletion + creation.
+
+---
+
+## 6. Human Interaction & The 4-Layer Validation Loop (Software 3.0 & `autoresearch` Pattern)
+
+As Andrej Karpathy observed in his **Software 3.0** and **`autoresearch`** frameworks, moving from casual **"Vibe Coding"** to production **Agentic Engineering** recognizes a fundamental law: **code generation is now virtually free; human verification is the true bottleneck.**
+
+To maximize the speed and safety of the **Generation $\to$ Verification Loop**, this playground enforces **4 Human Interaction Gates** ("Iron Man Suit" controls / "Short Leash") and **4 Automated Validation Layers**:
+
+### A. The 4 Human Interaction Gates & Karpathy's 4 Coding Agent Rules
+
+| Human Control Gate | How You Interact in `Conductor` + `OpenSpec` | Karpathy Agent Rule Enforced |
+| :--- | :--- | :--- |
+| **1. Interactive Clarification Q&A** (`/conductor:newTrack` & `/opsx:explore`) | Runs inside a **Plan Mode Sandbox** (`policies/conductor.toml` blocks writes outside `conductor/`). The agent asks **3–5 targeted clarifying questions** to surface trade-offs before touching code. | **1. Think Before Coding** (Zero silent assumptions) |
+| **2. Spec-First Contract Approval** (`proposal.md`, `spec.md`, `ADR-*.md`) | Like `program.md` in `autoresearch`, the human steers and approves a concise **50-line behavioral contract** (`REQ-0001..REQ-0006` + ADRs in **Lab 01 & Lab 02**) instead of auditing a 2,000-line surprise diff. | **2. Simplicity First** (Minimal surface area & explicit intent) |
+| **3. Surgical Scope & Stack Lock** (`## 6. Out of Scope` & `tech-stack.md`) | In **Lab 04**, the human uses the Engineering Scorecard to approve *only* `F-01` (`REQ-0005` bug) while locking `F-02..F-04` in `## 6. Out of Scope`. Any unapproved library triggers a **Tech-Stack Deviation Halt**. | **3. Surgical Changes** (Zero collateral refactoring of adjacent working code) |
+| **4. Short-Leash Phase Checkpoints** (`plan.md` & `tasks.md` Batches) | Work is sliced into small phases (**Lab 03**) and **Stacked PR Batches** (**Lab 05**). At each phase end, Conductor pauses for **User Manual Verification** before recording `[checkpoint: <sha>]`. | **4. Goal-Driven Execution & Short Leash** (Fast visual/diff verification + `/conductor:revert`) |
+
+### B. The 4 Automated Validation Layers (`./self_diagnose_all.sh`)
+
+1. **Layer 1 — Static Contract & Schema Validation (`openspec validate --strict` & `self_diagnose.sh`):**
+   Deterministically verifies that specifications contain `REQ-XXXX` IDs, normative RFC 2119 keywords (`SHALL`, `MUST`), 4-hashtag `#### Scenario:` (`GIVEN`/`WHEN`/`THEN`), and the 7-Section Conductor `spec.md` anatomy *before* code execution.
+2. **Layer 2 — 1-to-1 Requirement-Traceable TDD (`Red` $\to$ `Green` $\to$ `Refactor`):**
+   Every requirement (`REQ-0001..REQ-0007`) maps 1-to-1 to a unit test (`test_req0001_...` in **Lab 03**) executed with `CI=true python3 -m unittest`.
+3. **Layer 3 — Spec-Drift & Patch Auditing (`/conductor:review` & `/opsx:verify` in Lab 05):**
+   Cross-checks code diffs against `openspec/specs/` to catch behavioral regressions (e.g., `get()` mutating FIFO order into LRU in `subpar_change.patch`) and un-specced methods (`put_with_ttl()`).
+4. **Layer 4 — Immutable Adversarial Verifier (`chmod -w` Clean-Room Rebuild Test in Lab 06):**
+   Directly implements Karpathy's **`autoresearch` immutable evaluator (`prepare.py`)** rule: in **Lab 06**, `self_diagnose.sh` copies the regenerated service into `/tmp/sdd_rebuild_...` alongside an independent adversarial test suite locked read-only with **`chmod -w`**, guaranteeing the agent can never pass by deleting or weakening failing test assertions.
+

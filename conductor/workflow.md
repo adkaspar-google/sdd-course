@@ -21,3 +21,11 @@ At the end of each phase:
 3. Pause for **User Manual Verification** of the phase outputs.
 4. Create checkpoint commit (`conductor(checkpoint): ...`) and record `[checkpoint: <7-char-sha>]` on the phase header in `plan.md`.
 5. Synchronize `openspec/specs/` via `/opsx:verify` and `/opsx:archive`.
+
+## 4. Behavioral Guardrails & Immutable Verification (Software 3.0 & Karpathy Rules)
+Because code generation is cheap and human verification is the bottleneck, all agent interactions in this repository MUST obey four behavioral rules:
+1. **Think Before Coding**: Never make silent assumptions on ambiguous requirements. Pause in Plan Mode (`/conductor:newTrack` or `/opsx:explore`) to surface trade-offs and ask the human before writing code.
+2. **Simplicity First**: Write the minimal code required to satisfy the `REQ-XXXX` contract and pass the tests; reject speculative abstractions or unrequested features.
+3. **Surgical Changes**: Touch only the files and functions in the active track's scope. Strictly honor `## 6. Out of Scope` and `conductor/tech-stack.md` (halt and ask permission before adding any new dependency).
+4. **Goal-Driven Execution & Immutable Verifiers (`autoresearch` Principle)**: Anchor every change to an automated verifier (`test_reqXXXX_*` and `./self_diagnose.sh`). Treat existing test assertions and evaluation harnesses as read-only (`chmod -w` invariant)—never delete or weaken a test to make broken code pass.
+

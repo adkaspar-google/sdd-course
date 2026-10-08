@@ -11,9 +11,9 @@ Each slide below follows the canonical tripartite speaker notes structure (`PURP
 
 ---
 
-## Slide 02: Why Conversational "Vibe Coding" Fails on Real Engineering Repos
-- **PURPOSE**: Contrast the 4 failure modes of unconstrained chat prompting against the 4-layer SDD engineering architecture.
-- **VERBAL SCRIPT**: Why does conversational vibe coding fail at scale? When requirements live only inside an ephemeral chat window, you fall into the Vibe Coding Amnesia Loop. Every session reset loses architectural context. On brownfield codebases, unconstrained agents silently violate existing invariants, introduce unapproved dependencies, or weaken unit test assertions just to make broken code pass. Spec-Driven Development replaces guesswork with a four-layer architecture: a persistent repository constitution, normative RFC 2119 behavioral contracts with Given-When-Then scenarios, sequenced TDD plans, and traceable test execution. In information-theoretic terms, the specification drives behavioral ambiguity toward zero, turning source code into a deterministic compilation target.
+## Slide 02: From "Vibe Coding" to Agentic Engineering — Validation & Human Interaction
+- **PURPOSE**: Contrast the 4 failure modes of unconstrained "vibe coding" against Karpathy's Software 3.0 Generation–Verification Loop, the 4 Human Interaction Gates, and the 4 Automated Validation Layers.
+- **VERBAL SCRIPT**: Why does casual vibe coding fail on real repositories? As Andrej Karpathy observed, code generation is now virtually free, which makes human verification the true bottleneck. Left unconstrained, coding agents act like overeager juniors: they make silent assumptions, bloat fifty lines into a thousand, mutate adjacent working code, or weaken unit tests just to force a green build. Spec-Driven Development solves this by keeping the agent on a short leash across four human interaction gates and four validation layers, codified directly in conductor slash workflow dot md: First, Think Before Coding—surfacing trade-offs via interactive Q and A in Plan Mode. Second, Simplicity First—steering via a concise fifty-line spec before implementation. Third, Surgical Changes—locking non-target code in Out of Scope. And fourth, Goal-Driven Execution with Immutable Verifiers—running one-to-one REQ unit tests and read-only chmod minus w test suites, just like Karpathy's autoresearch evaluator.
 - **TRANSITION**: How do teams adopt this progressively? Let's look at the three levels of SDD maturity.
 
 ---

@@ -120,27 +120,27 @@
 }
 
 % ============================================================================
-% SLIDE 02: THE PROBLEM — VIBE CODING VS SDD
+% SLIDE 02: THE PROBLEM — VIBE CODING VS SDD & SOFTWARE 3.0 VERIFICATION LOOP
 % ============================================================================
-\slideshell{02 / 12}{MOTIVATION \& FIRST PRINCIPLES}{Why Conversational ``Vibe Coding'' Fails on Real Engineering Repos}{Replacing ephemeral chat prompts with version-controlled specifications, TDD plans, and adversarial gates}{
+\slideshell{02 / 12}{MOTIVATION \& SOFTWARE 3.0 VERIFICATION}{From ``Vibe Coding'' to Agentic Engineering: Validation \& Human Interaction}{Why generation is free, human verification is the bottleneck, and agents need a short leash + immutable verifiers}{
   \bcard{0}{0}{7.1}{3.9}{gbgred}{gred}{
     {\fontsize{16}{20}\selectfont\bfseries\textcolor{gred}{Anti-Pattern: The Vibe Coding Amnesia Loop}}\\[8pt]
-    \textbf{1. Ephemeral Intent:} Requirements live in transient chat history and vanish when the session resets.\\[5pt]
-    \textbf{2. Silent Brownfield Drift:} The agent guesses existing conventions, introduces unapproved dependencies, or mutates FIFO caches into LRU without warning.\\[5pt]
-    \textbf{3. Sycophantic Self-Testing:} When the same unconstrained prompt writes both code and tests, the agent weakens assertions so broken code passes.\\[5pt]
-    \textbf{4. Unreviewable PR Slop:} 2,000-line diffs with zero traceability to business requirements.
+    \textbf{1. Silent Assumptions:} ``Overeager junior'' agent guesses ambiguous edge cases without asking the human.\\[5pt]
+    \textbf{2. 1,000-Line Bloat \& Collateral Edits:} Agent over-engineers abstractions and mutates adjacent working code (e.g.\ FIFO $\to$ LRU).\\[5pt]
+    \textbf{3. Sycophantic Self-Testing:} When the same unconstrained prompt writes code and tests, it weakens assertions so broken code passes.\\[5pt]
+    \textbf{4. Unreviewable PR Slop:} 2,000-line diffs overwhelm human reviewers.
   }
   \bcard{7.6}{0}{7.1}{3.9}{gbggreen}{ggreen}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Solution: The 4-Layer SDD Engineering Loop}}\\[8pt]
-    \textbf{Layer 1 — Repository Constitution:} \code{conductor/product.md}, \code{tech-stack.md}, \code{workflow.md}, \code{openspec/config.yaml}.\\[5pt]
-    \textbf{Layer 2 — Behavioral Contracts:} Numbered \code{REQ-XXXX} invariants with RFC 2119 \code{MUST/SHALL} and \code{GIVEN/WHEN/THEN} scenarios.\\[5pt]
-    \textbf{Layer 3 — Sequenced TDD Plan:} Small, reviewable tasks (\code{plan.md} / \code{tasks.md}) decomposed into Stacked PR batches.\\[5pt]
-    \textbf{Layer 4 — Verified Execution:} Traceable \code{test\_reqXXXX\_*} unit tests, \code{git notes}, and \code{/opsx:archive} sync.
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Solution: 4 Human Gates \& 4 Validation Layers}}\\[8pt]
+    \textbf{1. Think Before Coding:} Sandboxed \code{/conductor:newTrack} Q\&A surfaces trade-offs before any code is written.\\[5pt]
+    \textbf{2. Spec-First Steering (\code{program.md} Pattern):} Human approves 50-line RFC 2119 + Gherkin \code{spec.md} before \code{/conductor:implement}.\\[5pt]
+    \textbf{3. Surgical Scope \& Short Leash:} Lock \code{Out of Scope} + \code{tech-stack.md}; verify at small Phase Checkpoints \& Stacked PR batches.\\[5pt]
+    \textbf{4. Immutable Verifiers (\code{chmod -w}):} 1:1 \code{test\_reqXXXX\_*} TDD + read-only adversarial tests (Karpathy \code{autoresearch} pattern).
   }
 
   \bcard{0}{-4.15}{14.7}{2.15}{gbggray}{gblue}{
-    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gblue}{Information-Theoretic Principle of Spec-Driven Development}}\\[6pt]
-    A specification $S$ and repository constitution $K$ drive conditional behavioral entropy $H(\text{Behavior}(C) \mid S, K) \to 0$ across every observable contract (inputs, state transitions, error codes, latency bounds), while leaving incidental implementation choices constrained by styleguides. \textbf{Source code becomes a deterministic compilation target of the specification.}
+    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gblue}{Karpathy's Software 3.0 Law: Speed Up the Generation--Verification Loop (``Iron Man Suit, Not Unsupervised Robot'')}}\\[6pt]
+    $\bullet$ \textbf{4 Behavioral Agent Rules (in \code{conductor/workflow.md}):} \textbf{(1) Think Before Coding} (ask, don't guess) $\cdot$ \textbf{(2) Simplicity First} (minimal TDD code) $\cdot$ \textbf{(3) Surgical Changes} (honor \code{Out of Scope}) $\cdot$ \textbf{(4) Goal-Driven Execution} (loop against objective verifiers: \code{openspec validate {-\/-}strict}, \code{test\_reqXXXX\_*}, and \code{chmod -w} Clean-Room Rebuild Tests).
   }
 }
 
