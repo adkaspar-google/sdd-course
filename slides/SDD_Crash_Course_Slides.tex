@@ -1,0 +1,448 @@
+% Copyright 2026 Google LLC
+%
+% Licensed under the Apache License, Version 2.0 (the "License");
+% you may not use this file except in compliance with the License.
+% You may obtain a copy of the License at
+%
+%     http://www.apache.org/licenses/LICENSE-2.0
+%
+% Unless required by applicable law or agreed to in writing, software
+% distributed under the License is distributed on an "AS IS" BASIS,
+% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+% See the License for the specific language governing permissions and
+% limitations under the License.
+\documentclass[11pt]{article}
+\usepackage[paperwidth=16in,paperheight=9in,margin=0in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{amsmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,fit,backgrounds}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{array}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% Official Google Cloudstyle 2.0 & Material 3 Palette
+\definecolor{gblue}{HTML}{1A73E8}
+\definecolor{gred}{HTML}{EA4335}
+\definecolor{gyellow}{HTML}{FBBC04}
+\definecolor{ggreen}{HTML}{34A853}
+\definecolor{gdark}{HTML}{202124}
+\definecolor{gmuted}{HTML}{5F6368}
+\definecolor{gborder}{HTML}{DADCE0}
+\definecolor{gbgblue}{HTML}{E8F0FE}
+\definecolor{gbggreen}{HTML}{E6F4EA}
+\definecolor{gbgred}{HTML}{FCE8E6}
+\definecolor{gbgyellow}{HTML}{FEF7E0}
+\definecolor{gbggray}{HTML}{F8F9FA}
+\definecolor{gnavy}{HTML}{0B192C}
+
+\newcommand{\code}[1]{\texttt{\textbf{\textcolor{gnavy}{#1}}}}
+
+% Master 16:9 Slide Frame Macro: #1 = Slide Number (01/12), #2 = Pill Tag, #3 = Assertive Title, #4 = Subtitle, #5 = Body TikZ/Nodes
+\newcommand{\slideshell}[5]{%
+\newpage\mbox{}%
+\begin{tikzpicture}[x=1in,y=1in,remember picture,overlay]
+  % Background canvas
+  \fill[white] (current page.south west) rectangle (current page.north east);
+  % 4-Color Google Cloud Top Bar
+  \fill[gblue]   ($(current page.north west)+(0,0)$) rectangle ($(current page.north west)+(4, -0.10)$);
+  \fill[gred]    ($(current page.north west)+(4,0)$) rectangle ($(current page.north west)+(8, -0.10)$);
+  \fill[gyellow] ($(current page.north west)+(8,0)$) rectangle ($(current page.north west)+(12,-0.10)$);
+  \fill[ggreen]  ($(current page.north west)+(12,0)$) rectangle ($(current page.north west)+(16,-0.10)$);
+
+  % Category Pill & Slide Counter
+  \node[anchor=north west, fill=gbgblue, draw=gblue, line width=0.8pt, rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, font=\fontsize{11}{13}\selectfont\bfseries, text=gblue] at ($(current page.north west)+(0.65,-0.32)$) {#2};
+  \node[anchor=north east, fill=gbggray, draw=gborder, line width=0.8pt, rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, font=\fontsize{11}{13}\selectfont\bfseries, text=gmuted] at ($(current page.north east)+(-0.65,-0.32)$) {SDD-CRASH-COURSE \quad | \quad SLIDE #1};
+
+  % Assertive Headline & Subtitle
+  \node[anchor=north west, text width=14.7in, font=\fontsize{25}{29}\selectfont\bfseries, text=gdark] at ($(current page.north west)+(0.65,-0.78)$) {#3};
+  \node[anchor=north west, text width=14.7in, font=\fontsize{14}{18}\selectfont, text=gmuted] at ($(current page.north west)+(0.65,-1.28)$) {#4};
+  \draw[gborder, line width=1pt] ($(current page.north west)+(0.65,-1.65)$) -- ($(current page.north east)+(-0.65,-1.65)$);
+
+  % Slide Content Area Origin: (0.65, -1.85) to (15.35, -8.40) -> width 14.7in, height 6.55in
+  \begin{scope}[shift={($(current page.north west)+(0.65,-1.85)$)}]
+    #5
+  \end{scope}
+
+  % Footer
+  \draw[gborder, line width=0.6pt] ($(current page.south west)+(0.65,0.48)$) -- ($(current page.south east)+(-0.65,0.48)$);
+  \node[anchor=south west, font=\fontsize{10}{12}\selectfont, text=gmuted] at ($(current page.south west)+(0.65,0.18)$) {github.com/adkaspar-google/sdd-course \quad $\bullet$ \quad Apache-2.0 Open-Access Engineering Course};
+  \node[anchor=south east, font=\fontsize{10}{12}\selectfont\bfseries, text=gblue] at ($(current page.south east)+(-0.65,0.18)$) {Conductor $\times$ OpenSpec $\times$ SPEC.md (SSOT)};
+\end{tikzpicture}%
+}
+
+\newcommand{\bcard}[7]{% x, y, w, h, fill, border, title+body
+  \node[anchor=north west, fill=#5, draw=#6, line width=1.1pt, rounded corners=6pt, minimum width=#3in, minimum height=#4in, inner sep=0pt] at (#1,#2) {};
+  \node[anchor=north west, text width=#3in-0.44in, align=left, font=\fontsize{13}{17}\selectfont, text=gdark] at ($(#1,#2)+(0.22,-0.20)$) {#7};
+}
+
+\begin{document}
+
+% ============================================================================
+% SLIDE 01: COVER & COURSE ARCHITECTURE
+% ============================================================================
+\slideshell{01 / 12}{OPEN-SOURCE HANDS-ON PLAYGROUND}{SDD-Crash-Course: Spec-Driven Development in Practice}{Mastering Context-Driven Development (Conductor), Delta Contracts (OpenSpec), and Spec-as-SSOT (SPEC.md)}{
+  \bcard{0}{0}{4.7}{4.1}{gbgblue}{gblue}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{1. Conductor (Context \& TDD Engine)}}\\[8pt]
+    \textbf{Unit of Work:} Track (\code{conductor/tracks/<id>/})\\[4pt]
+    $\bullet$ Persistent repo constitution (\code{product.md}, \code{tech-stack.md}, \code{workflow.md}).\\[4pt]
+    $\bullet$ Interactive 7-Section Track \code{spec.md} \& phased \code{plan.md}.\\[4pt]
+    $\bullet$ Strict \textbf{Red $\to$ Green $\to$ Refactor} TDD execution (\code{/conductor:implement}) with \code{git notes} \& SHA checkpoints.
+  }
+  \bcard{5.0}{0}{4.7}{4.1}{gbggreen}{ggreen}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{2. OpenSpec (Delta Contract Engine)}}\\[8pt]
+    \textbf{Unit of Work:} Capability Delta (\code{openspec/changes/<id>/})\\[4pt]
+    $\bullet$ Two-Plane isolation: \code{openspec/specs/} (Current Truth) vs.\ \code{openspec/changes/} (Proposed Delta).\\[4pt]
+    $\bullet$ Normative RFC 2119 (\code{SHALL}, \code{MUST}) + 4-hashtag \code{\#\#\#\# Scenario:} (\code{GIVEN/WHEN/THEN}).\\[4pt]
+    $\bullet$ Deterministic merge via \code{/opsx:verify} \& \code{/opsx:archive}.
+  }
+  \bcard{10.0}{0}{4.7}{4.1}{gbgyellow}{gyellow}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gdark}{3. SPEC.md (Single Source of Truth)}}\\[8pt]
+    \textbf{Unit of Work:} Whole-System Blueprint (\code{SPEC.md})\\[4pt]
+    $\bullet$ Canonical 8-Section architecture, schema, API, and deployment specification.\\[4pt]
+    $\bullet$ Separates \textbf{Essential Domain Intent} from incidental implementation details.\\[4pt]
+    $\bullet$ Verified by the \textbf{Clean-Room Rebuild Test} against read-only adversarial tests.
+  }
+
+  \bcard{0}{-4.35}{14.7}{1.95}{gbggray}{gborder}{
+    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gnavy}{What You Will Build \& Verify in This Crash Course (100\% Executable Python Playground)}}\\[6pt]
+    $\bullet$ \textbf{6 Self-Diagnosing Hands-On Labs} (\code{labs/lab\_01} to \code{lab\_06}): Rate Limiter, Brownfield Lease Manager with Fencing Tokens, Circuit Breaker State Machine, Token Bucket Drift \& Scorecard Refactoring, KVCache SDD Code Review \& Stacked PRs, and CoursePulse Clean-Room Rebuild.\\[3pt]
+    $\bullet$ \textbf{One-Command Verification Harness}: Run \code{./self\_diagnose\_all.sh} to execute all \textbf{6 lab graders} and \textbf{37 traceable unit tests} (\code{test\_req0001\_...}) in $<1$ second.
+  }
+}
+
+% ============================================================================
+% SLIDE 02: THE PROBLEM — VIBE CODING VS SDD
+% ============================================================================
+\slideshell{02 / 12}{MOTIVATION \& FIRST PRINCIPLES}{Why Conversational ``Vibe Coding'' Fails on Real Engineering Repos}{Replacing ephemeral chat prompts with version-controlled specifications, TDD plans, and adversarial gates}{
+  \bcard{0}{0}{7.1}{3.9}{gbgred}{gred}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gred}{Anti-Pattern: The Vibe Coding Amnesia Loop}}\\[8pt]
+    \textbf{1. Ephemeral Intent:} Requirements live in transient chat history and vanish when the session resets.\\[5pt]
+    \textbf{2. Silent Brownfield Drift:} The agent guesses existing conventions, introduces unapproved dependencies, or mutates FIFO caches into LRU without warning.\\[5pt]
+    \textbf{3. Sycophantic Self-Testing:} When the same unconstrained prompt writes both code and tests, the agent weakens assertions so broken code passes.\\[5pt]
+    \textbf{4. Unreviewable PR Slop:} 2,000-line diffs with zero traceability to business requirements.
+  }
+  \bcard{7.6}{0}{7.1}{3.9}{gbggreen}{ggreen}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Solution: The 4-Layer SDD Engineering Loop}}\\[8pt]
+    \textbf{Layer 1 — Repository Constitution:} \code{conductor/product.md}, \code{tech-stack.md}, \code{workflow.md}, \code{openspec/config.yaml}.\\[5pt]
+    \textbf{Layer 2 — Behavioral Contracts:} Numbered \code{REQ-XXXX} invariants with RFC 2119 \code{MUST/SHALL} and \code{GIVEN/WHEN/THEN} scenarios.\\[5pt]
+    \textbf{Layer 3 — Sequenced TDD Plan:} Small, reviewable tasks (\code{plan.md} / \code{tasks.md}) decomposed into Stacked PR batches.\\[5pt]
+    \textbf{Layer 4 — Verified Execution:} Traceable \code{test\_reqXXXX\_*} unit tests, \code{git notes}, and \code{/opsx:archive} sync.
+  }
+
+  \bcard{0}{-4.15}{14.7}{2.15}{gbggray}{gblue}{
+    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gblue}{Information-Theoretic Principle of Spec-Driven Development}}\\[6pt]
+    A specification $S$ and repository constitution $K$ drive conditional behavioral entropy $H(\text{Behavior}(C) \mid S, K) \to 0$ across every observable contract (inputs, state transitions, error codes, latency bounds), while leaving incidental implementation choices constrained by styleguides. \textbf{Source code becomes a deterministic compilation target of the specification.}
+  }
+}
+
+% ============================================================================
+% SLIDE 03: THE 3 LEVELS OF SDD MATURITY
+% ============================================================================
+\slideshell{03 / 12}{TAXONOMY \& MATURITY MODEL}{The 3 Levels of Spec-Driven Development Maturity}{Moving from disposable pre-coding specs to living delta synchronization and deterministic clean-room rebuilds}{
+  \bcard{0}{0}{4.7}{4.3}{gbggray}{gborder}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gmuted}{Level 1: Spec-First}}\\[6pt]
+    \textbf{``Write a spec before coding, then discard it.''}\\[8pt]
+    $\bullet$ Engineers draft a design doc or prompt spec to generate v1 of a feature.\\[5pt]
+    $\bullet$ Subsequent bugfixes and hotfixes edit source code directly.\\[5pt]
+    $\bullet$ \textbf{Failure Mode:} Within 2 sprints, the spec is stale documentation that misleads future agents.
+  }
+  \bcard{5.0}{0}{4.7}{4.3}{gbgblue}{gblue}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Level 2: Spec-Anchored}}\\[6pt]
+    \textbf{``Living specs synchronized on every PR.''}\\[8pt]
+    $\bullet$ Powered by \textbf{OpenSpec} (\code{openspec/specs/}) and \textbf{Conductor} (\code{conductor/tracks/}).\\[5pt]
+    $\bullet$ Every change proposes explicit \code{ADDED / MODIFIED / REMOVED / RENAMED} requirement deltas.\\[5pt]
+    $\bullet$ \textbf{Guarantee:} CI and \code{/opsx:verify} block PRs whenever code and specs diverge.
+  }
+  \bcard{10.0}{0}{4.7}{4.3}{gbggreen}{ggreen}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Level 3: Spec-as-Source (SSOT)}}\\[6pt]
+    \textbf{``The spec can regenerate the system from scratch.''}\\[8pt]
+    $\bullet$ Powered by the canonical \textbf{8-Section \code{SPEC.md}} blueprint.\\[5pt]
+    $\bullet$ Zero raw customer secrets or hardcoded environment IDs.\\[5pt]
+    $\bullet$ \textbf{Guarantee:} Passes the \textbf{Clean-Room Rebuild Test} in an empty \code{/tmp/} directory against locked adversarial tests.
+  }
+
+  \bcard{0}{-4.55}{14.7}{1.75}{gbgyellow}{gyellow}{
+    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gdark}{Universal Decision Rule: Which Level \& Tool Do I Pick Today?}}\\[4pt]
+    $\bullet$ \textbf{Single-repo feature, bugfix, or TDD refactor?} Use \textbf{Conductor} (\code{/conductor:newTrack} $\to$ \code{/conductor:implement}). \quad
+    $\bullet$ \textbf{Cross-cutting capability contract or brownfield delta?} Layer \textbf{OpenSpec} (\code{/opsx:propose} $\to$ \code{/opsx:archive}). \quad
+    $\bullet$ \textbf{Re-architecting or extracting a portable microservice blueprint?} Author an \textbf{8-Section \code{SPEC.md}} and run the Rebuild Test.
+  }
+}
+
+% ============================================================================
+% SLIDE 04: ENGINE 1 — CONDUCTOR
+% ============================================================================
+\slideshell{04 / 12}{ENGINE 1: CONDUCTOR}{Conductor: Context-Driven Development \& TDD Track Execution}{``Measure Twice, Code Once'' — Persistent repository context, interactive specifications, and Git-backed checkpoints}{
+  \bcard{0}{0}{4.7}{3.9}{gbgblue}{gblue}{
+    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gblue}{Step 1: \code{/conductor:setup}}}\\[6pt]
+    \textbf{One-Time Repo Constitution:}\\[4pt]
+    $\bullet$ \code{conductor/product.md} (vision \& personas)\\[3pt]
+    $\bullet$ \code{conductor/product-guidelines.md}\\[3pt]
+    $\bullet$ \code{conductor/tech-stack.md} (approved stack)\\[3pt]
+    $\bullet$ \code{conductor/workflow.md} (TDD \& coverage $>80\%$)\\[3pt]
+    $\bullet$ \code{conductor/tracks.md} (master track registry)
+  }
+  \bcard{5.0}{0}{4.7}{3.9}{gbgblue}{gblue}{
+    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gblue}{Step 2: \code{/conductor:newTrack}}}\\[6pt]
+    \textbf{Interactive Spec \& Phased Plan:}\\[4pt]
+    $\bullet$ Asks 3--5 targeted clarifying questions (Additive vs.\ Exclusive).\\[3pt]
+    $\bullet$ Writes \code{conductor/tracks/<id>/spec.md}.\\[3pt]
+    $\bullet$ Writes hierarchical \code{plan.md} with \code{[ ]} tasks and Phase Manual Verification gates.\\[3pt]
+    $\bullet$ Sandboxed in Plan Mode (\code{\textasciicircum{}conductor/}).
+  }
+  \bcard{10.0}{0}{4.7}{3.9}{gbgblue}{gblue}{
+    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gblue}{Step 3: \code{/conductor:implement}}}\\[6pt]
+    \textbf{Autonomous Red-Green-Refactor TDD:}\\[4pt]
+    $\bullet$ Marks task \code{[\textasciitilde]} $\to$ writes failing test (\textbf{Red}).\\[3pt]
+    $\bullet$ Writes minimal code (\textbf{Green}) \& refactors.\\[3pt]
+    $\bullet$ Commits code, attaches \code{git notes}, records \code{[x] <7-char-sha>}, and runs Phase Checkpoint (\code{[checkpoint: <sha>]}).
+  }
+
+  \bcard{0}{-4.15}{14.7}{2.15}{gbggray}{gborder}{
+    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gnavy}{Day-2 Operations in Conductor: Auditing, Principal Review \& Logical Git Revert}}\\[6pt]
+    $\bullet$ \textbf{\code{/conductor:status}}: Audits \code{tracks.md} and active \code{plan.md} files to report completed \code{[x]}, in-progress \code{[\textasciitilde]}, and blocked tasks.\\[3pt]
+    $\bullet$ \textbf{\code{/conductor:review}}: Audits diffs against \code{spec.md}, \code{tech-stack.md}, and styleguides; appends \code{\#\# Phase: Review Fixes} to \code{plan.md}.\\[3pt]
+    $\bullet$ \textbf{\code{/conductor:revert}}: Reconciles implementation SHAs, \code{conductor(plan)} SHAs, and \code{conductor(checkpoint)} SHAs to cleanly roll back an entire Task, Phase, or Track.
+  }
+}
+
+% ============================================================================
+% SLIDE 05: ENGINE 2 — OPENSPEC
+% ============================================================================
+\slideshell{05 / 12}{ENGINE 2: OPENSPEC}{OpenSpec: Two-Plane Architecture \& Deterministic Delta Algebra}{Isolating current system truth (\code{openspec/specs/}) from active work-in-progress proposals (\code{openspec/changes/})}{
+  \bcard{0}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Plane 1: \code{openspec/specs/<capability>/spec.md}}}\\[6pt]
+    \textbf{The Living System of Record (Current Truth):}\\[4pt]
+    $\bullet$ Organized by architectural capability (\code{rate-limiter}, \code{lease-manager}, \code{enrollment}), never by sprint ticket.\\[4pt]
+    $\bullet$ Every requirement has a stable ID (\code{REQ-0001}) and RFC 2119 normative verb (\code{SHALL}, \code{MUST}, \code{MUST NOT}).\\[4pt]
+    $\bullet$ Every requirement is paired with 4-hashtag \code{\#\#\#\# Scenario:} blocks using \code{GIVEN / WHEN / THEN}.
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Plane 2: \code{openspec/changes/<change-id>/}}}\\[6pt]
+    \textbf{Isolated Delta Bundle (\code{proposal.md}, \code{design.md}, \code{tasks.md}, \code{specs/}):}\\[4pt]
+    $\bullet$ Expresses exact mutations via 4 delta headers: \code{ADDED}, \code{MODIFIED}, \code{REMOVED} (requires \textbf{Reason} \& \textbf{Migration}), and \code{RENAMED}.\\[4pt]
+    $\bullet$ \textbf{Deterministic 4-Step Archive Merge (\code{/opsx:archive}):}\\[2pt]
+    \code{1. Pre-Validate $\to$ 2. RENAMED $\to$ 3. REMOVED $\to$ 4. MODIFIED $\to$ 5. ADDED}.
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgyellow}{gyellow}{
+    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gdark}{The 99\% / 1\% OpenSpec Rule \& The ``Core 4'' Daily Loop}}\\[4pt]
+    $\bullet$ \textbf{1\% Terminal CLI:} Run \code{openspec init} once per repo (and \code{openspec validate --all --strict --json} in CI).\\[3pt]
+    $\bullet$ \textbf{99\% AI Slash Commands:} Drive all daily work through \textbf{\code{/opsx:explore}} (read-only investigation) $\to$ \textbf{\code{/opsx:propose}} (generate \code{proposal.md}, \code{specs/}, \code{design.md}, \code{tasks.md}) $\to$ \textbf{\code{/opsx:apply}} (implement tasks) $\to$ \textbf{\code{/opsx:verify}} \& \textbf{\code{/opsx:archive}} (audit \& merge deltas).
+  }
+}
+
+% ============================================================================
+% SLIDE 06: DUAL-ENGINE WIRING (CONDUCTOR + OPENSPEC + SPEC SKILL)
+% ============================================================================
+\slideshell{06 / 12}{DUAL-ENGINE ARCHITECTURE}{Wiring Conductor + OpenSpec + Dedicated Spec Skills Together}{How \code{conductor/workflow.md} delegates specification quality to \code{writing-arch-specs} and OpenSpec contracts}{
+  \bcard{0}{0}{7.1}{4.1}{gbgblue}{gblue}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Dual-Engine Repository Wiring}}\\[6pt]
+    \textbf{1. Dedicated Spec Skill:}\\[2pt]
+    \code{.agents/skills/writing-arch-specs/SKILL.md} defines the 7-Section Track Spec Anatomy, RFC 2119 rules, and ADR tables.\\[5pt]
+    \textbf{2. Workflow Hook (\code{conductor/workflow.md}):}\\[2pt]
+    Instructs Conductor to load \code{writing-arch-specs} and align every track with \code{openspec/specs/<capability>/spec.md} (\code{REQ-XXXX}).\\[5pt]
+    \textbf{3. Post-Track Sync:} At Phase Checkpoint, run \code{/opsx:verify} and \code{/opsx:archive} to keep capability specs 100\% current.
+  }
+  \bcard{7.6}{0}{7.1}{4.1}{gbggreen}{ggreen}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{The 7-Section Track \code{spec.md} Anatomy}}\\[6pt]
+    Every \code{conductor/tracks/<track\_id>/spec.md} MUST include:\\[4pt]
+    \textbf{1. Overview} (2--3 sentence problem \& outcome summary)\\[2pt]
+    \textbf{2. Architecture \& Component Topology} (Mermaid diagram)\\[2pt]
+    \textbf{3. Functional Requirements} (\code{REQ-XXXX} + \code{WHEN/THEN})\\[2pt]
+    \textbf{4. Non-Functional Requirements} (latency, thread safety, $>80\%$ cov)\\[2pt]
+    \textbf{5. Acceptance Criteria} (1:1 mapping to \code{test\_reqXXXX\_*})\\[2pt]
+    \textbf{6. Out of Scope} (explicit guardrails against scope creep)\\[2pt]
+    \textbf{7. Verification Commands} (\code{CI=true python3 -m unittest ...})
+  }
+
+  \bcard{0}{-4.35}{14.7}{1.95}{gbggray}{gborder}{
+    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gnavy}{Why Dual-Engine SDD Beats Either Tool Alone}}\\[4pt]
+    \textbf{Conductor alone} excels at single-track TDD execution and Git checkpoints, but archives track specs separately without merging them into a unified capability tree. \textbf{OpenSpec alone} maintains a clean capability spec tree (\code{openspec/specs/}), but lacks Conductor's \code{git notes} audit trail, \code{tech-stack.md} governance gates, and 4-phase \code{/conductor:revert}. \textbf{Together, they cover both planes.}
+  }
+}
+
+% ============================================================================
+% SLIDE 07: HANDS-ON LABS 01 & 02
+% ============================================================================
+\slideshell{07 / 12}{HANDS-ON LABS 01 \& 02}{Labs 01 \& 02: Greenfield Spec Authoring \& Brownfield Spec Recovery}{Practicing forward specification from ambiguous proposals and reverse-engineering legacy code into contracts}{
+  \bcard{0}{0}{7.1}{4.2}{gbgblue}{gblue}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Lab 01: Greenfield Proposal $\to$ Specs, ADRs \& Code}}\\[6pt]
+    \textbf{System:} Per-Key Sliding-Window Rate Limiter (\code{ratelimiter.py})\\[5pt]
+    $\bullet$ \textbf{Starting Input:} Ambiguous product memo (\code{proposal.md}) missing cost bounds, retry-after math, and concurrency semantics.\\[4pt]
+    $\bullet$ \textbf{What You Build:}\\[2pt]
+    \quad -- \code{openspec/specs/rate-limiter/spec.md} (\code{REQ-0001..0006})\\[2pt]
+    \quad -- \code{ADR-0001} (Storage Engine) \& \code{ADR-0002} (Sliding Log vs.\ Fixed)\\[2pt]
+    \quad -- 7-Section Conductor \code{spec.md}, \code{plan.md} \& \code{ratelimiter.py}\\[4pt]
+    $\bullet$ \textbf{Verify:} \code{./labs/lab\_01\_.../self\_diagnose.sh} (\code{6/6} tests PASS).
+  }
+  \bcard{7.6}{0}{7.1}{4.2}{gbggreen}{ggreen}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Lab 02: Brownfield Legacy Code $\to$ Living Spec Recovery}}\\[6pt]
+    \textbf{System:} Distributed Lease Lock Manager (\code{service/leasemanager.py})\\[5pt]
+    $\bullet$ \textbf{Starting Input:} Undocumented production Python service + unit tests with zero specification files.\\[4pt]
+    $\bullet$ \textbf{What You Recover (\code{/opsx:explore}):}\\[2pt]
+    \quad -- \code{REQ-0001..0006} in \code{openspec/specs/lease-manager/spec.md}\\[2pt]
+    \quad -- Strictly monotonic 64-bit \code{fencing\_token} invariant (never resets across release or TTL expiry)\\[2pt]
+    \quad -- \code{ADR-0001-fencing-tokens.md} (split-brain zombie protection)\\[4pt]
+    $\bullet$ \textbf{Verify:} \code{./labs/lab\_02\_.../self\_diagnose.sh} (\code{6/6} tests PASS).
+  }
+
+  \bcard{0}{-4.45}{14.7}{1.85}{gbggray}{gborder}{
+    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gnavy}{Key Engineering Takeaway from Labs 01 \& 02}}\\[4pt]
+    Always require an injectable \code{clock: Callable[[], float] = time.monotonic} in your specification (\code{REQ-0004}) so time-window expiration, retry-after delays, and lease TTL takeovers can be unit-tested deterministically in $<1\text{ms}$ without \code{time.sleep()}.
+  }
+}
+
+% ============================================================================
+% SLIDE 08: HANDS-ON LABS 03 & 04
+% ============================================================================
+\slideshell{08 / 12}{HANDS-ON LABS 03 \& 04}{Labs 03 \& 04: TDD State Machines, Drift Detection \& 5-Step Refactoring}{Translating formal specs into traceable TDD code and surgically remediating brownfield scorecard findings}{
+  \bcard{0}{0}{7.1}{4.2}{gbgblue}{gblue}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Lab 03: From Specs to Traceable TDD Code}}\\[6pt]
+    \textbf{System:} Stateful Circuit Breaker (\code{circuitbreaker.py})\\[5pt]
+    $\bullet$ \textbf{Starting Input:} Approved \code{specs/spec.md} (\code{REQ-0001..0007}) and state machine diagram (\code{CLOSED $\to$ OPEN $\to$ HALF\_OPEN}).\\[4pt]
+    $\bullet$ \textbf{What You Build (\code{/conductor:implement}):}\\[2pt]
+    \quad -- Sequenced TDD \code{tasks.md} across 2 batches\\[2pt]
+    \quad -- \code{test\_req0001\_*} through \code{test\_req0007\_*} in \code{test\_circuitbreaker.py}\\[2pt]
+    \quad -- Fast-fail \code{CircuitOpenError} \& single-probe \code{HALF\_OPEN} recovery\\[4pt]
+    $\bullet$ \textbf{Verify:} \code{./labs/lab\_03\_.../self\_diagnose.sh} (\code{7/7} tests PASS).
+  }
+  \bcard{7.6}{0}{7.1}{4.2}{gbgred}{gred}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gred}{Lab 04: Spec Drift \& 5-Step Scorecard Refactoring}}\\[6pt]
+    \textbf{System:} Token Bucket Quota Allocator (\code{quota\_allocator.py})\\[5pt]
+    $\bullet$ \textbf{The Drift Bug (\code{F-01 / REQ-0005}):} \code{\_replenish()} overwrites \code{last\_replenished = now} even when \code{added == 0}, starving token refill under frequent sub-second polling!\\[4pt]
+    $\bullet$ \textbf{The 5-Step Brownfield Loop:}\\[2pt]
+    \quad 1. Audit Scorecard (\code{F-01..F-04}) $\to$ 2. Isolate \code{F-01} in Track \code{spec.md} (\code{Out of Scope: F-02..F-04}) $\to$ 3. Write failing \code{test\_req0005} $\to$ 4. Fix \code{\_replenish()} $\to$ 5. Re-score.
+  }
+
+  \bcard{0}{-4.45}{14.7}{1.85}{gbgyellow}{gyellow}{
+    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gdark}{Why the ``Out of Scope'' Section in Lab 04 Is Critical}}\\[4pt]
+    When given a brownfield file with 4 technical debt findings (\code{F-01..F-04}), an unconstrained agent attempts to fix all 4 at once and breaks existing callers. Placing \code{F-02..F-04} in \textbf{Section 6: Out of Scope} forces surgical, 1-finding-per-track execution.
+  }
+}
+
+% ============================================================================
+% SLIDE 09: HANDS-ON LAB 05 — SDD CODE REVIEW & STACKED PRS
+% ============================================================================
+\slideshell{09 / 12}{HANDS-ON LAB 05}{Lab 05: SDD Code Review \& Stacked PR Task Decomposition}{Reviewing the specification diff first, blocking silent contract violations, and sizing PR batches}{
+  \bcard{0}{0}{7.1}{4.1}{gbgred}{gred}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gred}{Auditing \code{simulated\_review/subpar\_change.patch}}}\\[6pt]
+    A contributor submits a ``vibe-coded'' patch to \code{base/kvcache.py}:\\[5pt]
+    \textbf{Violation 1 (Silent Contract Break):} Adds \code{self.\_store.move\_to\_end(key)} inside \code{get()}, silently mutating \textbf{FIFO eviction (\code{REQ-0002})} into \textbf{LRU eviction} without updating the spec!\\[5pt]
+    \textbf{Violation 2 (Un-Specced Public API):} Adds \code{put\_with\_ttl()} with zero requirement in \code{openspec/specs/kv-cache/spec.md}.\\[5pt]
+    \textbf{Violation 3 (Untested Edge Cases):} No \code{ttl\_seconds <= 0} validation and no \code{test\_req0006\_*} unit test.
+  }
+  \bcard{7.6}{0}{7.1}{4.1}{gbggreen}{ggreen}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Stacked PR Task Decomposition (\code{tasks.md})}}\\[6pt]
+    Instead of a monolithic PR, structure \code{tasks.md} into reviewable Stacked PR Batches (\code{150--250 LOC} each):\\[5pt]
+    $\bullet$ \textbf{Batch 1 (PR 1/3):} Add \code{REQ-0006} to \code{spec.md} (keeping \code{REQ-0002} FIFO intact) + add injectable \code{clock} and \code{\_CacheEntry}.\\[4pt]
+    $\bullet$ \textbf{Batch 2 (PR 2/3):} Implement \code{put\_with\_ttl}, pre-eviction expired purging, and \code{test\_req0001..0006}.\\[4pt]
+    $\bullet$ \textbf{Archive PR N+1 (PR 3/3):} Run \code{/opsx:verify} \& \code{/opsx:archive}.
+  }
+
+  \bcard{0}{-4.35}{14.7}{1.95}{gbggray}{gborder}{
+    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gnavy}{The Golden Rule of SDD Code Review}}\\[4pt]
+    \textbf{Review the Specification Diff before reading a single line of Python/Go/TypeScript.} If a PR alters observable behavior without a matching \code{REQ-XXXX} delta—or if it contradicts an existing requirement—reject the PR at the contract layer.
+  }
+}
+
+% ============================================================================
+% SLIDE 10: HANDS-ON LAB 06 — CAPSTONE SPEC.MD & REBUILD TEST
+% ============================================================================
+\slideshell{10 / 12}{HANDS-ON LAB 06 (CAPSTONE)}{Lab 06: The 8-Section \code{SPEC.md} (SSOT) \& Clean-Room Rebuild Test}{Proving your specification is a true Single Source of Truth via isolated adversarial verification}{
+  \bcard{0}{0}{7.1}{4.2}{gbgblue}{gblue}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{The Canonical 8-Section \code{SPEC.md} Blueprint}}\\[6pt]
+    In \code{labs/lab\_06\_capstone\_ssot\_and\_rebuild\_test/SPEC.md}, the \textbf{CoursePulse Enrollment \& Waitlist Service} is specified across 8 sections:\\[4pt]
+    \textbf{1.} System Overview \& Domain Intent\\[2pt]
+    \textbf{2.} Architecture \& Data Flow (Mermaid topology)\\[2pt]
+    \textbf{3.} Data Models \& Schemas (\code{EnrollmentResult}, \code{DropResult}, \code{CourseRoster})\\[2pt]
+    \textbf{4.} Interface \& API Contracts (\code{create\_course}, \code{enroll}, \code{drop}, \code{get\_roster})\\[2pt]
+    \textbf{5.} Normative Workflows (\code{REQ-0001..0006}: FIFO waitlist promotion)\\[2pt]
+    \textbf{6--8.} Repo Structure, Parameterized Config \& 3-Phase Rebuild Recipe.
+  }
+  \bcard{7.6}{0}{7.1}{4.2}{gbggreen}{ggreen}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{The Adversarial Clean-Room Rebuild Protocol}}\\[6pt]
+    How \code{labs/lab\_06\_.../self\_diagnose.sh} verifies Level-3 SSOT maturity:\\[5pt]
+    \textbf{Step 1:} Create an empty isolated directory \code{mktemp -d} in \code{/tmp/}.\\[4pt]
+    \textbf{Step 2:} Copy only \code{SPEC.md}, the regenerated \code{coursepulse.py}, and \code{adversarial\_tests/test\_rebuild\_contract.py}.\\[4pt]
+    \textbf{Step 3:} Lock \code{adversarial\_tests/} read-only via \textbf{\code{chmod -R a-w}} so the implementer agent cannot weaken or delete test assertions.\\[4pt]
+    \textbf{Step 4:} Execute \code{python3 -m unittest} — all 6 contract tests pass!
+  }
+
+  \bcard{0}{-4.45}{14.7}{1.85}{gbgyellow}{gyellow}{
+    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gdark}{Multi-Agent Adversarial Isolation (Preventing Sycophantic Tests)}}\\[4pt]
+    In production SDD pipelines, \textbf{Agent A (Test Scaffolder)} writes \code{adversarial\_tests/} from \code{SPEC.md}, and \textbf{Agent B (Implementer)} writes \code{coursepulse.py} with filesystem write permissions restricted to \code{src/} only.
+  }
+}
+
+% ============================================================================
+% SLIDE 11: 5 SECURITY GUARDRAILS & DIAGNOSTIC PITFALLS
+% ============================================================================
+\slideshell{11 / 12}{SECURITY \& DIAGNOSTIC PITFALLS}{5 Mandatory Security Guardrails \& Top Practitioner Traps}{Avoiding silent scenario loss, parser drops, credential leaks, and mid-track tech-stack drift}{
+  \bcard{0}{0}{7.1}{4.2}{gbgred}{gred}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gred}{Top 5 Practitioner Failure Modes \& Fixes}}\\[6pt]
+    \textbf{1. Partial \code{MODIFIED} Block:} Pasting only the new scenario under \code{\#\# MODIFIED Requirements} overwrites the entire requirement on archive. \textit{Fix: Copy the full requirement + all retained scenarios.}\\[4pt]
+    \textbf{2. 3-Hashtag \code{\#\#\# Scenario:} Drop:} OpenSpec's parser strictly requires \textbf{4 hashtags} (\code{\#\#\#\# Scenario:}).\\[4pt]
+    \textbf{3. \code{RENAMED} + \code{MODIFIED} Collision:} \code{MODIFIED} must reference the \textbf{new (\code{TO:})} header name.\\[4pt]
+    \textbf{4. Unapproved Stack Drift:} Halt task \code{[\textasciitilde]} and update \code{tech-stack.md} first.
+  }
+  \bcard{7.6}{0}{7.1}{4.2}{gbgblue}{gblue}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{5 Security Guardrails for SDD Repositories}}\\[6pt]
+    \textbf{1. Zero Secrets in Specs:} \code{openspec/} and \code{conductor/} are committed to Git—use \code{\$\{API\_KEY\}} placeholders, never live tokens.\\[4pt]
+    \textbf{2. Sanitize Brownfield Extractions:} Strip internal hostnames, project IDs, and PII during \code{SPEC.md} extraction.\\[4pt]
+    \textbf{3. Enforce Plan Mode Path Sandboxing:} Keep \code{policies/conductor.toml} active so planning cannot mutate \code{src/}.\\[4pt]
+    \textbf{4. Lock Adversarial Tests Read-Only:} \code{chmod -R a-w adversarial\_tests/}.\\[4pt]
+    \textbf{5. Gate CI on Strict Validation:} Run \code{./self\_diagnose\_all.sh} on every PR.
+  }
+
+  \bcard{0}{-4.45}{14.7}{1.85}{gbggray}{gborder}{
+    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gnavy}{Quick Diagnostic Command Cheat Sheet}}\\[4pt]
+    $\bullet$ Validate all OpenSpec changes in CI: \code{openspec validate --all --strict --json} \quad $\bullet$ Audit Conductor tracks: \code{/conductor:status} \quad $\bullet$ Run Principal Engineer spec review: \code{/conductor:review} \quad $\bullet$ Logical rollback: \code{/conductor:revert}
+  }
+}
+
+% ============================================================================
+% SLIDE 12: QUICKSTART & CALL TO ACTION
+% ============================================================================
+\slideshell{12 / 12}{GET STARTED IN 2 MINUTES}{Start Practicing Now: Clone, Diagnose \& Build}{Everything in SDD-Crash-Course runs offline in $<1$ second with Python 3.11+ Standard Library}{
+  \bcard{0}{0}{7.1}{4.2}{gbggreen}{ggreen}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{2-Minute Terminal Quickstart}}\\[6pt]
+    \textbf{1. Clone the Open-Access Repository:}\\[2pt]
+    \code{git clone https://github.com/adkaspar-google/sdd-course.git}\\[2pt]
+    \code{cd sdd-course}\\[6pt]
+    \textbf{2. Run the Master Diagnostic Suite (All 6 Labs):}\\[2pt]
+    \code{./self\_diagnose\_all.sh}\\[6pt]
+    \textbf{3. Install Conductor \& OpenSpec in Your IDE/CLI:}\\[2pt]
+    \code{gemini extensions install \textbackslash}\\[1pt]
+    \quad \code{https://github.com/gemini-cli-extensions/conductor}\\[2pt]
+    \code{npm install -g @fission-ai/openspec@latest}
+  }
+  \bcard{7.6}{0}{7.1}{4.2}{gbgblue}{gblue}{
+    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Included Course Resources \& Codelabs}}\\[6pt]
+    $\bullet$ \textbf{16-Page Practical Field Guide PDF:}\\[1pt]
+    \quad \code{Coursebook\_SDD\_Conductor\_OpenSpec.pdf}\\[4pt]
+    $\bullet$ \textbf{Dual-Engine Playbook:}\\[1pt]
+    \quad \code{playbooks/DUAL\_ENGINE\_CONDUCTOR\_OPENSPEC\_PLAYBOOK.md}\\[4pt]
+    $\bullet$ \textbf{Dedicated Spec Skill Template:}\\[1pt]
+    \quad \code{.agents/skills/writing-arch-specs/SKILL.md}\\[4pt]
+    $\bullet$ \textbf{Official Google Codelabs:}\\[1pt]
+    \quad -- \code{codelabs.developers.google.com/next26/advanced-planning}\\[1pt]
+    \quad -- \code{codelabs.developers.google.com/conductor-plugin}
+  }
+
+  \bcard{0}{-4.45}{14.7}{1.85}{gbgyellow}{gyellow}{
+    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gdark}{Summary: Measure Twice, Specify Once, Code Deterministically}}\\[4pt]
+    Whether you are building greenfield services (Lab 01 \& 03), recovering specs and refactoring brownfield legacy systems (Lab 02 \& 04), reviewing PRs (Lab 05), or running clean-room rebuilds (Lab 06), \textbf{the specification is your source of truth.}
+  }
+}
+
+\end{document}

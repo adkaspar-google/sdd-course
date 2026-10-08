@@ -32,9 +32,10 @@ Instead of reading abstract slides, you will work through **6 self-contained, ex
 | **`05`** | **SDD Code Review, Spec Sync & Stacked PRs** (Auditing Un-Specced Patches & `tasks.md` Batches) | Thread-Safe LRU+TTL Cache (`kvcache.py`) | [`labs/lab_05_sdd_code_review_and_stacked_prs/WALKTHROUGH.md`](./labs/lab_05_sdd_code_review_and_stacked_prs/WALKTHROUGH.md) | `./labs/lab_05_sdd_code_review_and_stacked_prs/self_diagnose.sh` |
 | **`06`** | **Capstone: Spec-as-SSOT (`SPEC.md`) & Clean-Room Rebuild Test** (Adversarial Agent Isolation) | CoursePulse Enrollment & Waitlist Service (`coursepulse.py`) | [`labs/lab_06_capstone_ssot_and_rebuild_test/WALKTHROUGH.md`](./labs/lab_06_capstone_ssot_and_rebuild_test/WALKTHROUGH.md) | `./labs/lab_06_capstone_ssot_and_rebuild_test/self_diagnose.sh` |
 
-### Engineering Playbooks & Printable Coursebook
+### Engineering Playbooks, Slide Deck & Printable Coursebook
 - **[Dual-Engine Engineering Playbook (`playbooks/DUAL_ENGINE_CONDUCTOR_OPENSPEC_PLAYBOOK.md`)](./playbooks/DUAL_ENGINE_CONDUCTOR_OPENSPEC_PLAYBOOK.md)**: Complete hands-on reference for wiring Conductor + OpenSpec + Dedicated Spec Skills (`@writing-arch-specs`), the 5-Step Refactoring Workflow, Stacked Multi-PRs (`git`/`jj`), the 5 Security Guardrails (HITL & Prompt Injection Defense), and the Elephant-Goldfish Model.
 - **[Printable 16-Page Practical Field Guide PDF (`Coursebook_SDD_Conductor_OpenSpec.pdf`)](./Coursebook_SDD_Conductor_OpenSpec.pdf)**: Concise 16-page visual reference manual with TikZ architecture blueprints, command tables, and copy-pasteable templates.
+- **[12-Slide Widescreen `16:9` Presentation Deck (`slides/SDD_Crash_Course_Slides.pdf`)](./slides/SDD_Crash_Course_Slides.pdf)**: Ready-to-teach widescreen lecture slides (`slides/SDD_Crash_Course_Slides.tex`), tripartite presenter notes (`slides/SPEAKER_NOTES.md` with `PURPOSE`, `VERBAL SCRIPT`, and `TRANSITION`), and automated `1080p` narrated lecture video builder (`slides/build_video.py`).
 
 ---
 

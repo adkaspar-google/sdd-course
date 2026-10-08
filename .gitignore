@@ -4,3 +4,10 @@ __pycache__/
 .pytest_cache/
 .coverage
 .DS_Store
+slides/*.aux
+slides/*.log
+slides/*.out
+slides/audio/
+slides/segments/
+slides/png/
+slides/*.mp4
