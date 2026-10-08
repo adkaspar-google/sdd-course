@@ -125,3 +125,22 @@ To maximize the speed and safety of the **Generation $\to$ Verification Loop**, 
 4. **Layer 4 — Immutable Adversarial Verifier (`chmod -w` Clean-Room Rebuild Test in Lab 06):**
    Directly implements Karpathy's **`autoresearch` immutable evaluator (`prepare.py`)** rule: in **Lab 06**, `self_diagnose.sh` copies the regenerated service into `/tmp/sdd_rebuild_...` alongside an independent adversarial test suite locked read-only with **`chmod -w`**, guaranteeing the agent can never pass by deleting or weakening failing test assertions.
 
+### C. Joel Spolsky's Law of Leaky Abstractions: Why Code Generation Saves Time *Working*, Not Time *Learning*
+
+In his classic 2002 essay [***"The Law of Leaky Abstractions"*** (*Joel on Software*, Nov 11, 2002)](https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/), Joel Spolsky stated a universal engineering law:
+
+> **"All non-trivial abstractions, to some degree, are leaky."**
+>
+> *"The law of leaky abstractions means that whenever somebody comes up with a wizzy new code-generation tool that is supposed to make us all ever-so-efficient, you hear a lot of people saying 'learn how to do it manually first, then use the wizzy tool to save time.' Code generation tools which pretend to abstract out something, like all abstractions, leak, and the only way to deal with the leaks competently is to learn about how the abstractions work and what they are abstracting. **So the abstractions save us time working, but they don't save us time learning.**"*
+
+**Natural-language prompting ("Vibe Coding") is the ultimate leaky abstraction.** When you prompt an agent *"build a rate limiter"* or *"add a distributed lock"*, the prompt abstracts away concurrency, clock monotonicity, failure recovery, and state-machine boundaries. Every single hands-on lab in `SDD-Crash-Course` is designed around a real-world abstraction leak that breaks naive AI-generated code unless pinned down by an explicit **Specification (`REQ-XXXX`)**, **Architecture Decision Record (`ADR-*.md`)**, and **Traceable Unit Test (`test_reqXXXX_*`)**:
+
+| Lab | The High-Level Prompt Abstraction | How the Abstraction Leaks in Production | How SDD + TDD Plugs the Leak |
+| :--- | :--- | :--- | :--- |
+| **`Lab 01`** | *"Limit each tenant to $N$ requests per window."* | Fixed-window counters allow a $2\times$ burst at window boundaries; concurrent threads race on shared counters; wall-clock jumps corrupt windows. | `ADR-0002` (sliding-window timestamp log), `REQ-0004` (injectable monotonic clock), and `REQ-0005` (`threading.RLock` concurrency test). |
+| **`Lab 02`** | *"Acquire a distributed lock with a TTL."* | A paused client (GC pause or network delay $>$ TTL) wakes up after its lock expired and overwrites the new lock holder's storage (**split-brain**). | `REQ-0002` & `ADR-0001`: strictly monotonic 64-bit `fencing_token` that never resets across releases or expirations. |
+| **`Lab 03`** | *"Call a remote RPC service just like a local function."* (Spolsky's classic TCP/NFS leak) | When the downstream dependency hangs or fails, naive callers retry in a tight loop and exhaust thread pools across the fleet. | `REQ-0001..0007`: explicit `CLOSED` $\to$ `OPEN` $\to$ `HALF_OPEN` state machine with `half_open_max_calls = 1` single-probe gating. |
+| **`Lab 04`** | *"Continuously replenish quota at $r$ tokens/sec."* | Integer truncation (`int(elapsed * rate) == 0`) on sub-quantum polling (`0.4s < 1.0s`) overwrites `last_replenished = now` and starves the bucket forever. | `REQ-0005` & 5-Step Scorecard Track (`F-01`): advance `last_replenished` only by `added / rate` when `added > 0`. |
+| **`Lab 05`** | *"Cache key-value pairs up to `max_size`."* | Calling `move_to_end()` inside `get()` silently mutates deterministic FIFO eviction (`REQ-0002`) into LRU; expired TTL keys evict live entries. | `/conductor:review` + `/opsx:verify` spec-diff audit; `REQ-0006` eager+lazy TTL purge before capacity eviction. |
+| **`Lab 06`** | *"Natural language is the new source code."* | Ambiguous prose omits duplicate-enrollment idempotency (`REQ-0003`) or FIFO waitlist promotion (`REQ-0004`), and agents weaken tests to pass. | Canonical 8-Section `SPEC.md` (SSOT) + Clean-Room Rebuild Test against read-only (`chmod -w`) `adversarial_tests/`. |
+
