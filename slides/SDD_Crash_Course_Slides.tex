@@ -21,51 +21,51 @@
 \renewcommand{\familydefault}{\sfdefault}
 \usepackage{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,fit,backgrounds}
-\usepackage{tabularx}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, fit, backgrounds}
+\usepackage{enumitem}
 \usepackage{booktabs}
-\usepackage{array}
-
+\usepackage{tabularx}
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 
-% Official Google Cloudstyle 2.0 & Material 3 Palette
+% Google Cloudstyle 2.0 & Material 3 Palette
 \definecolor{gblue}{HTML}{1A73E8}
 \definecolor{gred}{HTML}{EA4335}
 \definecolor{gyellow}{HTML}{FBBC04}
 \definecolor{ggreen}{HTML}{34A853}
 \definecolor{gdark}{HTML}{202124}
 \definecolor{gmuted}{HTML}{5F6368}
-\definecolor{gborder}{HTML}{DADCE0}
+\definecolor{gbggray}{HTML}{F8F9FA}
 \definecolor{gbgblue}{HTML}{E8F0FE}
 \definecolor{gbggreen}{HTML}{E6F4EA}
-\definecolor{gbgred}{HTML}{FCE8E6}
 \definecolor{gbgyellow}{HTML}{FEF7E0}
-\definecolor{gbggray}{HTML}{F8F9FA}
-\definecolor{gnavy}{HTML}{0B192C}
+\definecolor{gbgred}{HTML}{FCE8E6}
+\definecolor{gborder}{HTML}{DADCE0}
+\definecolor{gnavy}{HTML}{174EA6}
 
-\newcommand{\code}[1]{\texttt{\textbf{\textcolor{gnavy}{#1}}}}
+\newcommand{\code}[1]{{\ttfamily\small\textcolor{gnavy}{#1}}}
 
-% Master 16:9 Slide Frame Macro: #1 = Slide Number (01/12), #2 = Pill Tag, #3 = Assertive Title, #4 = Subtitle, #5 = Body TikZ/Nodes
+% Master Widescreen Slide Shell (#1=Slide Num, #2=Module Pill, #3=Title, #4=Subtitle, #5=Body)
 \newcommand{\slideshell}[5]{%
-\newpage\mbox{}%
-\begin{tikzpicture}[x=1in,y=1in,remember picture,overlay]
-  % Background canvas
+\newpage
+\noindent\begin{tikzpicture}[remember picture, overlay, x=1in, y=1in]
+  % Background
   \fill[white] (current page.south west) rectangle (current page.north east);
-  % 4-Color Google Cloud Top Bar
-  \fill[gblue]   ($(current page.north west)+(0,0)$) rectangle ($(current page.north west)+(4, -0.10)$);
-  \fill[gred]    ($(current page.north west)+(4,0)$) rectangle ($(current page.north west)+(8, -0.10)$);
-  \fill[gyellow] ($(current page.north west)+(8,0)$) rectangle ($(current page.north west)+(12,-0.10)$);
-  \fill[ggreen]  ($(current page.north west)+(12,0)$) rectangle ($(current page.north west)+(16,-0.10)$);
 
-  % Category Pill & Slide Counter
-  \node[anchor=north west, fill=gbgblue, draw=gblue, line width=0.8pt, rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, font=\fontsize{11}{13}\selectfont\bfseries, text=gblue] at ($(current page.north west)+(0.65,-0.32)$) {#2};
-  \node[anchor=north east, fill=gbggray, draw=gborder, line width=0.8pt, rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, font=\fontsize{11}{13}\selectfont\bfseries, text=gmuted] at ($(current page.north east)+(-0.65,-0.32)$) {SDD-CRASH-COURSE \quad | \quad SLIDE #1};
+  % Top 4-Color Google Brand Bar
+  \fill[gblue]   (current page.north west) rectangle ($(current page.north west)+(4, -0.10)$);
+  \fill[gred]    ($(current page.north west)+(4, 0)$) rectangle ($(current page.north west)+(8, -0.10)$);
+  \fill[gyellow] ($(current page.north west)+(8, 0)$) rectangle ($(current page.north west)+(12, -0.10)$);
+  \fill[ggreen]  ($(current page.north west)+(12, 0)$) rectangle ($(current page.north west)+(16, -0.10)$);
 
-  % Assertive Headline & Subtitle
-  \node[anchor=north west, text width=14.7in, font=\fontsize{25}{29}\selectfont\bfseries, text=gdark] at ($(current page.north west)+(0.65,-0.78)$) {#3};
-  \node[anchor=north west, text width=14.7in, font=\fontsize{14}{18}\selectfont, text=gmuted] at ($(current page.north west)+(0.65,-1.28)$) {#4};
-  \draw[gborder, line width=1pt] ($(current page.north west)+(0.65,-1.65)$) -- ($(current page.north east)+(-0.65,-1.65)$);
+  % Module Pill & Slide Counter
+  \node[anchor=north west, fill=gbgblue, draw=gblue, line width=0.8pt, rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, font=\fontsize{10}{12}\selectfont\bfseries, text=gblue] at ($(current page.north west)+(0.65,-0.32)$) {#2};
+  \node[anchor=north east, fill=gbggray, draw=gborder, line width=0.8pt, rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, font=\fontsize{10}{12}\selectfont\bfseries, text=gmuted] at ($(current page.north east)+(-0.65,-0.32)$) {SDD-CRASH-COURSE \quad|\quad SLIDE #1};
+
+  % Title & Subtitle
+  \node[anchor=north west, font=\fontsize{25}{30}\selectfont\bfseries, text=gdark, text width=14.7in] at ($(current page.north west)+(0.65,-0.76)$) {#3};
+  \node[anchor=north west, font=\fontsize{13.5}{17}\selectfont, text=gmuted, text width=14.7in] at ($(current page.north west)+(0.65,-1.26)$) {#4};
+  \draw[gborder, line width=0.8pt] ($(current page.north west)+(0.65,-1.62)$) -- ($(current page.north east)+(-0.65,-1.62)$);
 
   % Slide Content Area Origin: (0.65, -1.85) to (15.35, -8.40) -> width 14.7in, height 6.55in
   \begin{scope}[shift={($(current page.north west)+(0.65,-1.85)$)}]
@@ -81,31 +81,33 @@
 
 \newcommand{\bcard}[7]{% x, y, w, h, fill, border, title+body
   \node[anchor=north west, fill=#5, draw=#6, line width=1.1pt, rounded corners=6pt, minimum width=#3in, minimum height=#4in, inner sep=0pt] at (#1,#2) {};
-  \node[anchor=north west, text width=#3in-0.44in, align=left, font=\fontsize{13}{17}\selectfont, text=gdark] at ($(#1,#2)+(0.22,-0.20)$) {#7};
+  \node[anchor=north west, text width=#3in-0.44in, align=left, font=\fontsize{12.5}{16.5}\selectfont, text=gdark] at ($(#1,#2)+(0.22,-0.18)$) {#7};
 }
 
 \begin{document}
 
 % ============================================================================
-% SLIDE 01: COVER & COURSE ARCHITECTURE
+% MODULE 01: FOUNDATIONS, SOFTWARE 3.0 VERIFICATION & DUAL-ENGINE ARCHITECTURE (SLIDES 01-06)
 % ============================================================================
-\slideshell{01 / 12}{OPEN-SOURCE HANDS-ON PLAYGROUND}{SDD-Crash-Course: Spec-Driven Development in Practice}{Mastering Context-Driven Development (Conductor), Delta Contracts (OpenSpec), and Spec-as-SSOT (SPEC.md)}{
+
+% SLIDE 01
+\slideshell{01 / 36}{MODULE 01: FOUNDATIONS \& ARCHITECTURE}{SDD-Crash-Course: Complete End-to-End Engineering Course}{Mastering Context-Driven Development (Conductor), Delta Contracts (OpenSpec), and Spec-as-SSOT (SPEC.md)}{
   \bcard{0}{0}{4.7}{4.1}{gbgblue}{gblue}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{1. Conductor (Context \& TDD Engine)}}\\[8pt]
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gblue}{1. Conductor (Context \& TDD Engine)}}\\[7pt]
     \textbf{Unit of Work:} Track (\code{conductor/tracks/<id>/})\\[4pt]
     $\bullet$ Persistent repo constitution (\code{product.md}, \code{tech-stack.md}, \code{workflow.md}).\\[4pt]
     $\bullet$ Interactive 7-Section Track \code{spec.md} \& phased \code{plan.md}.\\[4pt]
     $\bullet$ Strict \textbf{Red $\to$ Green $\to$ Refactor} TDD execution (\code{/conductor:implement}) with \code{git notes} \& SHA checkpoints.
   }
   \bcard{5.0}{0}{4.7}{4.1}{gbggreen}{ggreen}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{2. OpenSpec (Delta Contract Engine)}}\\[8pt]
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{ggreen}{2. OpenSpec (Delta Contract Engine)}}\\[7pt]
     \textbf{Unit of Work:} Capability Delta (\code{openspec/changes/<id>/})\\[4pt]
     $\bullet$ Two-Plane isolation: \code{openspec/specs/} (Current Truth) vs.\ \code{openspec/changes/} (Proposed Delta).\\[4pt]
     $\bullet$ Normative RFC 2119 (\code{SHALL}, \code{MUST}) + 4-hashtag \code{\#\#\#\# Scenario:} (\code{GIVEN/WHEN/THEN}).\\[4pt]
     $\bullet$ Deterministic merge via \code{/opsx:verify} \& \code{/opsx:archive}.
   }
   \bcard{10.0}{0}{4.7}{4.1}{gbgyellow}{gyellow}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gdark}{3. SPEC.md (Single Source of Truth)}}\\[8pt]
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gdark}{3. SPEC.md (Single Source of Truth)}}\\[7pt]
     \textbf{Unit of Work:} Whole-System Blueprint (\code{SPEC.md})\\[4pt]
     $\bullet$ Canonical 8-Section architecture, schema, API, and deployment specification.\\[4pt]
     $\bullet$ Separates \textbf{Essential Domain Intent} from incidental implementation details.\\[4pt]
@@ -113,335 +115,1145 @@
   }
 
   \bcard{0}{-4.35}{14.7}{1.95}{gbggray}{gborder}{
-    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gnavy}{What You Will Build \& Verify in This Crash Course (100\% Executable Python Playground)}}\\[6pt]
-    $\bullet$ \textbf{6 Self-Diagnosing Hands-On Labs} (\code{labs/lab\_01} to \code{lab\_06}): Rate Limiter, Brownfield Lease Manager with Fencing Tokens, Circuit Breaker State Machine, Token Bucket Drift \& Scorecard Refactoring, KVCache SDD Code Review \& Stacked PRs, and CoursePulse Clean-Room Rebuild.\\[3pt]
-    $\bullet$ \textbf{One-Command Verification Harness}: Run \code{./self\_diagnose\_all.sh} to execute all \textbf{6 lab graders} and \textbf{37 traceable unit tests} (\code{test\_req0001\_...}) in $<1$ second.
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{7-Module Step-by-Step Curriculum: Theory + 6 Executable Python Engineering Labs}}\\[5pt]
+    $\bullet$ \textbf{Module 01:} Foundations, Software 3.0 Verification Loop, Conductor \& OpenSpec Architecture \quad $\bullet$ \textbf{Module 02 (Lab 01):} Greenfield Rate Limiter Specs \& ADRs\\[2pt]
+    $\bullet$ \textbf{Module 03 (Lab 02):} Brownfield Lease Lock \& Fencing Tokens \quad $\bullet$ \textbf{Module 04 (Lab 03):} Circuit Breaker TDD State Machine\\[2pt]
+    $\bullet$ \textbf{Module 05 (Lab 04):} Token Bucket Drift \& 5-Step Scorecard Refactoring \quad $\bullet$ \textbf{Module 06 (Lab 05):} KVCache SDD Code Review \& Stacked PRs \quad $\bullet$ \textbf{Module 07 (Lab 06):} CoursePulse \code{SPEC.md} Clean-Room Rebuild
   }
 }
 
-% ============================================================================
-% SLIDE 02: THE PROBLEM — VIBE CODING VS SDD & SOFTWARE 3.0 VERIFICATION LOOP
-% ============================================================================
-\slideshell{02 / 12}{MOTIVATION \& SOFTWARE 3.0 VERIFICATION}{From ``Vibe Coding'' to Agentic Engineering: Validation \& Human Interaction}{Why generation is free, human verification is the bottleneck, and agents need a short leash + immutable verifiers}{
+% SLIDE 02
+\slideshell{02 / 36}{MODULE 01: SOFTWARE 3.0 VERIFICATION}{From ``Vibe Coding'' to Agentic Engineering: Validation \& Human Interaction}{Why generation is free, human verification is the bottleneck, and agents need a short leash + immutable verifiers}{
   \bcard{0}{0}{7.1}{3.9}{gbgred}{gred}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gred}{Anti-Pattern: The Vibe Coding Amnesia Loop}}\\[8pt]
-    \textbf{1. Silent Assumptions:} ``Overeager junior'' agent guesses ambiguous edge cases without asking the human.\\[5pt]
-    \textbf{2. 1,000-Line Bloat \& Collateral Edits:} Agent over-engineers abstractions and mutates adjacent working code (e.g.\ FIFO $\to$ LRU).\\[5pt]
-    \textbf{3. Sycophantic Self-Testing:} When the same unconstrained prompt writes code and tests, it weakens assertions so broken code passes.\\[5pt]
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gred}{Anti-Pattern: The Vibe Coding Amnesia Loop}}\\[7pt]
+    \textbf{1. Silent Assumptions:} ``Overeager junior'' agent guesses ambiguous edge cases without asking the human.\\[4pt]
+    \textbf{2. 1,000-Line Bloat \& Collateral Edits:} Agent over-engineers abstractions and mutates adjacent working code (e.g.\ FIFO $\to$ LRU).\\[4pt]
+    \textbf{3. Sycophantic Self-Testing:} When the same unconstrained prompt writes code and tests, it weakens assertions so broken code passes.\\[4pt]
     \textbf{4. Unreviewable PR Slop:} 2,000-line diffs overwhelm human reviewers.
   }
   \bcard{7.6}{0}{7.1}{3.9}{gbggreen}{ggreen}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Solution: 4 Human Gates \& 4 Validation Layers}}\\[8pt]
-    \textbf{1. Think Before Coding:} Sandboxed \code{/conductor:newTrack} Q\&A surfaces trade-offs before any code is written.\\[5pt]
-    \textbf{2. Spec-First Steering (\code{program.md} Pattern):} Human approves 50-line RFC 2119 + Gherkin \code{spec.md} before \code{/conductor:implement}.\\[5pt]
-    \textbf{3. Surgical Scope \& Short Leash:} Lock \code{Out of Scope} + \code{tech-stack.md}; verify at small Phase Checkpoints \& Stacked PR batches.\\[5pt]
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{ggreen}{Solution: 4 Human Gates \& 4 Validation Layers}}\\[7pt]
+    \textbf{1. Think Before Coding:} Sandboxed \code{/conductor:newTrack} Q\&A surfaces trade-offs before any code is written.\\[4pt]
+    \textbf{2. Spec-First Steering (\code{program.md} Pattern):} Human approves 50-line RFC 2119 + Gherkin \code{spec.md} before \code{/conductor:implement}.\\[4pt]
+    \textbf{3. Surgical Scope \& Short Leash:} Lock \code{Out of Scope} + \code{tech-stack.md}; verify at small Phase Checkpoints \& Stacked PR batches.\\[4pt]
     \textbf{4. Immutable Verifiers (\code{chmod -w}):} 1:1 \code{test\_reqXXXX\_*} TDD + read-only adversarial tests (Karpathy \code{autoresearch} pattern).
   }
 
   \bcard{0}{-4.15}{14.7}{2.15}{gbggray}{gblue}{
-    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gblue}{Karpathy's Software 3.0 Law: Speed Up the Generation--Verification Loop (``Iron Man Suit, Not Unsupervised Robot'')}}\\[6pt]
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gblue}{Karpathy's Software 3.0 Law: Speed Up the Generation--Verification Loop (``Iron Man Suit, Not Unsupervised Robot'')}}\\[5pt]
     $\bullet$ \textbf{4 Behavioral Agent Rules (in \code{conductor/workflow.md}):} \textbf{(1) Think Before Coding} (ask, don't guess) $\cdot$ \textbf{(2) Simplicity First} (minimal TDD code) $\cdot$ \textbf{(3) Surgical Changes} (honor \code{Out of Scope}) $\cdot$ \textbf{(4) Goal-Driven Execution} (loop against objective verifiers: \code{openspec validate {-\/-}strict}, \code{test\_reqXXXX\_*}, and \code{chmod -w} Clean-Room Rebuild Tests).
   }
 }
 
-% ============================================================================
-% SLIDE 03: THE 3 LEVELS OF SDD MATURITY
-% ============================================================================
-\slideshell{03 / 12}{TAXONOMY \& MATURITY MODEL}{The 3 Levels of Spec-Driven Development Maturity}{Moving from disposable pre-coding specs to living delta synchronization and deterministic clean-room rebuilds}{
-  \bcard{0}{0}{4.7}{4.3}{gbggray}{gborder}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gmuted}{Level 1: Spec-First}}\\[6pt]
-    \textbf{``Write a spec before coding, then discard it.''}\\[8pt]
-    $\bullet$ Engineers draft a design doc or prompt spec to generate v1 of a feature.\\[5pt]
-    $\bullet$ Subsequent bugfixes and hotfixes edit source code directly.\\[5pt]
-    $\bullet$ \textbf{Failure Mode:} Within 2 sprints, the spec is stale documentation that misleads future agents.
+% SLIDE 03
+\slideshell{03 / 36}{MODULE 01: MATURITY TAXONOMY}{The 3 Levels of Spec-Driven Development Maturity}{Choosing the right level of specification rigor for greenfield, brownfield, and full-system rebuilds}{
+  \bcard{0}{0}{4.7}{4.0}{gbggray}{gborder}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gdark}{Level 1: Spec-First}}\\[6pt]
+    \textbf{``Write Spec, Generate Code, Discard Spec''}\\[5pt]
+    $\bullet$ Developer writes a prompt/spec to generate initial feature code.\\[4pt]
+    $\bullet$ Subsequent bugfixes edit source code directly without updating the spec.\\[4pt]
+    $\bullet$ \textbf{Failure Mode:} Spec becomes stale documentation within 2 sprints; never use for long-lived services.
   }
-  \bcard{5.0}{0}{4.7}{4.3}{gbgblue}{gblue}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Level 2: Spec-Anchored}}\\[6pt]
-    \textbf{``Living specs synchronized on every PR.''}\\[8pt]
-    $\bullet$ Powered by \textbf{OpenSpec} (\code{openspec/specs/}) and \textbf{Conductor} (\code{conductor/tracks/}).\\[5pt]
-    $\bullet$ Every change proposes explicit \code{ADDED / MODIFIED / REMOVED / RENAMED} requirement deltas.\\[5pt]
-    $\bullet$ \textbf{Guarantee:} CI and \code{/opsx:verify} block PRs whenever code and specs diverge.
+  \bcard{5.0}{0}{4.7}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gblue}{Level 2: Spec-Anchored}}\\[6pt]
+    \textbf{``Living Specs \& Bidirectional Delta Sync''}\\[5pt]
+    $\bullet$ Powered by \textbf{OpenSpec} (\code{openspec/specs/}) and \textbf{Conductor} (\code{conductor/}).\\[4pt]
+    $\bullet$ Every PR proposes explicit \code{ADDED}, \code{MODIFIED}, \code{REMOVED}, or \code{RENAMED} requirement deltas.\\[4pt]
+    $\bullet$ \textbf{Sweet Spot:} Default choice for 90\% of daily team feature \& brownfield engineering.
   }
-  \bcard{10.0}{0}{4.7}{4.3}{gbggreen}{ggreen}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Level 3: Spec-as-Source (SSOT)}}\\[6pt]
-    \textbf{``The spec can regenerate the system from scratch.''}\\[8pt]
-    $\bullet$ Powered by the canonical \textbf{8-Section \code{SPEC.md}} blueprint.\\[5pt]
-    $\bullet$ Zero raw customer secrets or hardcoded environment IDs.\\[5pt]
-    $\bullet$ \textbf{Guarantee:} Passes the \textbf{Clean-Room Rebuild Test} in an empty \code{/tmp/} directory against locked adversarial tests.
-  }
-
-  \bcard{0}{-4.55}{14.7}{1.75}{gbgyellow}{gyellow}{
-    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gdark}{Universal Decision Rule: Which Level \& Tool Do I Pick Today?}}\\[4pt]
-    $\bullet$ \textbf{Single-repo feature, bugfix, or TDD refactor?} Use \textbf{Conductor} (\code{/conductor:newTrack} $\to$ \code{/conductor:implement}). \quad
-    $\bullet$ \textbf{Cross-cutting capability contract or brownfield delta?} Layer \textbf{OpenSpec} (\code{/opsx:propose} $\to$ \code{/opsx:archive}). \quad
-    $\bullet$ \textbf{Re-architecting or extracting a portable microservice blueprint?} Author an \textbf{8-Section \code{SPEC.md}} and run the Rebuild Test.
-  }
-}
-
-% ============================================================================
-% SLIDE 04: ENGINE 1 — CONDUCTOR
-% ============================================================================
-\slideshell{04 / 12}{ENGINE 1: CONDUCTOR}{Conductor: Context-Driven Development \& TDD Track Execution}{``Measure Twice, Code Once'' — Persistent repository context, interactive specifications, and Git-backed checkpoints}{
-  \bcard{0}{0}{4.7}{3.9}{gbgblue}{gblue}{
-    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gblue}{Step 1: \code{/conductor:setup}}}\\[6pt]
-    \textbf{One-Time Repo Constitution:}\\[4pt]
-    $\bullet$ \code{conductor/product.md} (vision \& personas)\\[3pt]
-    $\bullet$ \code{conductor/product-guidelines.md}\\[3pt]
-    $\bullet$ \code{conductor/tech-stack.md} (approved stack)\\[3pt]
-    $\bullet$ \code{conductor/workflow.md} (TDD \& coverage $>80\%$)\\[3pt]
-    $\bullet$ \code{conductor/tracks.md} (master track registry)
-  }
-  \bcard{5.0}{0}{4.7}{3.9}{gbgblue}{gblue}{
-    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gblue}{Step 2: \code{/conductor:newTrack}}}\\[6pt]
-    \textbf{Interactive Spec \& Phased Plan:}\\[4pt]
-    $\bullet$ Asks 3--5 targeted clarifying questions (Additive vs.\ Exclusive).\\[3pt]
-    $\bullet$ Writes \code{conductor/tracks/<id>/spec.md}.\\[3pt]
-    $\bullet$ Writes hierarchical \code{plan.md} with \code{[ ]} tasks and Phase Manual Verification gates.\\[3pt]
-    $\bullet$ Sandboxed in Plan Mode (\code{\textasciicircum{}conductor/}).
-  }
-  \bcard{10.0}{0}{4.7}{3.9}{gbgblue}{gblue}{
-    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gblue}{Step 3: \code{/conductor:implement}}}\\[6pt]
-    \textbf{Autonomous Red-Green-Refactor TDD:}\\[4pt]
-    $\bullet$ Marks task \code{[\textasciitilde]} $\to$ writes failing test (\textbf{Red}).\\[3pt]
-    $\bullet$ Writes minimal code (\textbf{Green}) \& refactors.\\[3pt]
-    $\bullet$ Commits code, attaches \code{git notes}, records \code{[x] <7-char-sha>}, and runs Phase Checkpoint (\code{[checkpoint: <sha>]}).
-  }
-
-  \bcard{0}{-4.15}{14.7}{2.15}{gbggray}{gborder}{
-    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gnavy}{Day-2 Operations in Conductor: Auditing, Principal Review \& Logical Git Revert}}\\[6pt]
-    $\bullet$ \textbf{\code{/conductor:status}}: Audits \code{tracks.md} and active \code{plan.md} files to report completed \code{[x]}, in-progress \code{[\textasciitilde]}, and blocked tasks.\\[3pt]
-    $\bullet$ \textbf{\code{/conductor:review}}: Audits diffs against \code{spec.md}, \code{tech-stack.md}, and styleguides; appends \code{\#\# Phase: Review Fixes} to \code{plan.md}.\\[3pt]
-    $\bullet$ \textbf{\code{/conductor:revert}}: Reconciles implementation SHAs, \code{conductor(plan)} SHAs, and \code{conductor(checkpoint)} SHAs to cleanly roll back an entire Task, Phase, or Track.
-  }
-}
-
-% ============================================================================
-% SLIDE 05: ENGINE 2 — OPENSPEC
-% ============================================================================
-\slideshell{05 / 12}{ENGINE 2: OPENSPEC}{OpenSpec: Two-Plane Architecture \& Deterministic Delta Algebra}{Isolating current system truth (\code{openspec/specs/}) from active work-in-progress proposals (\code{openspec/changes/})}{
-  \bcard{0}{0}{7.1}{4.0}{gbggreen}{ggreen}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Plane 1: \code{openspec/specs/<capability>/spec.md}}}\\[6pt]
-    \textbf{The Living System of Record (Current Truth):}\\[4pt]
-    $\bullet$ Organized by architectural capability (\code{rate-limiter}, \code{lease-manager}, \code{enrollment}), never by sprint ticket.\\[4pt]
-    $\bullet$ Every requirement has a stable ID (\code{REQ-0001}) and RFC 2119 normative verb (\code{SHALL}, \code{MUST}, \code{MUST NOT}).\\[4pt]
-    $\bullet$ Every requirement is paired with 4-hashtag \code{\#\#\#\# Scenario:} blocks using \code{GIVEN / WHEN / THEN}.
-  }
-  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Plane 2: \code{openspec/changes/<change-id>/}}}\\[6pt]
-    \textbf{Isolated Delta Bundle (\code{proposal.md}, \code{design.md}, \code{tasks.md}, \code{specs/}):}\\[4pt]
-    $\bullet$ Expresses exact mutations via 4 delta headers: \code{ADDED}, \code{MODIFIED}, \code{REMOVED} (requires \textbf{Reason} \& \textbf{Migration}), and \code{RENAMED}.\\[4pt]
-    $\bullet$ \textbf{Deterministic 4-Step Archive Merge (\code{/opsx:archive}):}\\[2pt]
-    \code{1. Pre-Validate $\to$ 2. RENAMED $\to$ 3. REMOVED $\to$ 4. MODIFIED $\to$ 5. ADDED}.
+  \bcard{10.0}{0}{4.7}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{ggreen}{Level 3: Spec-as-Source (SSOT)}}\\[6pt]
+    \textbf{``Deterministic Clean-Room Regeneration''}\\[5pt]
+    $\bullet$ Powered by canonical 8-Section \textbf{\code{SPEC.md}} + \textbf{Adversarial Test Suite}.\\[4pt]
+    $\bullet$ Captures all schemas, API contracts, state machines, and parameterized IaC.\\[4pt]
+    $\bullet$ \textbf{Verification:} Delete \code{src/}, rebuild in \code{/tmp/} from \code{SPEC.md}, pass \code{chmod -w} tests.
   }
 
   \bcard{0}{-4.25}{14.7}{2.05}{gbgyellow}{gyellow}{
-    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gdark}{The 99\% / 1\% OpenSpec Rule \& The ``Core 4'' Daily Loop}}\\[4pt]
-    $\bullet$ \textbf{1\% Terminal CLI:} Run \code{openspec init} once per repo (and \code{openspec validate --all --strict --json} in CI).\\[3pt]
-    $\bullet$ \textbf{99\% AI Slash Commands:} Drive all daily work through \textbf{\code{/opsx:explore}} (read-only investigation) $\to$ \textbf{\code{/opsx:propose}} (generate \code{proposal.md}, \code{specs/}, \code{design.md}, \code{tasks.md}) $\to$ \textbf{\code{/opsx:apply}} (implement tasks) $\to$ \textbf{\code{/opsx:verify}} \& \textbf{\code{/opsx:archive}} (audit \& merge deltas).
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gdark}{Practitioner Decision Rule: How They Interlock in One Repository}}\\[5pt]
+    $\bullet$ \textbf{Macro System Blueprint (\code{SPEC.md}):} Defines the 8-section architecture, data models, and clean-room rebuild contract.\\[3pt]
+    $\bullet$ \textbf{Capability Contracts (\code{openspec/specs/<cap>/spec.md}):} Tracks requirement deltas (\code{REQ-XXXX}) across pull requests.\\[3pt]
+    $\bullet$ \textbf{Execution Engine (\code{conductor/tracks/<id>/}):} Enforces stack locks, Red-Green-Refactor TDD, \code{git notes}, and logical \code{/conductor:revert}.
+  }
+}
+
+% SLIDE 04
+\slideshell{04 / 36}{MODULE 01: ENGINE 1 — CONDUCTOR}{Conductor: Context-Driven Development \& TDD Track Execution}{``Measure Twice, Code Once'' — Persistent repository context, Plan Mode sandboxing, and Git-aware execution}{
+  \bcard{0}{0}{4.7}{3.9}{gbgblue}{gblue}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gblue}{Step 1: \code{/conductor:setup}}}\\[6pt]
+    \textbf{One-Time Repo Constitution}\\[4pt]
+    $\bullet$ Scans greenfield or brownfield repo (respecting \code{.gitignore}).\\[4pt]
+    $\bullet$ Generates \code{conductor/index.md}, \code{product.md}, \code{product-guidelines.md}, \code{tech-stack.md}, \code{workflow.md}, and \code{tracks.md}.
+  }
+  \bcard{5.0}{0}{4.7}{3.9}{gbgblue}{gblue}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gblue}{Step 2: \code{/conductor:newTrack}}}\\[6pt]
+    \textbf{Sandboxed Spec \& Phased Plan}\\[4pt]
+    $\bullet$ Enforces \code{policies/conductor.toml} (blocks writes outside \code{conductor/}).\\[4pt]
+    $\bullet$ Conducts 3--5 interactive Q\&A turns.\\[4pt]
+    $\bullet$ Emits 7-section \code{spec.md}, hierarchical \code{plan.md}, and \code{metadata.json}.
+  }
+  \bcard{10.0}{0}{4.7}{3.9}{gbggreen}{ggreen}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{ggreen}{Step 3: \code{/conductor:implement}}}\\[6pt]
+    \textbf{Strict Red-Green-Refactor TDD}\\[4pt]
+    $\bullet$ Marks task \code{[\textasciitilde]}, writes failing \code{test\_reqXXXX\_*} first (\textbf{Red}).\\[4pt]
+    $\bullet$ Writes minimal code (\textbf{Green}), checks \code{>80\%} coverage (\code{CI=true}).\\[4pt]
+    $\bullet$ Commits code, attaches \code{git notes}, records \code{[x] <7-char-sha>}.
+  }
+
+  \bcard{0}{-4.15}{14.7}{2.15}{gbggray}{gborder}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Day-2 Engineering Commands: Auditing, Principal-Engineer Review \& Logical Git Revert}}\\[5pt]
+    $\bullet$ \code{/conductor:status} — Audits \code{tracks.md} and \code{plan.md} state markers (\code{[ ]}, \code{[\textasciitilde]}, \code{[x] sha}, \code{[checkpoint: sha]}) against Git history.\\[3pt]
+    $\bullet$ \code{/conductor:review} — Audits diff against \code{spec.md}, \code{tech-stack.md}, and \code{code\_styleguides/}; appends auto-fixes to \code{\#\# Phase: Review Fixes}.\\[3pt]
+    $\bullet$ \code{/conductor:revert} — 4-Phase Git-aware logical rollback of an entire Track, Phase, or Task (reconciling implementation + plan commits).
+  }
+}
+
+% SLIDE 05
+\slideshell{05 / 36}{MODULE 01: ENGINE 2 — OPENSPEC}{OpenSpec: Two-Plane Architecture \& Deterministic Delta Algebra}{Separating ``Current System Truth'' (\code{openspec/specs/}) from ``Proposed Changes'' (\code{openspec/changes/})}{
+  \bcard{0}{0}{7.1}{3.9}{gbgblue}{gblue}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gblue}{Plane 1: \code{openspec/specs/<capability>/spec.md}}}\\[6pt]
+    \textbf{The Living System of Record ("The Elephant")}\\[4pt]
+    $\bullet$ Organized by capability domain (e.g.\ \code{rate-limiter}, \code{lease-manager}, \code{kv-cache}), never by sprint ticket.\\[4pt]
+    $\bullet$ Every requirement uses \code{\#\#\# Requirement: [REQ-XXXX] <Title>} + uppercase \textbf{RFC 2119} (\code{SHALL}, \code{MUST}, \code{MUST NOT}).\\[4pt]
+    $\bullet$ Every testable behavior uses \textbf{4-hashtag} \code{\#\#\#\# Scenario:} with \code{GIVEN}, \code{WHEN}, \code{THEN}.
+  }
+  \bcard{7.6}{0}{7.1}{3.9}{gbggreen}{ggreen}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{ggreen}{Plane 2: \code{openspec/changes/<change-id>/}}}\\[6pt]
+    \textbf{Isolated Change Bundle ("The Goldfish")}\\[4pt]
+    $\bullet$ \code{proposal.md}: Why ($50$--$1000$ chars), What Changes, Capabilities, Impact.\\[4pt]
+    $\bullet$ \code{design.md}: Context, Goals/Non-Goals, Decisions, Risks + \code{ADR-XXXX.md}.\\[4pt]
+    $\bullet$ \code{specs/<cap>/spec.md}: Delta sections (\code{ADDED}, \code{MODIFIED}, \code{REMOVED}, \code{RENAMED}).\\[4pt]
+    $\bullet$ \code{tasks.md}: Checkboxes (\code{- [ ] 1.1 ...}) grouped into Stacked PR batches.
+  }
+
+  \bcard{0}{-4.15}{14.7}{2.15}{gbgyellow}{gyellow}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gdark}{The 99\% / 1\% CLI Rule \& Deterministic 5-Stage Archive Merge (\code{specs-apply.js})}}\\[5pt]
+    $\bullet$ \textbf{1\% Terminal CLI:} Run \code{openspec init} once and \code{openspec validate {-\/-}all {-\/-}strict} in CI. \textbf{99\% Slash Skills:} \code{/opsx:explore} $\to$ \code{/opsx:propose} $\to$ \code{/opsx:apply} $\to$ \code{/opsx:verify} $\to$ \code{/opsx:archive}.\\[3pt]
+    $\bullet$ \textbf{Archive Execution Order:} \textbf{(1)} Pre-Validate Cross-Section Conflicts $\to$ \textbf{(2)} \code{RENAMED} $\to$ \textbf{(3)} \code{REMOVED} $\to$ \textbf{(4)} \code{MODIFIED} (full replacement!) $\to$ \textbf{(5)} \code{ADDED}.
+  }
+}
+
+% SLIDE 06
+\slideshell{06 / 36}{MODULE 01: DUAL-ENGINE WIRING}{Wiring Conductor + OpenSpec + \code{@writing-arch-specs}}{How \code{conductor/workflow.md} invokes dedicated spec skills and aligns tracks with \code{openspec/specs/}}{
+  \bcard{0}{0}{7.1}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{1. \code{conductor/workflow.md} \& \code{index.md} Handshake}}\\[6pt]
+    {\ttfamily\scriptsize
+    \# conductor/index.md\\
+    - [Writing Arch Specs Skill](../.agents/skills/writing-arch-specs/SKILL.md)\\
+    - [OpenSpec Canonical Specs](../openspec/specs/)\\[5pt]
+    \# conductor/workflow.md\\
+    1. Skill Activation: Read .agents/skills/writing-arch-specs/SKILL.md\\
+    2. Contract Alignment: Map track spec.md 1:1 to REQ-XXXX in openspec/specs/\\
+    3. TDD Loop: Write failing test\_reqXXXX\_* first (Red -> Green -> Refactor)\\
+    4. Guardrails: Think Before Coding, Simplicity First, Surgical Changes, Immutable Verifiers
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{2. The 7-Section Track \code{spec.md} Anatomy}}\\[6pt]
+    \textbf{1. Overview:} Problem statement, business goal, target service.\\[3pt]
+    \textbf{2. Architecture:} Component topology, concurrency \& data flow.\\[3pt]
+    \textbf{3. Functional Requirements:} Traceable \code{REQ-XXXX} contracts.\\[3pt]
+    \textbf{4. Non-Functional Requirements:} Latency, memory, lock contention.\\[3pt]
+    \textbf{5. Acceptance Criteria:} Binary pass/fail scenarios.\\[3pt]
+    \textbf{6. Out of Scope:} Explicit deferred items (prevents scope creep!).\\[3pt]
+    \textbf{7. Verification Commands:} Exact non-interactive \code{CI=true} commands.
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggreen}{ggreen}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{ggreen}{Why Dual-Engine Beats Either Tool Alone}}\\[5pt]
+    $\bullet$ \textbf{OpenSpec alone} gives you clean capability contracts (\code{openspec/specs/}) and delta merges, but lacks Conductor's repo-wide \code{tech-stack.md} lock, \code{git notes} audit trail, and 4-phase logical \code{/conductor:revert}.\\[3pt]
+    $\bullet$ \textbf{Conductor alone} gives you disciplined TDD track execution, but without OpenSpec its track specs remain isolated per ticket instead of merging into a permanent capability tree. \textbf{Together, they form a closed loop.}
   }
 }
 
 % ============================================================================
-% SLIDE 06: DUAL-ENGINE WIRING (CONDUCTOR + OPENSPEC + SPEC SKILL)
+% MODULE 02: LAB 01 STEP-BY-STEP — GREENFIELD PROPOSALS TO SPECS & ADRS (SLIDES 07-11)
 % ============================================================================
-\slideshell{06 / 12}{DUAL-ENGINE ARCHITECTURE}{Wiring Conductor + OpenSpec + Dedicated Spec Skills Together}{How \code{conductor/workflow.md} delegates specification quality to \code{writing-arch-specs} and OpenSpec contracts}{
-  \bcard{0}{0}{7.1}{4.1}{gbgblue}{gblue}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Dual-Engine Repository Wiring}}\\[6pt]
-    \textbf{1. Dedicated Spec Skill:}\\[2pt]
-    \code{.agents/skills/writing-arch-specs/SKILL.md} defines the 7-Section Track Spec Anatomy, RFC 2119 rules, and ADR tables.\\[5pt]
-    \textbf{2. Workflow Hook (\code{conductor/workflow.md}):}\\[2pt]
-    Instructs Conductor to load \code{writing-arch-specs} and align every track with \code{openspec/specs/<capability>/spec.md} (\code{REQ-XXXX}).\\[5pt]
-    \textbf{3. Post-Track Sync:} At Phase Checkpoint, run \code{/opsx:verify} and \code{/opsx:archive} to keep capability specs 100\% current.
+
+% SLIDE 07
+\slideshell{07 / 36}{MODULE 02: LAB 01 — STEP 1 OF 5}{Lab 01 Step 1: Auditing the Ambiguous Proposal \& Interactive Q\&A}{Walking through \code{labs/lab\_01\_greenfield\_proposals\_to\_specs/proposal.md} (\textbf{Think Before Coding})}{
+  \bcard{0}{0}{7.1}{4.0}{gbgred}{gred}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gred}{Input: The Vague Product Memo (\code{proposal.md})}}\\[6pt]
+    {\ttfamily\footnotesize
+    "We need an in-memory API Rate Limiter in Python so noisy\\
+    tenants stop overloading our backend endpoints. Each client\\
+    key should have a configurable request limit per time window,\\
+    and callers should know whether a request is allowed or when\\
+    to retry. Please ship this fast!"
+    }\\[8pt]
+    \textbf{Why Vibe Coding Fails Here:} A raw coding agent immediately guesses fixed-window vs.\ sliding-window, ignores clock drift in unit tests, and forgets thread synchronization!
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gblue}{Step 1 Action: \code{/opsx:explore} \& \code{/conductor:newTrack} Q\&A}}\\[6pt]
+    In Plan Mode, the agent pauses and asks \textbf{5 Clarifying Questions}:\\[4pt]
+    \textbf{Q1 (Window Semantics):} Fixed counter or exact sliding-window timestamp log? $\to$ \emph{Exact sliding-window log (prevents boundary bursts).}\\[3pt]
+    \textbf{Q2 (Weighted Calls):} Single-token only or configurable \code{cost >= 1}? $\to$ \emph{Support \code{cost: int = 1}.}\\[3pt]
+    \textbf{Q3 (Rejection Metadata):} Return boolean or structured \code{RateLimitDecision}? $\to$ \emph{Return \code{allowed}, \code{remaining}, \code{retry\_after\_seconds}.}\\[3pt]
+    \textbf{Q4 (Test Determinism):} Injectable \code{clock: Callable[[], float]}? $\to$ \emph{Yes.}\\[3pt]
+    \textbf{Q5 (Concurrency):} Thread-safe \code{threading.RLock}? $\to$ \emph{Yes.}
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggray}{gborder}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Hands-On Terminal \& Prompt Recipe for Lab 01 Step 1}}\\[5pt]
+    $\bullet$ \textbf{Inspect Starting Proposal:} \code{cd labs/lab\_01\_greenfield\_proposals\_to\_specs \&\& cat proposal.md}\\[3pt]
+    $\bullet$ \textbf{Slash Command:} Run \code{/opsx:explore} to surface the 5 architectural ambiguities, then run \code{/opsx:propose "add-distributed-rate-limiter"} and \code{/conductor:newTrack "Implement Sliding-Window Rate Limiter MVP"}.
+  }
+}
+
+% SLIDE 08
+\slideshell{08 / 36}{MODULE 02: LAB 01 — STEP 2 OF 5}{Lab 01 Step 2: Authoring the OpenSpec Capability Contract}{Writing \code{expected\_output/openspec/specs/rate-limiter/spec.md} with \code{REQ-0001..REQ-0006}}{
+  \bcard{0}{0}{7.1}{4.1}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Exact OpenSpec Contract Excerpt (\code{REQ-0001} \& \code{REQ-0002})}}\\[5pt]
+    {\ttfamily\scriptsize
+    \#\#\# Requirement: [REQ-0001] Sliding-Window Request Allowance\\
+    The RateLimiter SHALL evaluate requests against a sliding window\\
+    of `[now - window\_seconds, now]` and MUST admit requests when\\
+    `active\_tokens + cost <= limit`.\\[4pt]
+    \#\#\#\# Scenario: Admit request within sliding window quota\\
+    - **GIVEN** a RateLimiter with `limit=3` and `window\_seconds=10.0`\\
+    - **WHEN** client `"tenant-a"` calls `allow("tenant-a", cost=2)` at `t=0.0`\\
+    - **THEN** `allowed` SHALL be `True`, `remaining` SHALL be `1`,\\
+    \ \ and `retry\_after\_seconds` SHALL be `0.0`.\\[4pt]
+    \#\#\# Requirement: [REQ-0002] Quota Exhaustion \& Retry-After\\
+    When `active\_tokens + cost > limit`, the RateLimiter MUST reject\\
+    the request without recording new timestamps and SHALL compute\\
+    exact `retry\_after\_seconds` until sufficient tokens expire.
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.1}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{Complete Requirement Matrix (\code{REQ-0001..REQ-0006})}}\\[6pt]
+    $\bullet$ \textbf{\code{REQ-0001} (Allowance):} Sliding window \code{[now - W, now]} admits when \code{used + cost <= limit}.\\[4pt]
+    $\bullet$ \textbf{\code{REQ-0002} (Rejection \& Retry-After):} Rejects when \code{used + cost > limit}; computes exact time until oldest timestamps expire.\\[4pt]
+    $\bullet$ \textbf{\code{REQ-0003} (Config \& Input Validation):} Raises \code{ValueError} on \code{limit < 1}, \code{window\_seconds <= 0}, empty \code{key}, or \code{cost < 1}.\\[4pt]
+    $\bullet$ \textbf{\code{REQ-0004} (Injectable Clock):} Accepts \code{clock: Callable[[], float]} for zero-sleep deterministic tests.\\[4pt]
+    $\bullet$ \textbf{\code{REQ-0005} (Thread Safety):} Guards per-key deque pruning and admission with \code{threading.RLock}.\\[4pt]
+    $\bullet$ \textbf{\code{REQ-0006} (Key Reset):} \code{reset(key)} clears state for \code{key} only.
+  }
+
+  \bcard{0}{-4.30}{14.7}{2.00}{gbgyellow}{gyellow}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gdark}{Structural Validation Gate Check in \code{self\_diagnose.sh}}}\\[5pt]
+    $\bullet$ Verify every requirement header matches \code{\#\#\# Requirement: [REQ-000X]}, contains uppercase \code{SHALL}/\code{MUST}, and includes a 4-hashtag \code{\#\#\#\# Scenario:} block with \code{GIVEN}, \code{WHEN}, and \code{THEN}.
+  }
+}
+
+% SLIDE 09
+\slideshell{09 / 36}{MODULE 02: LAB 01 — STEP 3 OF 5}{Lab 01 Step 3: Recording Architecture Decision Records (ADRs)}{Evaluating storage and window trade-offs in \code{ADR-0001-storage-engine.md} and \code{ADR-0002-sync-protocol.md}}{
+  \bcard{0}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gblue}{\code{ADR-0001}: Storage Engine Selection}}\\[6pt]
+    \textbf{Context:} Need sub-millisecond per-key timestamp pruning with zero external infra dependencies for MVP.\\[5pt]
+    \textbf{Options Evaluated:}\\[3pt]
+    1. \textbf{In-Memory \code{dict[str, deque]} + \code{RLock} (ACCEPTED):} $O(1)$ amortized popleft expiration, zero network hop, deterministic unit testing.\\[3pt]
+    2. \textbf{Redis Sorted Set (\code{ZREMRANGEBYSCORE}) (DEFERRED):} Needed only for multi-node horizontal scaling; adds network/serialization overhead.\\[3pt]
+    3. \textbf{SQLite / PostgreSQL Table (REJECTED):} Disk I/O \& row lock contention violate $<1\text{ms}$ P99 latency budget.
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{ggreen}{\code{ADR-0002}: Window Synchronization Protocol}}\\[6pt]
+    \textbf{Context:} Must prevent $2\times$ boundary traffic spikes at window edges while providing exact \code{retry\_after\_seconds}.\\[5pt]
+    \textbf{Options Evaluated:}\\[3pt]
+    1. \textbf{Exact Sliding-Window Log (ACCEPTED):} Stores \code{(timestamp, cost)} entries in a monotonic deque; eliminates boundary bursts and computes exact \code{retry\_after\_seconds}.\\[3pt]
+    2. \textbf{Fixed-Window Counter (REJECTED):} Permits $2\times$ burst at window boundary ($t = W - \epsilon$ and $t = W + \epsilon$).\\[3pt]
+    3. \textbf{Approximate Sliding Counter (REJECTED):} Cannot compute exact per-request \code{retry\_after\_seconds}.
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggray}{gborder}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Why ADRs Are Mandatory in Spec-Driven Development}}\\[5pt]
+    $\bullet$ Specifications (\code{spec.md}) capture \textbf{WHAT} the system must do; Architecture Decision Records (\code{ADR-XXXX.md}) capture \textbf{WHY} rejected alternatives were ruled out—preventing future AI sessions from ``refactoring'' an exact sliding-window deque back into a buggy fixed-window counter!
+  }
+}
+
+% SLIDE 10
+\slideshell{10 / 36}{MODULE 02: LAB 01 — STEP 4 OF 5}{Lab 01 Step 4: Authoring the 7-Section Conductor Track \code{spec.md} \& \code{plan.md}}{Bridging OpenSpec contracts into Conductor's phased Red-Green-Refactor execution plan}{
+  \bcard{0}{0}{7.1}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{7-Section Conductor Track \code{spec.md} Structure}}\\[5pt]
+    {\ttfamily\scriptsize
+    \#\# 1. Overview\\
+    Implement thread-safe SlidingWindowRateLimiter satisfying REQ-0001..0006.\\
+    \#\# 2. Architecture\\
+    Per-key collections.deque[(float, int)] guarded by threading.RLock.\\
+    \#\# 3. Functional Requirements\\
+    Maps 1:1 to REQ-0001..REQ-0006 in openspec/specs/rate-limiter/spec.md.\\
+    \#\# 4. Non-Functional Requirements\\
+    O(1) amortized pruning; zero external runtime packages.\\
+    \#\# 5. Acceptance Criteria\\
+    All 6 unit tests pass with 100\% requirement traceability.\\
+    \#\# 6. Out of Scope\\
+    Distributed Redis cluster sync; HTTP middleware wrapper.\\
+    \#\# 7. Verification Commands\\
+    CI=true python3 -m unittest discover -s expected\_output -p "test\_*.py" -v
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{Phased Conductor \code{plan.md} with Checkpoints}}\\[5pt]
+    {\ttfamily\scriptsize
+    \#\# Phase 1: Core Data Model \& Validation [checkpoint: a1b2c3d]\\
+    - [x] Task 1.1: Define RateLimitDecision \& validate inputs (REQ-0003) 11a2b3c\\
+    - [x] Task 1.2: Inject deterministic clock callable (REQ-0004) 22b3c4d\\
+    - [x] Task: Conductor - User Manual Verification 'Phase 1'\\[4pt]
+    \#\# Phase 2: Sliding Window \& Retry-After [checkpoint: d4e5f6a]\\
+    - [x] Task 2.1: Implement deque pruning \& allow() (REQ-0001) 33c4d5e\\
+    - [x] Task 2.2: Compute exact retry\_after\_seconds (REQ-0002) 44d5e6f\\
+    - [x] Task: Conductor - User Manual Verification 'Phase 2'\\[4pt]
+    \#\# Phase 3: Concurrency \& Reset [checkpoint: 77a8b9c]\\
+    - [x] Task 3.1: Add RLock \& reset(key) (REQ-0005, REQ-0006) 55e6f7a
+    }
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggreen}{ggreen}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{ggreen}{Human-in-the-Loop Gate Before Code Generation}}\\[5pt]
+    $\bullet$ Notice Section 6 (\code{Out of Scope}): explicitly excluding Redis and HTTP middleware prevents the agent from writing 800 lines of unrequested boilerplate. Once you approve \code{spec.md} and \code{plan.md}, you trigger \code{/conductor:implement}.
+  }
+}
+
+% SLIDE 11
+\slideshell{11 / 36}{MODULE 02: LAB 01 — STEP 5 OF 5}{Lab 01 Step 5: Implementing \code{ratelimiter.py} \& Running \code{./self\_diagnose.sh}}{Inspecting the reference implementation and verifying all 6 requirement-traceable unit tests}{
+  \bcard{0}{0}{7.3}{4.1}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{Reference Implementation (\code{expected\_output/ratelimiter.py})}}\\[5pt]
+    {\ttfamily\scriptsize
+    def allow(self, key: str, cost: int = 1) -> RateLimitDecision:\\
+    \ \ if not key or not isinstance(key, str): raise ValueError("Invalid key")\\
+    \ \ if cost < 1 or cost > self.limit: raise ValueError("Invalid cost")\\
+    \ \ with self.\_lock:\\
+    \ \ \ \ now = float(self.\_clock())\\
+    \ \ \ \ cutoff = now - self.window\_seconds\\
+    \ \ \ \ q = self.\_events.setdefault(key, deque())\\
+    \ \ \ \ while q and q[0][0] <= cutoff:\\
+    \ \ \ \ \ \ q.popleft()\\
+    \ \ \ \ used = sum(c for \_, c in q)\\
+    \ \ \ \ if used + cost <= self.limit:\\
+    \ \ \ \ \ \ q.append((now, cost))\\
+    \ \ \ \ \ \ return RateLimitDecision(True, self.limit - (used + cost), 0.0)\\
+    \ \ \ \ needed = (used + cost) - self.limit\\
+    \ \ \ \ freed = 0\\
+    \ \ \ \ for ts, c in q:\\
+    \ \ \ \ \ \ freed += c\\
+    \ \ \ \ \ \ if freed >= needed:\\
+    \ \ \ \ \ \ \ \ return RateLimitDecision(False, max(0, self.limit - used),\\
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ max(0.0, (ts + self.window\_seconds) - now))
+    }
   }
   \bcard{7.6}{0}{7.1}{4.1}{gbggreen}{ggreen}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{The 7-Section Track \code{spec.md} Anatomy}}\\[6pt]
-    Every \code{conductor/tracks/<track\_id>/spec.md} MUST include:\\[4pt]
-    \textbf{1. Overview} (2--3 sentence problem \& outcome summary)\\[2pt]
-    \textbf{2. Architecture \& Component Topology} (Mermaid diagram)\\[2pt]
-    \textbf{3. Functional Requirements} (\code{REQ-XXXX} + \code{WHEN/THEN})\\[2pt]
-    \textbf{4. Non-Functional Requirements} (latency, thread safety, $>80\%$ cov)\\[2pt]
-    \textbf{5. Acceptance Criteria} (1:1 mapping to \code{test\_reqXXXX\_*})\\[2pt]
-    \textbf{6. Out of Scope} (explicit guardrails against scope creep)\\[2pt]
-    \textbf{7. Verification Commands} (\code{CI=true python3 -m unittest ...})
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Live Verification Output (\code{./self\_diagnose.sh})}}\\[5pt]
+    {\ttfamily\scriptsize
+    \$ ./labs/lab\_01\_greenfield\_proposals\_to\_specs/self\_diagnose.sh\\
+    === Lab 01 Self-Diagnosis: Greenfield Proposals to Specs ===\\
+    test\_req0001\_sliding\_window\_allows\_within\_limit ... ok\\
+    test\_req0002\_rejects\_exceeding\_limit\_and\_computes\_retry\_after ... ok\\
+    test\_req0003\_validates\_configuration\_and\_arguments ... ok\\
+    test\_req0004\_deterministic\_clock\_expiration\_slides\_window ... ok\\
+    test\_req0005\_thread\_safe\_concurrent\_requests ... ok\\
+    test\_req0006\_reset\_clears\_key\_state ... ok\\
+    ----------------------------------------------------------------------\\
+    Ran 6 tests in 0.001s --- OK\\
+    {[PASS]} All Lab 01 specs, ADRs, Conductor plan, and 6/6 tests verified!
+    }
   }
 
-  \bcard{0}{-4.35}{14.7}{1.95}{gbggray}{gborder}{
-    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gnavy}{Why Dual-Engine SDD Beats Either Tool Alone}}\\[4pt]
-    \textbf{Conductor alone} excels at single-track TDD execution and Git checkpoints, but archives track specs separately without merging them into a unified capability tree. \textbf{OpenSpec alone} maintains a clean capability spec tree (\code{openspec/specs/}), but lacks Conductor's \code{git notes} audit trail, \code{tech-stack.md} governance gates, and 4-phase \code{/conductor:revert}. \textbf{Together, they cover both planes.}
+  \bcard{0}{-4.30}{14.7}{2.00}{gbgblue}{gblue}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gblue}{Lab 01 Key Takeaway}}\\[5pt]
+    $\bullet$ By spending 5 minutes on \code{/opsx:propose}, 2 ADRs, and a 7-section Conductor \code{spec.md}, the 60-line implementation and 6 unit tests pass on the very first run with zero ambiguity.
   }
 }
 
 % ============================================================================
-% SLIDE 07: HANDS-ON LABS 01 & 02
+% MODULE 03: LAB 02 STEP-BY-STEP — BROWNFIELD SPEC RECOVERY (SLIDES 12-16)
 % ============================================================================
-\slideshell{07 / 12}{HANDS-ON LABS 01 \& 02}{Labs 01 \& 02: Greenfield Spec Authoring \& Brownfield Spec Recovery}{Practicing forward specification from ambiguous proposals and reverse-engineering legacy code into contracts}{
-  \bcard{0}{0}{7.1}{4.2}{gbgblue}{gblue}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Lab 01: Greenfield Proposal $\to$ Specs, ADRs \& Code}}\\[6pt]
-    \textbf{System:} Per-Key Sliding-Window Rate Limiter (\code{ratelimiter.py})\\[5pt]
-    $\bullet$ \textbf{Starting Input:} Ambiguous product memo (\code{proposal.md}) missing cost bounds, retry-after math, and concurrency semantics.\\[4pt]
-    $\bullet$ \textbf{What You Build:}\\[2pt]
-    \quad -- \code{openspec/specs/rate-limiter/spec.md} (\code{REQ-0001..0006})\\[2pt]
-    \quad -- \code{ADR-0001} (Storage Engine) \& \code{ADR-0002} (Sliding Log vs.\ Fixed)\\[2pt]
-    \quad -- 7-Section Conductor \code{spec.md}, \code{plan.md} \& \code{ratelimiter.py}\\[4pt]
-    $\bullet$ \textbf{Verify:} \code{./labs/lab\_01\_.../self\_diagnose.sh} (\code{6/6} tests PASS).
+
+% SLIDE 12
+\slideshell{12 / 36}{MODULE 03: LAB 02 — STEP 1 OF 5}{Lab 02 Step 1: Auditing an Undocumented Brownfield Codebase}{Inspecting \code{labs/lab\_02\_brownfield\_spec\_recovery/service/leasemanager.py} via \code{/opsx:explore}}{
+  \bcard{0}{0}{7.1}{4.0}{gbgred}{gred}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gred}{The Brownfield Challenge: Code Exists, Specs Don't}}\\[6pt]
+    $\bullet$ You inherit \code{service/leasemanager.py} (a working Distributed Lease Lock Manager) and \code{service/test\_leasemanager.py}, with \textbf{zero specification files}.\\[5pt]
+    $\bullet$ \textbf{Why Direct Agent Edits Are Dangerous:} If you ask an agent to ``optimize lease cleanup'' without a baseline spec, it might reset the counter when all leases expire—silently breaking monotonic fencing tokens and corrupting downstream storage!
   }
-  \bcard{7.6}{0}{7.1}{4.2}{gbggreen}{ggreen}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Lab 02: Brownfield Legacy Code $\to$ Living Spec Recovery}}\\[6pt]
-    \textbf{System:} Distributed Lease Lock Manager (\code{service/leasemanager.py})\\[5pt]
-    $\bullet$ \textbf{Starting Input:} Undocumented production Python service + unit tests with zero specification files.\\[4pt]
-    $\bullet$ \textbf{What You Recover (\code{/opsx:explore}):}\\[2pt]
-    \quad -- \code{REQ-0001..0006} in \code{openspec/specs/lease-manager/spec.md}\\[2pt]
-    \quad -- Strictly monotonic 64-bit \code{fencing\_token} invariant (never resets across release or TTL expiry)\\[2pt]
-    \quad -- \code{ADR-0001-fencing-tokens.md} (split-brain zombie protection)\\[4pt]
-    $\bullet$ \textbf{Verify:} \code{./labs/lab\_02\_.../self\_diagnose.sh} (\code{6/6} tests PASS).
+  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gblue}{Inspecting \code{service/leasemanager.py} in Explore Mode}}\\[6pt]
+    {\ttfamily\scriptsize
+    class LeaseLockManager:\\
+    \ \ def \_\_init\_\_(self, clock: Callable[[], float] = time.monotonic):\\
+    \ \ \ \ self.\_lock = threading.RLock()\\
+    \ \ \ \ self.\_leases: dict[str, Lease] = \{\}\\
+    \ \ \ \ self.\_fencing\_counter: int = 0  \# <-- CRITICAL INVARIANT!\\[4pt]
+    \ \ def acquire(self, resource: str, owner: str, ttl\_seconds: float):\\
+    \ \ \ \ ...\\
+    \ \ \ \ self.\_fencing\_counter += 1\\
+    \ \ \ \ lease = Lease(resource, owner, self.\_fencing\_counter, now + ttl)
+    }
   }
 
-  \bcard{0}{-4.45}{14.7}{1.85}{gbggray}{gborder}{
-    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gnavy}{Key Engineering Takeaway from Labs 01 \& 02}}\\[4pt]
-    Always require an injectable \code{clock: Callable[[], float] = time.monotonic} in your specification (\code{REQ-0004}) so time-window expiration, retry-after delays, and lease TTL takeovers can be unit-tested deterministically in $<1\text{ms}$ without \code{time.sleep()}.
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggray}{gborder}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Step 1 Command \& Read-Only Investigation Rule}}\\[5pt]
+    $\bullet$ Run \code{/opsx:explore} on \code{labs/lab\_02\_brownfield\_spec\_recovery/service/}. Remember: \code{/opsx:explore} is strictly read-only—it maps every branch, exception, and state transition before writing a single line of specification.
+  }
+}
+
+% SLIDE 13
+\slideshell{13 / 36}{MODULE 03: LAB 02 — STEP 2 OF 5}{Lab 02 Step 2: Extracting the 6 Hidden Behavioral Invariants}{Mapping every method and guard in \code{leasemanager.py} to \code{REQ-0001} through \code{REQ-0006}}{
+  \bcard{0}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Invariants \code{REQ-0001} to \code{REQ-0003} (Acquisition \& Fencing)}}\\[6pt]
+    $\bullet$ \textbf{\code{REQ-0001} (Exclusive Acquisition):} \code{acquire(resource, owner, ttl)} grants a lease when the resource has no lease or its existing lease has expired (\code{now >= expires\_at}).\\[5pt]
+    $\bullet$ \textbf{\code{REQ-0002} (Monotonic 64-Bit Fencing Token):} Every successful \code{acquire()} or \code{renew()} MUST increment \code{\_fencing\_counter} strictly monotonically ($t_{k+1} > t_k$), and the counter MUST NEVER reset even when all leases are released or evicted.\\[5pt]
+    $\bullet$ \textbf{\code{REQ-0003} (Contended Rejection):} If an active, non-expired lease is held by another owner, \code{acquire()} MUST return \code{None}.
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{Invariants \code{REQ-0004} to \code{REQ-0006} (Lifecycle \& Eviction)}}\\[6pt]
+    $\bullet$ \textbf{\code{REQ-0004} (Active Lease Renewal):} \code{renew(resource, owner, ttl)} extends \code{expires\_at = now + ttl} and issues a new higher \code{fencing\_token} if and only if \code{owner} holds an active, non-expired lease.\\[5pt]
+    $\bullet$ \textbf{\code{REQ-0005} (Holder-Verified Release):} \code{release(resource, owner, fencing\_token)} removes the lease only when both \code{owner} and \code{fencing\_token} match the active lease.\\[5pt]
+    $\bullet$ \textbf{\code{REQ-0006} (Expired Eviction \& Thread Safety):} \code{evict\_expired()} purges expired leases under \code{threading.RLock} without altering \code{\_fencing\_counter}.
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgyellow}{gyellow}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gdark}{Brownfield Extraction Rule: Capture Essential Behavior, Not Incidental Variable Names}}\\[5pt]
+    $\bullet$ Notice that \code{REQ-0002} specifies the \emph{observable monotonicity invariant} ($t_2 > t_1$ across expiration/release cycles) rather than hardcoding private attribute names in the contract.
+  }
+}
+
+% SLIDE 14
+\slideshell{14 / 36}{MODULE 03: LAB 02 — STEP 3 OF 5}{Lab 02 Step 3: Why TTL Leases Fail Under GC Pauses (\code{ADR-0001})}{Documenting the distributed systems rationale in \code{expected\_output/ADR-0001-fencing-tokens.md}}{
+  \bcard{0}{0}{7.1}{4.0}{gbgred}{gred}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gred}{The Split-Brain Zombie Write Hazard (Without Fencing)}}\\[6pt]
+    \textbf{1.} Worker A acquires lease (\code{TTL = 5s}) and begins preparing a storage write.\\[4pt]
+    \textbf{2.} Worker A hits a \textbf{6-second stop-the-world GC pause} (or network delay).\\[4pt]
+    \textbf{3.} At $t=5.1\text{s}$, the lease expires; Worker B acquires the lease and writes valid state to storage.\\[4pt]
+    \textbf{4.} At $t=6.0\text{s}$, Worker A wakes up from GC pause and sends its delayed write—\textbf{silently overwriting Worker B's state!}
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{ggreen}{The Monotonic Fencing Token Solution (\code{ADR-0001})}}\\[6pt]
+    \textbf{1.} Worker A is issued \code{fencing\_token = 101} upon acquisition.\\[4pt]
+    \textbf{2.} After Worker A's lease expires during its GC pause, Worker B acquires the lease and receives \code{fencing\_token = 102}.\\[4pt]
+    \textbf{3.} Storage records \code{max\_seen\_token = 102} when committing Worker B's write.\\[4pt]
+    \textbf{4.} When Worker A wakes up and sends its write with \code{token = 101 < 102}, storage immediately \textbf{rejects the stale write}!
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgblue}{gblue}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gblue}{Why Recovering \code{ADR-0001-fencing-tokens.md} Protects Your Codebase}}\\[5pt]
+    $\bullet$ By recording this Kleppmann fencing-token proof in \code{ADR-0001-fencing-tokens.md}, any engineer or AI agent reading the repo understands immediately why \code{\_fencing\_counter} must be global and monotonic.
+  }
+}
+
+% SLIDE 15
+\slideshell{15 / 36}{MODULE 03: LAB 02 — STEP 4 OF 5}{Lab 02 Step 4: Authoring \code{openspec/specs/lease-manager/spec.md} \& \code{design.md}}{Writing the normative 4-hashtag Gherkin scenarios and component design doc}{
+  \bcard{0}{0}{7.3}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{Recovered Spec (\code{openspec/specs/lease-manager/spec.md})}}\\[5pt]
+    {\ttfamily\scriptsize
+    \#\#\# Requirement: [REQ-0002] Strictly Monotonic 64-Bit Fencing Tokens\\
+    The LeaseLockManager SHALL assign a strictly increasing integer\\
+    `fencing\_token` (`token\_next > token\_prev`) on every successful\\
+    `acquire` or `renew` call. The counter MUST NOT reset when leases\\
+    expire or are released.\\[4pt]
+    \#\#\#\# Scenario: Fencing token increments across expiration boundary\\
+    - **GIVEN** `"worker-1"` acquires `"db-shard-0"` at `t=0.0` (`ttl=5.0`)\\
+    \ \ receiving `fencing\_token = 1`\\
+    - **WHEN** the clock advances to `t=6.0` and `"worker-2"` acquires\\
+    \ \ `"db-shard-0"`\\
+    - **THEN** `"worker-2"` SHALL receive `fencing\_token = 2` (`2 > 1`).
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{Recovered Design Document (\code{expected\_output/design.md})}}\\[6pt]
+    $\bullet$ \textbf{Context:} Documents the in-memory \code{LeaseLockManager} and immutable \code{Lease( dataclass(frozen=True) )} value object.\\[4pt]
+    $\bullet$ \textbf{Goals / Non-Goals:} Guarantees single-process mutual exclusion and monotonic fencing token issuance; out-of-process Raft consensus is a Non-Goal.\\[4pt]
+    $\bullet$ \textbf{Concurrency Invariant:} All mutations to \code{\_leases} and \code{\_fencing\_counter} execute atomically inside \code{with self.\_lock:}.
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggreen}{ggreen}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{ggreen}{Baseline Spec Promotion}}\\[5pt]
+    $\bullet$ Once verified, your recovered \code{spec.md} lives permanently at \code{openspec/specs/lease-manager/spec.md}. The brownfield subsystem is now upgraded to \textbf{SDD Maturity Level 2 (Spec-Anchored)}!
+  }
+}
+
+% SLIDE 16
+\slideshell{16 / 36}{MODULE 03: LAB 02 — STEP 5 OF 5}{Lab 02 Step 5: Verifying Zero-Regression Brownfield Recovery}{Running \code{./labs/lab\_02\_brownfield\_spec\_recovery/self\_diagnose.sh}}{
+  \bcard{0}{0}{7.1}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{What \code{lab\_02/self\_diagnose.sh} Checks}}\\[6pt]
+    \textbf{1. Normative Spec Completeness:} Confirms \code{REQ-0001} through \code{REQ-0006} are present in \code{expected\_output/openspec/specs/lease-manager/spec.md}.\\[4pt]
+    \textbf{2. RFC 2119 \& 4-Hashtag Gherkin Compliance:} Confirms uppercase \code{SHALL}/\code{MUST} and \code{\#\#\#\# Scenario:} blocks with \code{GIVEN}, \code{WHEN}, \code{THEN}.\\[4pt]
+    \textbf{3. ADR \& Design Completeness:} Confirms \code{ADR-0001-fencing-tokens.md} and \code{design.md} document split-brain fencing protection.\\[4pt]
+    \textbf{4. Brownfield Test Suite Execution:} Runs all 6 unit tests in \code{service/test\_leasemanager.py}.
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Terminal Output (\code{./self\_diagnose.sh})}}\\[6pt]
+    {\ttfamily\scriptsize
+    \$ ./labs/lab\_02\_brownfield\_spec\_recovery/self\_diagnose.sh\\
+    === Lab 02 Self-Diagnosis: Brownfield Spec Recovery ===\\
+    test\_acquire\_and\_contended\_rejection ... ok\\
+    test\_expiration\_allows\_new\_owner\_with\_higher\_fencing\_token ... ok\\
+    test\_fencing\_token\_strictly\_monotonic\_across\_release ... ok\\
+    test\_holder\_verified\_release\_guards\_owner\_and\_token ... ok\\
+    test\_renew\_extends\_ttl\_and\_increments\_token ... ok\\
+    test\_evict\_expired\_cleans\_only\_expired\_leases ... ok\\
+    ----------------------------------------------------------------------\\
+    Ran 6 tests in 0.000s --- OK\\
+    {[PASS]} Brownfield unit tests and recovered OpenSpec REQ-0001..0006 +\\
+    \ \ \ \ \ \ \ \ ADR-0001 verified.
+    }
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgblue}{gblue}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gblue}{Lab 02 Key Takeaway}}\\[5pt]
+    $\bullet$ Never unleash a coding agent on legacy code blind. Spend 10 minutes running \code{/opsx:explore} to recover \code{spec.md} and \code{ADR-0001} first—then every future change is anchored to verified invariants.
   }
 }
 
 % ============================================================================
-% SLIDE 08: HANDS-ON LABS 03 & 04
+% MODULE 04: LAB 03 STEP-BY-STEP — FROM SPECS TO TDD CODE (SLIDES 17-21)
 % ============================================================================
-\slideshell{08 / 12}{HANDS-ON LABS 03 \& 04}{Labs 03 \& 04: TDD State Machines, Drift Detection \& 5-Step Refactoring}{Translating formal specs into traceable TDD code and surgically remediating brownfield scorecard findings}{
-  \bcard{0}{0}{7.1}{4.2}{gbgblue}{gblue}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Lab 03: From Specs to Traceable TDD Code}}\\[6pt]
-    \textbf{System:} Stateful Circuit Breaker (\code{circuitbreaker.py})\\[5pt]
-    $\bullet$ \textbf{Starting Input:} Approved \code{specs/spec.md} (\code{REQ-0001..0007}) and state machine diagram (\code{CLOSED $\to$ OPEN $\to$ HALF\_OPEN}).\\[4pt]
-    $\bullet$ \textbf{What You Build (\code{/conductor:implement}):}\\[2pt]
-    \quad -- Sequenced TDD \code{tasks.md} across 2 batches\\[2pt]
-    \quad -- \code{test\_req0001\_*} through \code{test\_req0007\_*} in \code{test\_circuitbreaker.py}\\[2pt]
-    \quad -- Fast-fail \code{CircuitOpenError} \& single-probe \code{HALF\_OPEN} recovery\\[4pt]
-    $\bullet$ \textbf{Verify:} \code{./labs/lab\_03\_.../self\_diagnose.sh} (\code{7/7} tests PASS).
+
+% SLIDE 17
+\slideshell{17 / 36}{MODULE 04: LAB 03 — STEP 1 OF 5}{Lab 03 Step 1: Inspecting the Approved Circuit Breaker Contract}{Walking through \code{labs/lab\_03\_from\_specs\_to\_tdd\_code/specs/spec.md} (\code{REQ-0001..REQ-0007})}{
+  \bcard{0}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{gblue}{The 3-State Machine (\code{CLOSED} $\to$ \code{OPEN} $\to$ \code{HALF\_OPEN})}}\\[6pt]
+    $\bullet$ \textbf{\code{CLOSED} (Normal):} Calls pass through; consecutive failures increment counter; any success resets counter to \code{0}.\\[4pt]
+    $\bullet$ \textbf{\code{OPEN} (Fast-Fail):} Triggered when consecutive failures reach \code{failure\_threshold}. Rejects calls immediately with \code{CircuitOpenError} without calling downstream function.\\[4pt]
+    $\bullet$ \textbf{\code{HALF\_OPEN} (Probe):} Entered after \code{recovery\_timeout\_seconds}. Admits \code{1} probe call: success $\to$ \code{CLOSED}; failure $\to$ \code{OPEN}.
   }
-  \bcard{7.6}{0}{7.1}{4.2}{gbgred}{gred}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gred}{Lab 04: Spec Drift \& 5-Step Scorecard Refactoring}}\\[6pt]
-    \textbf{System:} Token Bucket Quota Allocator (\code{quota\_allocator.py})\\[5pt]
-    $\bullet$ \textbf{The Drift Bug (\code{F-01 / REQ-0005}):} \code{\_replenish()} overwrites \code{last\_replenished = now} even when \code{added == 0}, starving token refill under frequent sub-second polling!\\[4pt]
-    $\bullet$ \textbf{The 5-Step Brownfield Loop:}\\[2pt]
-    \quad 1. Audit Scorecard (\code{F-01..F-04}) $\to$ 2. Isolate \code{F-01} in Track \code{spec.md} (\code{Out of Scope: F-02..F-04}) $\to$ 3. Write failing \code{test\_req0005} $\to$ 4. Fix \code{\_replenish()} $\to$ 5. Re-score.
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15.5}{19}\selectfont\bfseries\textcolor{ggreen}{The 7 Normative Requirements (\code{specs/spec.md})}}\\[6pt]
+    $\bullet$ \textbf{\code{REQ-0001}:} Initial \code{CLOSED} state forwards calls and returns results.\\[3pt]
+    $\bullet$ \textbf{\code{REQ-0002}:} Reaching \code{failure\_threshold} trips state to \code{OPEN}.\\[3pt]
+    $\bullet$ \textbf{\code{REQ-0003}:} \code{OPEN} state raises \code{CircuitOpenError} with zero downstream calls.\\[3pt]
+    $\bullet$ \textbf{\code{REQ-0004}:} Cooldown elapsed transitions \code{OPEN} $\to$ \code{HALF\_OPEN}.\\[3pt]
+    $\bullet$ \textbf{\code{REQ-0005}:} Successful probe in \code{HALF\_OPEN} resets streak and closes circuit.\\[3pt]
+    $\bullet$ \textbf{\code{REQ-0006}:} Failed probe in \code{HALF\_OPEN} immediately re-opens circuit.\\[3pt]
+    $\bullet$ \textbf{\code{REQ-0007}:} Success in \code{CLOSED} resets prior sub-threshold failure streak.
   }
 
-  \bcard{0}{-4.45}{14.7}{1.85}{gbgyellow}{gyellow}{
-    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gdark}{Why the ``Out of Scope'' Section in Lab 04 Is Critical}}\\[4pt]
-    When given a brownfield file with 4 technical debt findings (\code{F-01..F-04}), an unconstrained agent attempts to fix all 4 at once and breaks existing callers. Placing \code{F-02..F-04} in \textbf{Section 6: Out of Scope} forces surgical, 1-finding-per-track execution.
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggray}{gborder}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Goal-Driven Execution Setup}}\\[5pt]
+    $\bullet$ In Lab 03, the spec (\code{specs/spec.md}) and design (\code{specs/design.md}) are already approved. Your job is to translate \code{REQ-0001..REQ-0007} into a sequenced TDD task plan and 1-to-1 traceable unit tests.
+  }
+}
+
+% SLIDE 18
+\slideshell{18 / 36}{MODULE 04: LAB 03 — STEP 2 OF 5}{Lab 03 Step 2: Decomposing Requirements into Sequenced TDD Tasks}{Structuring \code{expected\_output/tasks.md} so every task pairs a \code{test\_reqXXXX\_*} test with minimal code}{
+  \bcard{0}{0}{7.3}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{Sequenced TDD Task Plan (\code{expected\_output/tasks.md})}}\\[5pt]
+    {\ttfamily\scriptsize
+    \#\# Batch 1: Core State Model \& Closed/Open Trip (REQ-0001, REQ-0002, REQ-0007)\\
+    - [x] 1.1 Write test\_req0001\_closed\_state\_forwards\_calls (Red) then\\
+    \ \ \ \ \ \ \ \ \ \ implement CircuitState \& CLOSED call forwarding (Green).\\
+    - [x] 1.2 Write test\_req0002\_failure\_threshold\_trips\_to\_open (Red) then\\
+    \ \ \ \ \ \ \ \ \ \ implement failure counter \& OPEN transition (Green).\\
+    - [x] 1.3 Write test\_req0007\_success\_resets\_failure\_streak (Red) then\\
+    \ \ \ \ \ \ \ \ \ \ reset failure count on CLOSED success (Green).\\[4pt]
+    \#\# Batch 2: Fast-Fail \& Half-Open Recovery (REQ-0003, REQ-0004, REQ-0005, REQ-0006)\\
+    - [x] 2.1 Write test\_req0003\_open\_state\_fails\_fast\_without\_invoking\_callable.\\
+    - [x] 2.2 Write test\_req0004\_cooldown\_transitions\_to\_half\_open.\\
+    - [x] 2.3 Write test\_req0005\_probe\_success\_closes\_circuit \&\\
+    \ \ \ \ \ \ \ \ \ \ test\_req0006\_probe\_failure\_reopens\_circuit.
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{Why 1-to-1 Requirement-to-Test Naming Matters}}\\[6pt]
+    $\bullet$ Naming every test \code{test\_reqXXXX\_<behavior>} (and putting \code{Verifies REQ-XXXX} in the docstring) creates an \textbf{auditable bi-directional link} between \code{spec.md} and your test runner.\\[5pt]
+    $\bullet$ When \code{REQ-0004} changes in a future OpenSpec delta, the engineer (or agent) knows immediately which unit test must be updated first in the \textbf{Red} phase!
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgyellow}{gyellow}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gdark}{The Strict Red $\to$ Green $\to$ Refactor Rule (\code{/conductor:implement})}}\\[5pt]
+    $\bullet$ Never allow an agent to write \code{circuitbreaker.py} first and ``backfill'' tests afterward. Write the failing test first, run \code{CI=true python3 -m unittest} to witness the failure, then write the code.
+  }
+}
+
+% SLIDE 19
+\slideshell{19 / 36}{MODULE 04: LAB 03 — STEP 3 OF 5}{Lab 03 Step 3: Red-Green-Refactor Batch 1 (\code{CLOSED} \& \code{OPEN} Fast-Fail)}{Implementing \code{REQ-0001}, \code{REQ-0002}, \code{REQ-0003}, and \code{REQ-0007} in \code{circuitbreaker.py}}{
+  \bcard{0}{0}{7.3}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{Traceable Unit Tests (\code{test\_circuitbreaker.py})}}\\[5pt]
+    {\ttfamily\scriptsize
+    def test\_req0002\_failure\_threshold\_trips\_to\_open(self) -> None:\\
+    \ \ """Verifies REQ-0002: Consecutive failures trip CLOSED -> OPEN."""\\
+    \ \ cb = CircuitBreaker(failure\_threshold=2, recovery\_timeout\_seconds=10.0)\\
+    \ \ with self.assertRaises(RuntimeError):\\
+    \ \ \ \ cb.call(self.\_fail)\\
+    \ \ self.assertEqual(cb.state, CircuitState.CLOSED)\\
+    \ \ with self.assertRaises(RuntimeError):\\
+    \ \ \ \ cb.call(self.\_fail)\\
+    \ \ self.assertEqual(cb.state, CircuitState.OPEN)\\[4pt]
+    def test\_req0003\_open\_state\_fails\_fast\_without\_invoking\_callable(self):\\
+    \ \ """Verifies REQ-0003: OPEN rejects with CircuitOpenError (0 calls)."""\\
+    \ \ ...\\
+    \ \ with self.assertRaises(CircuitOpenError):\\
+    \ \ \ \ cb.call( tracked\_callable )\\
+    \ \ self.assertEqual(invocations, 0)
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Minimal Production Code (\code{circuitbreaker.py})}}\\[5pt]
+    {\ttfamily\scriptsize
+    if current\_state == CircuitState.OPEN:\\
+    \ \ raise CircuitOpenError("Circuit breaker is OPEN; failing fast.")\\[4pt]
+    try:\\
+    \ \ result = func(*args, **kwargs)\\
+    except Exception:\\
+    \ \ with self.\_lock:\\
+    \ \ \ \ self.\_failure\_count += 1\\
+    \ \ \ \ self.\_last\_failure\_time = float(self.\_clock())\\
+    \ \ \ \ if (self.\_state == CircuitState.HALF\_OPEN\\
+    \ \ \ \ \ \ \ \ or self.\_failure\_count >= self.failure\_threshold):\\
+    \ \ \ \ \ \ self.\_state = CircuitState.OPEN\\
+    \ \ \ \ \ \ self.\_half\_open\_Flight = 0\\
+    \ \ raise
+    }
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgblue}{gblue}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gblue}{Why \code{test\_req0003} Explicitly Asserts \code{invocations == 0}}}\\[5pt]
+    $\bullet$ A classic LLM bug is calling \code{func()} \emph{before} checking if the circuit is \code{OPEN}. Because the Gherkin scenario in \code{REQ-0003} states ``without invoking the wrapped callable'', our test asserts \code{invocations == 0}.
+  }
+}
+
+% SLIDE 20
+\slideshell{20 / 36}{MODULE 04: LAB 03 — STEP 4 OF 5}{Lab 03 Step 4: Red-Green-Refactor Batch 2 (\code{HALF\_OPEN} Probe Recovery)}{Implementing \code{REQ-0004}, \code{REQ-0005}, and \code{REQ-0006} with deterministic clock injection}{
+  \bcard{0}{0}{7.3}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{Cooldown \& Single-Probe Gate (\code{circuitbreaker.py})}}\\[5pt]
+    {\ttfamily\scriptsize
+    def \_evaluate\_state\_unlocked(self) -> CircuitState:\\
+    \ \ if self.\_state == CircuitState.OPEN and self.\_last\_failure\_time is not None:\\
+    \ \ \ \ elapsed = float(self.\_clock()) - self.\_last\_failure\_time\\
+    \ \ \ \ if elapsed >= self.recovery\_timeout\_seconds:\\
+    \ \ \ \ \ \ self.\_state = CircuitState.HALF\_OPEN\\
+    \ \ \ \ \ \ self.\_half\_open\_in\_flight = 0\\
+    \ \ return self.\_state\\[5pt]
+    \# Inside call():\\
+    if current\_state == CircuitState.HALF\_OPEN:\\
+    \ \ if self.\_half\_open\_in\_flight >= self.half\_open\_max\_calls:\\
+    \ \ \ \ raise CircuitOpenError("Half-open probe limit reached")\\
+    \ \ self.\_half\_open\_in\_flight += 1
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{Probe Success vs.\ Probe Failure (\code{REQ-0005} \& \code{REQ-0006})}}\\[6pt]
+    $\bullet$ \textbf{On Probe Success (\code{REQ-0005}):} Inside \code{with self.\_lock:}, reset \code{self.\_failure\_count = 0}, \code{self.\_half\_open\_in\_flight = 0}, and transition \code{self.\_state = CircuitState.CLOSED}.\\[5pt]
+    $\bullet$ \textbf{On Probe Failure (\code{REQ-0006}):} Inside the \code{except Exception:} handler, record \code{self.\_last\_failure\_time = float(self.\_clock())} and immediately transition back to \code{CircuitState.OPEN} for another full cooldown cycle.
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggreen}{ggreen}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{ggreen}{Zero \code{time.sleep()} in Unit Tests}}\\[5pt]
+    $\bullet$ Because \code{CircuitBreaker} accepts an injectable \code{clock} lambda, \code{test\_req0004}, \code{test\_req0005}, and \code{test\_req0006} advance simulated time from $t=0.0$ to $t=15.0$ instantaneously—running all 7 tests in \textbf{1 millisecond}!
+  }
+}
+
+% SLIDE 21
+\slideshell{21 / 36}{MODULE 04: LAB 03 — STEP 5 OF 5}{Lab 03 Step 5: Git Notes Audit Trail \& Running \code{./self\_diagnose.sh}}{Verifying 100\% requirement-to-test traceability across \code{REQ-0001..REQ-0007}}{
+  \bcard{0}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{Conductor \code{git notes} \& Checkpoint Recording}}\\[6pt]
+    {\ttfamily\scriptsize
+    \$ git commit -m "feat(circuit-breaker): implement HALF\_OPEN probe recovery"\\
+    \$ git notes add -m "Track: circuit\_breaker\_20261008\\
+    Tasks: 2.1, 2.2, 2.3 (REQ-0003..REQ-0006)\\
+    Tests: 7/7 passing (CI=true python3 -m unittest)" HEAD\\[5pt]
+    \# Phase Checkpoint in conductor/tracks/<id>/plan.md:\\
+    \#\# Phase 2: Fast-Fail \& Half-Open Recovery [checkpoint: 8f9e0a1]
+    }\\[5pt]
+    $\bullet$ Attaching \code{git notes} keeps commit titles clean while storing structured task telemetry directly in Git object storage.
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Live Verification Output (\code{./self\_diagnose.sh})}}\\[5pt]
+    {\ttfamily\scriptsize
+    \$ ./labs/lab\_03\_from\_specs\_to\_tdd\_code/self\_diagnose.sh\\
+    === Lab 03 Self-Diagnosis: From Specs to TDD Code (Circuit Breaker) ===\\
+    test\_req0001\_closed\_state\_forwards\_calls ... ok\\
+    test\_req0002\_failure\_threshold\_trips\_to\_open ... ok\\
+    test\_req0003\_open\_state\_fails\_fast\_without\_invoking\_callable ... ok\\
+    test\_req0004\_cooldown\_transitions\_to\_half\_open ... ok\\
+    test\_req0005\_probe\_success\_closes\_circuit ... ok\\
+    test\_req0006\_probe\_failure\_reopens\_circuit ... ok\\
+    test\_req0007\_success\_resets\_failure\_streak ... ok\\
+    ----------------------------------------------------------------------\\
+    Ran 7 tests in 0.001s --- OK\\
+    {[PASS]} All 7 CircuitBreaker requirements (REQ-0001..REQ-0007) verified!
+    }
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggray}{gborder}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Lab 03 Key Takeaway}}\\[5pt]
+    $\bullet$ When every requirement ID (\code{REQ-0001..REQ-0007}) maps 1-to-1 to a Red-Green-Refactor unit test, verification becomes a deterministic $<1\text{ms}$ check rather than a subjective human eyeball review.
   }
 }
 
 % ============================================================================
-% SLIDE 09: HANDS-ON LAB 05 — SDD CODE REVIEW & STACKED PRS
+% MODULE 05: LAB 04 STEP-BY-STEP — DRIFT DETECTION & 5-STEP REFACTORING (SLIDES 22-26)
 % ============================================================================
-\slideshell{09 / 12}{HANDS-ON LAB 05}{Lab 05: SDD Code Review \& Stacked PR Task Decomposition}{Reviewing the specification diff first, blocking silent contract violations, and sizing PR batches}{
-  \bcard{0}{0}{7.1}{4.1}{gbgred}{gred}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gred}{Auditing \code{simulated\_review/subpar\_change.patch}}}\\[6pt]
-    A contributor submits a ``vibe-coded'' patch to \code{base/kvcache.py}:\\[5pt]
-    \textbf{Violation 1 (Silent Contract Break):} Adds \code{self.\_store.move\_to\_end(key)} inside \code{get()}, silently mutating \textbf{FIFO eviction (\code{REQ-0002})} into \textbf{LRU eviction} without updating the spec!\\[5pt]
-    \textbf{Violation 2 (Un-Specced Public API):} Adds \code{put\_with\_ttl()} with zero requirement in \code{openspec/specs/kv-cache/spec.md}.\\[5pt]
-    \textbf{Violation 3 (Untested Edge Cases):} No \code{ttl\_seconds <= 0} validation and no \code{test\_req0006\_*} unit test.
+
+% SLIDE 22
+\slideshell{22 / 36}{MODULE 05: LAB 04 — STEP 1 OF 5}{Lab 04 Step 1: Detecting Spec-to-Code Drift (\code{REQ-0005} Starvation Bug)}{Auditing \code{labs/lab\_04\_drift\_detection\_and\_5step\_refactoring/service/quota\_allocator.py}}{
+  \bcard{0}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{What \code{specs/spec.md} Requires (\code{REQ-0005})}}\\[5pt]
+    {\ttfamily\scriptsize
+    \#\#\# Requirement: [REQ-0005] Fractional Replenishment Progress Preservation\\
+    Calls to `consume` or `available` that occur before a full integer\\
+    token has accumulated (`elapsed * refill\_rate\_per\_sec < 1.0`) MUST\\
+    NOT discard fractional elapsed time or starve token replenishment.\\[4pt]
+    \#\#\#\# Scenario: High-frequency polling does not starve token refill\\
+    - **GIVEN** a bucket with `capacity=5`, `tokens=0`, `refill\_rate=1.0/s`\\
+    - **WHEN** a client polls `consume(1)` at `t=0.4s`, `0.8s`, and `1.2s`\\
+    - **THEN** at `t=1.2s` the bucket SHALL have replenished `1` token\\
+    \ \ and admit the request.
+    }
   }
-  \bcard{7.6}{0}{7.1}{4.1}{gbggreen}{ggreen}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{Stacked PR Task Decomposition (\code{tasks.md})}}\\[6pt]
-    Instead of a monolithic PR, structure \code{tasks.md} into reviewable Stacked PR Batches (\code{150--250 LOC} each):\\[5pt]
-    $\bullet$ \textbf{Batch 1 (PR 1/3):} Add \code{REQ-0006} to \code{spec.md} (keeping \code{REQ-0002} FIFO intact) + add injectable \code{clock} and \code{\_CacheEntry}.\\[4pt]
-    $\bullet$ \textbf{Batch 2 (PR 2/3):} Implement \code{put\_with\_ttl}, pre-eviction expired purging, and \code{test\_req0001..0006}.\\[4pt]
-    $\bullet$ \textbf{Archive PR N+1 (PR 3/3):} Run \code{/opsx:verify} \& \code{/opsx:archive}.
+  \bcard{7.6}{0}{7.1}{4.0}{gbgred}{gred}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gred}{The Bug in \code{service/quota\_allocator.py}}}\\[5pt]
+    {\ttfamily\scriptsize
+    def \_replenish(self, bucket: \_BucketState, now: float) -> None:\\
+    \ \ elapsed = max(0.0, now - bucket.last\_replenished)\\
+    \ \ added = int(elapsed * self.\_refill\_rate\_per\_sec)\\
+    \ \ if added > 0:\\
+    \ \ \ \ bucket.tokens = min(self.\_capacity, bucket.tokens + added)\\
+    \ \ \# DRIFT BUG: unconditionally overwrites timestamp even when added == 0!\\
+    \ \ bucket.last\_replenished = now
+    }\\[6pt]
+    $\bullet$ When polled every $0.4\text{s}$ at $1\text{ token/s}$, \code{added == int(0.4) == 0}, yet \code{last\_replenished} resets to \code{now}—\textbf{permanently starving the bucket forever!}
   }
 
-  \bcard{0}{-4.35}{14.7}{1.95}{gbggray}{gborder}{
-    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gnavy}{The Golden Rule of SDD Code Review}}\\[4pt]
-    \textbf{Review the Specification Diff before reading a single line of Python/Go/TypeScript.} If a PR alters observable behavior without a matching \code{REQ-XXXX} delta—or if it contradicts an existing requirement—reject the PR at the contract layer.
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgyellow}{gyellow}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gdark}{Why Existing Happy-Path Tests Missed This Drift}}\\[5pt]
+    $\bullet$ Happy-path tests only advanced the clock by whole seconds ($t=0 \to t=5$). Only by auditing the code against \code{REQ-0005}'s sub-quantum Gherkin scenario do we expose the timestamp overwrite bug.
+  }
+}
+
+% SLIDE 23
+\slideshell{23 / 36}{MODULE 05: LAB 04 — STEP 2 OF 5}{Lab 04 Step 2: The 5-Step Brownfield Scorecard Refactoring Loop}{Triaging \code{labs/lab\_04\_drift\_detection\_and\_5step\_refactoring/scorecard.md} (Steps 1 \& 2)}{
+  \bcard{0}{0}{7.3}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{Engineering Audit Scorecard (\code{scorecard.md})}}\\[5pt]
+    {\ttfamily\scriptsize
+    | ID   | Severity | Finding Description                        | Decision              |\\
+    |------|----------|--------------------------------------------|-----------------------|\\
+    | F-01 | CRITICAL | REQ-0005 fractional timestamp overwrite    | ACCEPTED\_FOR\_REFACTOR |\\
+    |      |          | starves refill under sub-quantum polling.  |                       |\\
+    | F-02 | LOW      | Export Prometheus gauge metrics for        | DEFERRED (Q4)         |\\
+    |      |          | per-tenant token balances.                 |                       |\\
+    | F-03 | LOW      | Migrate in-memory dict to Redis cluster.   | DEFERRED              |\\
+    | F-04 | NIT      | Rewrite docstrings to NumPy format.        | REJECTED              |
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{The 5-Step Brownfield Refactoring Loop}}\\[6pt]
+    \textbf{Step 1 (Audit):} Run static/spec audit to populate \code{scorecard.md}.\\[4pt]
+    \textbf{Step 2 (Human Go/No-Go Triage):} Lead engineer marks each finding \code{ACCEPTED\_FOR\_REFACTOR}, \code{DEFERRED}, or \code{REJECTED}.\\[4pt]
+    \textbf{Step 3 (Surgical Track Spec):} Create Conductor track for \code{ACCEPTED} item(s) only; lock \code{DEFERRED}/\code{REJECTED} in \code{Out of Scope}.\\[4pt]
+    \textbf{Step 4 (Red-Green-Refactor TDD):} Write regression test, apply minimal fix.\\[4pt]
+    \textbf{Step 5 (Review \& Sync):} Run \code{/conductor:review} \& \code{/opsx:verify}.
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggreen}{ggreen}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{ggreen}{Why Step 2 (Scorecard Triage) Stops ``Mega-Prompt'' Disasters}}\\[5pt]
+    $\bullet$ If you feed all 4 findings to an agent at once, it will mix a critical concurrency bugfix (\code{F-01}) with a Redis rewrite (\code{F-03}) and docstring churn (\code{F-04}). The scorecard enforces \textbf{one surgical track per critical finding}.
+  }
+}
+
+% SLIDE 24
+\slideshell{24 / 36}{MODULE 05: LAB 04 — STEP 3 OF 5}{Lab 04 Step 3: Enforcing Karpathy's ``Surgical Changes'' Rule}{Locking \code{F-02}, \code{F-03}, and \code{F-04} inside Section 6 (\code{Out of Scope}) of \code{expected\_output/spec.md}}{
+  \bcard{0}{0}{7.3}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{Surgical Conductor Track \code{spec.md} (\code{expected\_output/spec.md})}}\\[5pt]
+    {\ttfamily\scriptsize
+    \#\# 1. Overview\\
+    Remediate Scorecard Finding F-01 (REQ-0005 fractional replenishment\\
+    starvation) in TokenBucketQuotaAllocator.\_replenish().\\[3pt]
+    \#\# 3. Functional Requirements\\
+    - Preserve fractional elapsed time `(elapsed * rate) \% 1.0` across\\
+    \ \ sub-quantum calls by advancing `last\_replenished` by `added / rate`\\
+    \ \ only when `added > 0` (or `now` when bucket reaches full capacity).\\[3pt]
+    \#\# 6. Out of Scope\\
+    - F-02 (DEFERRED): Prometheus gauge metrics export.\\
+    - F-03 (DEFERRED): Distributed Redis backend migration.\\
+    - F-04 (REJECTED): NumPy docstring reformatting.
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{How \code{Out of Scope} Acts as a Hard Guardrail}}\\[6pt]
+    $\bullet$ During \code{/conductor:implement}, the agent reads \code{spec.md}. Because \code{F-02}, \code{F-03}, and \code{F-04} are explicitly listed in \code{\#\# 6. Out of Scope}, the agent is forbidden from touching docstrings, adding metrics, or importing Redis.\\[5pt]
+    $\bullet$ During \code{/conductor:review}, if the git diff touches anything in \code{Out of Scope}, the automated review flags a \textbf{Plan Compliance Violation}!
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgblue}{gblue}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gblue}{Result: A 6-Line Surgical Diff Instead of a 500-Line Rewrite}}\\[5pt]
+    $\bullet$ Human review time drops from 45 minutes to \textbf{30 seconds}: the diff only modifies \code{\_replenish()} and adds \code{test\_req0005\_sub\_quantum\_polling\_*}.
+  }
+}
+
+% SLIDE 25
+\slideshell{25 / 36}{MODULE 05: LAB 04 — STEP 4 OF 5}{Lab 04 Step 4: Writing the Regression Test \& Surgical Code Fix}{Executing Step 4 (\code{Red} $\to$ \code{Green}) in \code{quota\_allocator\_fixed.py} and \code{test\_quota\_allocator.py}}{
+  \bcard{0}{0}{7.3}{4.0}{gbgred}{gred}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gred}{1. The Red Phase: Failing \code{REQ-0005} Regression Test}}\\[5pt]
+    {\ttfamily\scriptsize
+    def test\_req0005\_sub\_quantum\_polling\_preserves\_fractional\_elapsed\_time(self):\\
+    \ \ """Verifies REQ-0005: Sub-quantum polling does not starve refill."""\\
+    \ \ now = [0.0]\\
+    \ \ alloc = TokenBucketQuotaAllocator(capacity=2, refill\_rate\_per\_sec=1.0,\\
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clock=lambda: now[0])\\
+    \ \ self.assertTrue(alloc.consume("tenant-1", 2))  \# Drain to 0 at t=0.0\\
+    \ \ now[0] = 0.4\\
+    \ \ self.assertFalse(alloc.consume("tenant-1", 1)) \# 0.4s < 1.0s\\
+    \ \ now[0] = 0.8\\
+    \ \ self.assertFalse(alloc.consume("tenant-1", 1)) \# 0.8s < 1.0s\\
+    \ \ now[0] = 1.2\\
+    \ \ \# At t=1.2s, 1.2s total elapsed -> 1 token MUST be available!\\
+    \ \ self.assertTrue(alloc.consume("tenant-1", 1))
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{2. The Green Phase: Surgical Fix in \code{\_replenish()}}}\\[5pt]
+    {\ttfamily\scriptsize
+    def \_replenish(self, bucket: \_BucketState, now: float) -> None:\\
+    \ \ if now <= bucket.last\_replenished:\\
+    \ \ \ \ return\\
+    \ \ elapsed = now - bucket.last\_replenished\\
+    \ \ added = int(elapsed * self.\_refill\_rate\_per\_sec)\\
+    \ \ if added > 0:\\
+    \ \ \ \ new\_tokens = bucket.tokens + added\\
+    \ \ \ \ if new\_tokens >= self.\_capacity:\\
+    \ \ \ \ \ \ bucket.tokens = self.\_capacity\\
+    \ \ \ \ \ \ bucket.last\_replenished = now\\
+    \ \ \ \ else:\\
+    \ \ \ \ \ \ bucket.tokens = new\_tokens\\
+    \ \ \ \ \ \ bucket.last\_replenished += added / self.\_refill\_rate\_per\_sec
+    }
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggray}{gborder}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Mathematical Precision of \code{bucket.last\_replenished += added / rate}}}\\[5pt]
+    $\bullet$ At $t=0.4\text{s}$ and $t=0.8\text{s}$, \code{added == 0} so \code{last\_replenished} remains $0.0$. At $t=1.2\text{s}$, \code{added == 1}, so \code{last\_replenished} advances to $0.0 + 1 / 1.0 = 1.0\text{s}$—preserving the remaining $0.2\text{s}$ fractional credit!
+  }
+}
+
+% SLIDE 26
+\slideshell{26 / 36}{MODULE 05: LAB 04 — STEP 5 OF 5}{Lab 04 Step 5: Differential Bug/Fix Verification in \code{./self\_diagnose.sh}}{Proving the regression test fails on the bugged service and passes on the fixed service}{
+  \bcard{0}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{How \code{lab\_04/self\_diagnose.sh} Proves the Fix}}\\[6pt]
+    \textbf{1. Negative Control (Bugged Service):} Runs \code{test\_req0005} against \code{service/quota\_allocator.py} and verifies that it \textbf{fails} (proving the test genuinely catches the starvation bug).\\[4pt]
+    \textbf{2. Positive Control (Fixed Service):} Runs the full 6-test suite (\code{REQ-0001..REQ-0006}) against \code{expected\_output/quota\_allocator\_fixed.py} and verifies \textbf{6/6 pass}.\\[4pt]
+    \textbf{3. Scorecard \& Scope Audit:} Confirms \code{expected\_output/spec.md} contains all 7 sections and lists \code{F-02}, \code{F-03}, and \code{F-04} under \code{Out of Scope}.
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Live Verification Output (\code{./self\_diagnose.sh})}}\\[5pt]
+    {\ttfamily\scriptsize
+    \$ ./labs/lab\_04\_drift\_detection\_and\_5step\_refactoring/self\_diagnose.sh\\
+    === Lab 04 Self-Diagnosis: Spec Drift \& 5-Step Refactoring ===\\
+    test\_req0001\_initial\_bucket\_starts\_at\_full\_capacity ... ok\\
+    test\_req0002\_insufficient\_tokens\_leaves\_balance\_unchanged ... ok\\
+    test\_req0003\_refill\_caps\_at\_capacity ... ok\\
+    test\_req0004\_validation\_rejects\_invalid\_inputs ... ok\\
+    test\_req0005\_sub\_quantum\_polling\_preserves\_fractional\_elapsed\_time ... ok\\
+    test\_req0006\_concurrent\_consumption\_safety ... ok\\
+    ----------------------------------------------------------------------\\
+    Ran 6 tests in 0.001s --- OK\\
+    {[PASS]} Drift bug confirmed in service/quota\_allocator.py, fixed in\\
+    \ \ \ \ \ \ \ \ expected\_output/, and scoped via 5-Step Scorecard Track Spec.
+    }
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgyellow}{gyellow}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gdark}{Lab 04 Key Takeaway}}\\[5pt]
+    $\bullet$ A regression test is only proven when you witness it \textbf{fail} on the buggy code (\textbf{Red}) and \textbf{pass} on the surgical fix (\textbf{Green}).
   }
 }
 
 % ============================================================================
-% SLIDE 10: HANDS-ON LAB 06 — CAPSTONE SPEC.MD & REBUILD TEST
+% MODULE 06: LAB 05 STEP-BY-STEP — SDD CODE REVIEW & STACKED PRS (SLIDES 27-31)
 % ============================================================================
-\slideshell{10 / 12}{HANDS-ON LAB 06 (CAPSTONE)}{Lab 06: The 8-Section \code{SPEC.md} (SSOT) \& Clean-Room Rebuild Test}{Proving your specification is a true Single Source of Truth via isolated adversarial verification}{
-  \bcard{0}{0}{7.1}{4.2}{gbgblue}{gblue}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{The Canonical 8-Section \code{SPEC.md} Blueprint}}\\[6pt]
-    In \code{labs/lab\_06\_capstone\_ssot\_and\_rebuild\_test/SPEC.md}, the \textbf{CoursePulse Enrollment \& Waitlist Service} is specified across 8 sections:\\[4pt]
-    \textbf{1.} System Overview \& Domain Intent\\[2pt]
-    \textbf{2.} Architecture \& Data Flow (Mermaid topology)\\[2pt]
-    \textbf{3.} Data Models \& Schemas (\code{EnrollmentResult}, \code{DropResult}, \code{CourseRoster})\\[2pt]
-    \textbf{4.} Interface \& API Contracts (\code{create\_course}, \code{enroll}, \code{drop}, \code{get\_roster})\\[2pt]
-    \textbf{5.} Normative Workflows (\code{REQ-0001..0006}: FIFO waitlist promotion)\\[2pt]
-    \textbf{6--8.} Repo Structure, Parameterized Config \& 3-Phase Rebuild Recipe.
+
+% SLIDE 27
+\slideshell{27 / 36}{MODULE 06: LAB 05 — STEP 1 OF 5}{Lab 05 Step 1: Auditing an Incoming ``Vibe-Coded'' Pull Request}{Inspecting \code{labs/lab\_05\_sdd\_code\_review\_and\_stacked\_prs/simulated\_review/subpar\_change.patch}}{
+  \bcard{0}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{Baseline System Truth (\code{base/openspec/specs/kv-cache/spec.md})}}\\[5pt]
+    $\bullet$ \textbf{\code{REQ-0001}:} Bounded key-value storage up to \code{max\_size}.\\[4pt]
+    $\bullet$ \textbf{\code{REQ-0002} (FIFO Eviction Invariant):} When inserting a new key at capacity, \code{KVCache} MUST evict the oldest inserted key in \textbf{First-In-First-Out (FIFO)} order. Reading a key via \code{get(key)} MUST NOT alter eviction order!\\[4pt]
+    $\bullet$ \textbf{\code{REQ-0003}:} Updating an existing key preserves its FIFO position.\\[4pt]
+    $\bullet$ \textbf{\code{REQ-0004} \& \code{REQ-0005}:} Explicit \code{delete(key)} \& input validation.
   }
-  \bcard{7.6}{0}{7.1}{4.2}{gbggreen}{ggreen}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{The Adversarial Clean-Room Rebuild Protocol}}\\[6pt]
-    How \code{labs/lab\_06\_.../self\_diagnose.sh} verifies Level-3 SSOT maturity:\\[5pt]
-    \textbf{Step 1:} Create an empty isolated directory \code{mktemp -d} in \code{/tmp/}.\\[4pt]
-    \textbf{Step 2:} Copy only \code{SPEC.md}, the regenerated \code{coursepulse.py}, and \code{adversarial\_tests/test\_rebuild\_contract.py}.\\[4pt]
-    \textbf{Step 3:} Lock \code{adversarial\_tests/} read-only via \textbf{\code{chmod -R a-w}} so the implementer agent cannot weaken or delete test assertions.\\[4pt]
-    \textbf{Step 4:} Execute \code{python3 -m unittest} — all 6 contract tests pass!
+  \bcard{7.6}{0}{7.1}{4.0}{gbgred}{gred}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gred}{The Incoming Patch (\code{simulated\_review/subpar\_change.patch})}}\\[5pt]
+    {\ttfamily\scriptsize
+    @@ -28,6 +28,7 @@ class KVCache:\\
+     def get(self, key: str) -> Optional[ str ]:\\
+       if key not in self.\_store:\\
+         return None\\
+    +  self.\_store.move\_to\_end(key)  \# <-- "Optimized cache hits!"\\
+       return self.\_store[key]\\[4pt]
+    +def put\_with\_ttl(self, key: str, val: str, ttl: float) -> None:\\
+    +  self.\_store[key] = val\\
+    +  self.\_expiry[key] = time.time() + ttl
+    }
   }
 
-  \bcard{0}{-4.45}{14.7}{1.85}{gbgyellow}{gyellow}{
-    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gdark}{Multi-Agent Adversarial Isolation (Preventing Sycophantic Tests)}}\\[4pt]
-    In production SDD pipelines, \textbf{Agent A (Test Scaffolder)} writes \code{adversarial\_tests/} from \code{SPEC.md}, and \textbf{Agent B (Implementer)} writes \code{coursepulse.py} with filesystem write permissions restricted to \code{src/} only.
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggray}{gborder}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Why Traditional ``Code-Only'' Review Misses This}}\\[5pt]
+    $\bullet$ A reviewer looking only at Python syntax thinks \code{self.\_store.move\_to\_end(key)} looks clean! Only by reviewing against \code{openspec/specs/kv-cache/spec.md} do you catch that \code{REQ-0002} mandates strict \textbf{FIFO} order.
+  }
+}
+
+% SLIDE 28
+\slideshell{28 / 36}{MODULE 06: LAB 05 — STEP 2 OF 5}{Lab 05 Step 2: Catching All 3 SDD Violations via \code{/conductor:review}}{How Spec-Driven Code Review blocks behavioral drift, un-specced APIs, and untested code}{
+  \bcard{0}{0}{4.7}{4.0}{gbgred}{gred}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gred}{Violation 1: Spec Contradiction}}\\[6pt]
+    \textbf{Breaks \code{REQ-0002} (FIFO $\to$ LRU)}\\[4pt]
+    $\bullet$ Calling \code{move\_to\_end(key)} inside \code{get()} mutates FIFO eviction into Least-Recently-Used (LRU) eviction.\\[4pt]
+    $\bullet$ Downstream callers relying on predictable FIFO cohort expiration suffer silent data bugs.
+  }
+  \bcard{5.0}{0}{4.7}{4.0}{gbgred}{gred}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gred}{Violation 2: Un-Specced API}}\\[6pt]
+    \textbf{Zero Spec Delta for \code{put\_with\_ttl}}\\[4pt]
+    $\bullet$ Adds public method \code{put\_with\_ttl(key, value, ttl\_seconds)} with no \code{REQ-0006} in \code{openspec/specs/kv-cache/spec.md}.\\[4pt]
+    $\bullet$ Fails to purge expired entries before evicting valid FIFO keys at capacity!
+  }
+  \bcard{10.0}{0}{4.7}{4.0}{gbgred}{gred}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gred}{Violation 3: Untested \& Non-Hermetic}}\\[6pt]
+    \textbf{Hardcoded \code{time.time()} \& 0 Tests}\\[4pt]
+    $\bullet$ Uses non-injectable \code{time.time()} instead of deterministic \code{clock}.\\[4pt]
+    $\bullet$ Fails to validate \code{ttl\_seconds <= 0} and includes zero \code{test\_req0006\_*} unit tests.
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgyellow}{gyellow}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gdark}{The SDD Code Review Golden Rule}}\\[5pt]
+    $\bullet$ \textbf{Review the Spec Diff First:} Every PR that adds or changes observable behavior MUST include an OpenSpec delta (\code{REQ-XXXX}) and a matching \code{test\_reqXXXX\_*} test. If code and spec disagree, block the PR.
+  }
+}
+
+% SLIDE 29
+\slideshell{29 / 36}{MODULE 06: LAB 05 — STEP 3 OF 5}{Lab 05 Step 3: Synchronizing the OpenSpec Contract (\code{REQ-0006})}{Adding \code{REQ-0006} to \code{expected\_output/openspec/specs/kv-cache/spec.md} while preserving \code{REQ-0002}}{
+  \bcard{0}{0}{7.3}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Synchronized Spec Delta (\code{REQ-0006}: Per-Entry TTL Expiration)}}\\[5pt]
+    {\ttfamily\scriptsize
+    \#\#\# Requirement: [REQ-0006] Optional Per-Entry TTL \& Capacity Reclamation\\
+    The KVCache SHALL support `put\_with\_ttl(key, value, ttl\_seconds)`\\
+    where `ttl\_seconds > 0`. Expired entries (`now >= expires\_at`) MUST\\
+    be treated as absent on `get(key)` and MUST be purged before evicting\\
+    any non-expired FIFO entry when inserting at capacity.\\[4pt]
+    \#\#\#\# Scenario: Expired entry is purged before FIFO eviction at capacity\\
+    - **GIVEN** a KVCache(`max\_size=2`) with `"k1"` (`ttl=5.0`) and `"k2"`\\
+    - **WHEN** clock advances to `t=6.0` and `"k3"` is inserted via `put`\\
+    - **THEN** expired `"k1"` SHALL be purged, `"k2"` SHALL remain present,\\
+    \ \ and `"k3"` SHALL be stored without evicting `"k2"`.
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{Why Spec Writing Exposed a Subtle Capacity Bug}}\\[6pt]
+    $\bullet$ Notice the scenario above: when the cache is full (\code{max\_size=2}) and \code{"k1"} has expired, inserting \code{"k3"} should reclaim \code{"k1"}'s slot—\textbf{not} evict a live key!\\[5pt]
+    $\bullet$ The vibe-coded patch forgot to call \code{\_purge\_expired()} inside \code{put()} before checking \code{len(self.\_store) >= self.max\_size}. Writing \code{REQ-0006} caught that edge case before production!
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggray}{gborder}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Preserving \code{REQ-0002} Intact}}\\[5pt]
+    $\bullet$ In \code{expected\_output/openspec/specs/kv-cache/spec.md}, \code{REQ-0001} through \code{REQ-0005} remain intact (strict FIFO order), and \code{REQ-0006} is cleanly appended.
+  }
+}
+
+% SLIDE 30
+\slideshell{30 / 36}{MODULE 06: LAB 05 — STEP 4 OF 5}{Lab 05 Step 4: Remediating \code{kvcache.py} \& Verifying \code{test\_kvcache.py}}{Fixing FIFO preservation, eager+lazy TTL expiration, and deterministic clock injection}{
+  \bcard{0}{0}{7.3}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{Compliant Implementation (\code{expected\_output/kvcache.py})}}\\[5pt]
+    {\ttfamily\scriptsize
+    def \_purge\_expired\_unlocked(self, now: float) -> None:\\
+    \ \ expired = [k for k, exp in self.\_expiry.items() if now >= exp]\\
+    \ \ for k in expired:\\
+    \ \ \ \ self.\_store.pop(k, None)\\
+    \ \ \ \ self.\_expiry.pop(k, None)\\[4pt]
+    def get(self, key: str) -> Optional[str]:\\
+    \ \ with self.\_lock:\\
+    \ \ \ \ now = float(self.\_clock())\\
+    \ \ \ \ if key in self.\_expiry and now >= self.\_expiry[key]:\\
+    \ \ \ \ \ \ self.\_store.pop(key, None); self.\_expiry.pop(key, None)\\
+    \ \ \ \ \ \ return None\\
+    \ \ \ \ return self.\_store.get(key) \# <-- Preserves REQ-0002 FIFO order!
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Traceable Test Suite (\code{expected\_output/test\_kvcache.py})}}\\[5pt]
+    {\ttfamily\scriptsize
+    test\_req0001\_put\_and\_get\_roundtrip ... ok\\
+    test\_req0002\_fifo\_eviction\_unaffected\_by\_get\_reads ... ok\\
+    test\_req0003\_in\_place\_update\_preserves\_fifo\_order ... ok\\
+    test\_req0004\_explicit\_key\_deletion ... ok\\
+    test\_req0005\_validation\_rejects\_invalid\_size\_or\_key ... ok\\
+    test\_req0006\_per\_entry\_ttl\_expiration\_and\_capacity\_reclamation ... ok
+    }\\[6pt]
+    $\bullet$ \code{test\_req0002} explicitly reads the oldest key via \code{get("k1")} before inserting \code{"k3"} at capacity and asserts \code{"k1"} is still evicted first (blocking any future LRU regression).
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgblue}{gblue}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gblue}{Eager + Lazy TTL Reclamation}}\\[5pt]
+    $\bullet$ \code{put()} and \code{put\_with\_ttl()} call \code{\_purge\_expired\_unlocked(now)} \emph{before} checking capacity so expired keys never cause live FIFO keys to be evicted prematurely.
+  }
+}
+
+% SLIDE 31
+\slideshell{31 / 36}{MODULE 06: LAB 05 — STEP 5 OF 5}{Lab 05 Step 5: Stacked Multi-PR Decomposition \& Archive PR \code{N+1}}{Structuring \code{expected\_output/tasks.md} for clean Git / Jujutsu (\code{jj}) stacked pull requests}{
+  \bcard{0}{0}{7.3}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{Stacked PR Task Breakdown (\code{expected\_output/tasks.md})}}\\[5pt]
+    {\ttfamily\scriptsize
+    \#\# Batch 1: Spec Delta \& Core TTL State (PR 1)\\
+    - [x] 1.1 Add REQ-0006 to openspec/specs/kv-cache/spec.md \& design.md\\
+    - [x] 1.2 Add injectable clock \& \_expiry dict to KVCache\\[4pt]
+    \#\# Batch 2: TTL Eviction, FIFO Remediation \& Tests (PR 2)\\
+    - [x] 2.1 Implement put\_with\_ttl() \& \_purge\_expired\_unlocked()\\
+    - [x] 2.2 Remove move\_to\_end() from get() to restore REQ-0002 FIFO\\
+    - [x] 2.3 Add test\_req0006\_per\_entry\_ttl\_expiration\_and\_capacity\_reclamation\\[4pt]
+    \#\# Batch 3: Dedicated OpenSpec Archive (PR N+1 — Docs Only)\\
+    - [x] 3.1 Run /opsx:verify \& /opsx:archive after PR 1 \& PR 2 merge
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{The 4 Stacked Multi-PR Rules}}\\[6pt]
+    \textbf{1. One Change Folder = One Feature:} Keep a single \code{openspec/changes/<id>/} folder across the stack.\\[4pt]
+    \textbf{2. Batch \code{tasks.md} by PR:} Group checkboxes under \code{Batch 1 (PR 1)}, \code{Batch 2 (PR 2)}.\\[4pt]
+    \textbf{3. Truthful Same-PR Checkmarks:} Only mark \code{[x]} for tasks whose code + tests are in that PR.\\[4pt]
+    \textbf{4. Dedicated Archive PR \code{N+1}:} Never run \code{/opsx:archive} mid-stack (moving files to \code{archive/} breaks downstream rebase!). Run \code{/opsx:archive} in a final docs-only PR \code{N+1}.
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgyellow}{gyellow}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gdark}{Lab 05 Verification Command}}\\[5pt]
+    $\bullet$ Run \code{./labs/lab\_05\_sdd\_code\_review\_and\_stacked\_prs/self\_diagnose.sh} to verify the \code{REQ-0006} contract, Stacked PR \code{tasks.md} batches, and all 6 \code{KVCache} unit tests.
   }
 }
 
 % ============================================================================
-% SLIDE 11: 5 SECURITY GUARDRAILS & DIAGNOSTIC PITFALLS
+% MODULE 07: LAB 06 STEP-BY-STEP — CAPSTONE SPEC.MD & CLEAN-ROOM REBUILD (SLIDES 32-36)
 % ============================================================================
-\slideshell{11 / 12}{SECURITY \& DIAGNOSTIC PITFALLS}{5 Mandatory Security Guardrails \& Top Practitioner Traps}{Avoiding silent scenario loss, parser drops, credential leaks, and mid-track tech-stack drift}{
-  \bcard{0}{0}{7.1}{4.2}{gbgred}{gred}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gred}{Top 5 Practitioner Failure Modes \& Fixes}}\\[6pt]
-    \textbf{1. Partial \code{MODIFIED} Block:} Pasting only the new scenario under \code{\#\# MODIFIED Requirements} overwrites the entire requirement on archive. \textit{Fix: Copy the full requirement + all retained scenarios.}\\[4pt]
-    \textbf{2. 3-Hashtag \code{\#\#\# Scenario:} Drop:} OpenSpec's parser strictly requires \textbf{4 hashtags} (\code{\#\#\#\# Scenario:}).\\[4pt]
-    \textbf{3. \code{RENAMED} + \code{MODIFIED} Collision:} \code{MODIFIED} must reference the \textbf{new (\code{TO:})} header name.\\[4pt]
-    \textbf{4. Unapproved Stack Drift:} Halt task \code{[\textasciitilde]} and update \code{tech-stack.md} first.
+
+% SLIDE 32
+\slideshell{32 / 36}{MODULE 07: LAB 06 (CAPSTONE) — STEP 1 OF 5}{Lab 06 Step 1: The 8-Section \code{SPEC.md} (Sections 1--4)}{Inspecting \code{labs/lab\_06\_capstone\_ssot\_and\_rebuild\_test/SPEC.md} for \code{CoursePulse}}{
+  \bcard{0}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{Sections 1 \& 2: Domain Intent \& Architecture}}\\[6pt]
+    $\bullet$ \textbf{Section 1 (System Overview \& Domain Intent):} \code{CoursePulse} manages university course creation, seat-bounded student enrollment, idempotent duplicate checks, and automatic FIFO waitlist promotion when an enrolled student drops.\\[5pt]
+    $\bullet$ \textbf{Section 2 (Architecture \& Concurrency):} Thread-safe in-memory domain service guarded by \code{threading.RLock} with zero external runtime dependencies.
   }
-  \bcard{7.6}{0}{7.1}{4.2}{gbgblue}{gblue}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{5 Security Guardrails for SDD Repositories}}\\[6pt]
-    \textbf{1. Zero Secrets in Specs:} \code{openspec/} and \code{conductor/} are committed to Git—use \code{\$\{API\_KEY\}} placeholders, never live tokens.\\[4pt]
-    \textbf{2. Sanitize Brownfield Extractions:} Strip internal hostnames, project IDs, and PII during \code{SPEC.md} extraction.\\[4pt]
-    \textbf{3. Enforce Plan Mode Path Sandboxing:} Keep \code{policies/conductor.toml} active so planning cannot mutate \code{src/}.\\[4pt]
-    \textbf{4. Lock Adversarial Tests Read-Only:} \code{chmod -R a-w adversarial\_tests/}.\\[4pt]
-    \textbf{5. Gate CI on Strict Validation:} Run \code{./self\_diagnose\_all.sh} on every PR.
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Sections 3 \& 4: Data Schemas \& API Contracts}}\\[6pt]
+    $\bullet$ \textbf{Section 3 (Data Models):} Immutable \code{EnrollmentResult(course\_id, student\_id, status, waitlist\_position)} and \code{DropResult(course\_id, dropped\_student\_id, was\_enrolled, promoted\_student\_id)} dataclasses.\\[5pt]
+    $\bullet$ \textbf{Section 4 (Interface Contracts):} Exact signatures and error semantics for \code{create\_course}, \code{enroll}, \code{drop}, and \code{get\_roster} (raising \code{KeyError} on unknown \code{course\_id} and \code{ValueError} on \code{capacity < 1}).
   }
 
-  \bcard{0}{-4.45}{14.7}{1.85}{gbggray}{gborder}{
-    {\fontsize{14}{18}\selectfont\bfseries\textcolor{gnavy}{Quick Diagnostic Command Cheat Sheet}}\\[4pt]
-    $\bullet$ Validate all OpenSpec changes in CI: \code{openspec validate --all --strict --json} \quad $\bullet$ Audit Conductor tracks: \code{/conductor:status} \quad $\bullet$ Run Principal Engineer spec review: \code{/conductor:review} \quad $\bullet$ Logical rollback: \code{/conductor:revert}
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggray}{gborder}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Essential vs.\ Incidental Complexity in \code{SPEC.md}}}\\[5pt]
+    $\bullet$ Sections 1--4 specify every \textbf{observable type, field name, status string (\code{"ENROLLED"}, \code{"WAITLISTED"}), and exception type} so an independent test suite can bind to the regenerated code with zero glue adjustments.
   }
 }
 
-% ============================================================================
-% SLIDE 12: QUICKSTART & CALL TO ACTION
-% ============================================================================
-\slideshell{12 / 12}{GET STARTED IN 2 MINUTES}{Start Practicing Now: Clone, Diagnose \& Build}{Everything in SDD-Crash-Course runs offline in $<1$ second with Python 3.11+ Standard Library}{
-  \bcard{0}{0}{7.1}{4.2}{gbggreen}{ggreen}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{ggreen}{2-Minute Terminal Quickstart}}\\[6pt]
-    \textbf{1. Clone the Open-Access Repository:}\\[2pt]
-    \code{git clone https://github.com/adkaspar-google/sdd-course.git}\\[2pt]
-    \code{cd sdd-course}\\[6pt]
-    \textbf{2. Run the Master Diagnostic Suite (All 6 Labs):}\\[2pt]
-    \code{./self\_diagnose\_all.sh}\\[6pt]
-    \textbf{3. Install Conductor \& OpenSpec in Your IDE/CLI:}\\[2pt]
-    \code{gemini extensions install \textbackslash}\\[1pt]
-    \quad \code{https://github.com/gemini-cli-extensions/conductor}\\[2pt]
-    \code{npm install -g @fission-ai/openspec@latest}
+% SLIDE 33
+\slideshell{33 / 36}{MODULE 07: LAB 06 (CAPSTONE) — STEP 2 OF 5}{Lab 06 Step 2: The 8-Section \code{SPEC.md} (Sections 5--8)}{State machines, parameterized config, and the 3-Phase Clean-Room Rebuild Recipe}{
+  \bcard{0}{0}{7.1}{4.0}{gbgblue}{gblue}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gblue}{Sections 5, 6 \& 7: Workflows, Layout \& Config}}\\[6pt]
+    $\bullet$ \textbf{Section 5 (Behavioral Workflows \& \code{REQ-0001..0006}):}\\[3pt]
+    \ \ -- \code{REQ-0002}: Seat available $\to$ \code{ENROLLED}; full $\to$ \code{WAITLISTED} (1-based position).\\[2pt]
+    \ \ -- \code{REQ-0003}: Duplicate \code{enroll()} is idempotent (no duplicate seat/waitlist entry).\\[2pt]
+    \ \ -- \code{REQ-0004}: Dropping an \code{ENROLLED} student immediately promotes head of FIFO waitlist (\code{popleft()}) into the vacated seat!\\[3pt]
+    $\bullet$ \textbf{Sections 6 \& 7:} Module layout (\code{coursepulse.py}) \& env parameterization (\code{\$\{PORT:-8080\}}).
   }
-  \bcard{7.6}{0}{7.1}{4.2}{gbgblue}{gblue}{
-    {\fontsize{16}{20}\selectfont\bfseries\textcolor{gblue}{Included Course Resources \& Codelabs}}\\[6pt]
-    $\bullet$ \textbf{16-Page Practical Field Guide PDF:}\\[1pt]
-    \quad \code{Coursebook\_SDD\_Conductor\_OpenSpec.pdf}\\[4pt]
-    $\bullet$ \textbf{Dual-Engine Playbook:}\\[1pt]
-    \quad \code{playbooks/DUAL\_ENGINE\_CONDUCTOR\_OPENSPEC\_PLAYBOOK.md}\\[4pt]
-    $\bullet$ \textbf{Dedicated Spec Skill Template:}\\[1pt]
-    \quad \code{.agents/skills/writing-arch-specs/SKILL.md}\\[4pt]
-    $\bullet$ \textbf{Official Google Codelabs:}\\[1pt]
-    \quad -- \code{codelabs.developers.google.com/next26/advanced-planning}\\[1pt]
-    \quad -- \code{codelabs.developers.google.com/conductor-plugin}
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Section 8: The 3-Phase Clean-Room Rebuild Recipe}}\\[6pt]
+    \textbf{Phase A (Data Models \& Validation):} Generate \code{EnrollmentResult}, \code{DropResult}, \code{CourseRoster}, and input validators (\code{REQ-0001}).\\[4pt]
+    \textbf{Phase B (Core Enrollment \& FIFO Waitlist Engine):} Implement \code{enroll()}, \code{drop()} with atomic FIFO head promotion, and defensive copy \code{get\_roster()} (\code{REQ-0002..0006}).\\[4pt]
+    \textbf{Phase C (Adversarial Verification):} Execute read-only \code{test\_rebuild\_contract.py} in an isolated \code{/tmp/} clean room.
   }
 
-  \bcard{0}{-4.45}{14.7}{1.85}{gbgyellow}{gyellow}{
-    {\fontsize{15}{19}\selectfont\bfseries\textcolor{gdark}{Summary: Measure Twice, Specify Once, Code Deterministically}}\\[4pt]
-    Whether you are building greenfield services (Lab 01 \& 03), recovering specs and refactoring brownfield legacy systems (Lab 02 \& 04), reviewing PRs (Lab 05), or running clean-room rebuilds (Lab 06), \textbf{the specification is your source of truth.}
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgyellow}{gyellow}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gdark}{The Level-3 SSOT Litmus Test}}\\[5pt]
+    $\bullet$ If an engineer or AI agent can read \code{SPEC.md} in an empty directory and produce \code{coursepulse.py} that passes all 6 adversarial contract tests on the first run, \code{SPEC.md} is a true \textbf{Single Source of Truth}.
+  }
+}
+
+% SLIDE 34
+\slideshell{34 / 36}{MODULE 07: LAB 06 (CAPSTONE) — STEP 3 OF 5}{Lab 06 Step 3: Clean-Room Rebuild \& \code{chmod -w} Adversarial Isolation}{How \code{labs/lab\_06\_capstone\_ssot\_and\_rebuild\_test/self\_diagnose.sh} enforces Karpathy's Immutable Verifier}{
+  \bcard{0}{0}{7.3}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{Clean-Room Rebuild Harness (\code{lab\_06/self\_diagnose.sh})}}\\[5pt]
+    {\ttfamily\scriptsize
+    \# 1. Create isolated clean-room workspace in /tmp\\
+    CLEAN\_ROOM="\$(mktemp -d /tmp/sdd\_rebuild\_XXXXXX)"\\
+    trap 'chmod -R u+w "\$CLEAN\_ROOM" 2>/dev/null; rm -rf "\$CLEAN\_ROOM"' EXIT\\[4pt]
+    \# 2. Copy SPEC.md, regenerated implementation, and adversarial tests\\
+    cp "\$SCRIPT\_DIR/SPEC.md" "\$CLEAN\_ROOM/SPEC.md"\\
+    cp "\$SCRIPT\_DIR/expected\_output/coursepulse.py" "\$CLEAN\_ROOM/coursepulse.py"\\
+    mkdir -p "\$CLEAN\_ROOM/tests"\\
+    cp "\$SCRIPT\_DIR/adversarial\_tests/test\_rebuild\_contract.py" \\
+    \ \ \ "\$CLEAN\_ROOM/tests/test\_rebuild\_contract.py"\\[4pt]
+    \# 3. Lock adversarial test directory READ-ONLY (chmod -w)\\
+    chmod -R a-w "\$CLEAN\_ROOM/tests"
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbgred}{gred}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gred}{Why \code{chmod -R a-w} Is Critical for Agentic Verification}}\\[6pt]
+    $\bullet$ Just like Karpathy's \code{autoresearch} locks \code{prepare.py} (\code{val\_bpb} evaluator) out of the agent's write scope, locking \code{tests/} with \code{chmod -R a-w} physically prevents an implementation agent from editing or deleting test assertions.\\[5pt]
+    $\bullet$ We also separate roles: \textbf{Agent A (Test Scaffolder)} writes \code{test\_rebuild\_contract.py} from \code{SPEC.md}, while \textbf{Agent B (Implementer)} writes \code{coursepulse.py} without permission to modify \code{tests/}.
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbggreen}{ggreen}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{ggreen}{Zero Shared State with the Original Repo}}\\[5pt]
+    $\bullet$ Running \code{python3 -m unittest} inside \code{\$CLEAN\_ROOM} guarantees \code{coursepulse.py} doesn't rely on hidden files or undeclared imports in the parent repository.
+  }
+}
+
+% SLIDE 35
+\slideshell{35 / 36}{MODULE 07: LAB 06 (CAPSTONE) — STEP 4 OF 5}{Lab 06 Step 4: Inspecting \code{coursepulse.py} \& \code{test\_rebuild\_contract.py}}{Verifying FIFO waitlist promotion (\code{REQ-0004}) and defensive roster snapshots (\code{REQ-0006})}{
+  \bcard{0}{0}{7.3}{4.0}{gbggray}{gborder}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{Atomic Drop \& FIFO Waitlist Promotion (\code{coursepulse.py})}}\\[5pt]
+    {\ttfamily\scriptsize
+    def drop(self, course\_id: str, student\_id: str) -> DropResult:\\
+    \ \ with self.\_lock:\\
+    \ \ \ \ course = self.\_get\_course\_unlocked(course\_id)\\
+    \ \ \ \ if student\_id in course.enrolled:\\
+    \ \ \ \ \ \ course.enrolled.remove(student\_id)\\
+    \ \ \ \ \ \ promoted: Optional[str] = None\\
+    \ \ \ \ \ \ while course.waitlist:\\
+    \ \ \ \ \ \ \ \ candidate = course.waitlist.popleft()\\
+    \ \ \ \ \ \ \ \ if candidate in course.waitlisted\_set:\\
+    \ \ \ \ \ \ \ \ \ \ course.waitlisted\_set.remove(candidate)\\
+    \ \ \ \ \ \ \ \ \ \ course.enrolled.append(candidate)\\
+    \ \ \ \ \ \ \ \ \ \ promoted = candidate\\
+    \ \ \ \ \ \ \ \ \ \ break\\
+    \ \ \ \ \ \ return DropResult(course\_id, student\_id, True, promoted)
+    }
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Live Clean-Room Verification (\code{./self\_diagnose.sh})}}\\[5pt]
+    {\ttfamily\scriptsize
+    \$ ./labs/lab\_06\_capstone\_ssot\_and\_rebuild\_test/self\_diagnose.sh\\
+    === Lab 06 Self-Diagnosis: 8-Section SPEC.md \& Rebuild Test ===\\
+    test\_req0001\_course\_creation\_and\_validation ... ok\\
+    test\_req0002\_seat\_allocation\_and\_waitlist\_overflow ... ok\\
+    test\_req0003\_idempotent\_duplicate\_enrollment ... ok\\
+    test\_req0004\_fifo\_waitlist\_promotion\_on\_enrolled\_drop ... ok\\
+    test\_req0005\_waitlist\_drop\_and\_non\_member\_drop ... ok\\
+    test\_req0006\_immutable\_roster\_snapshot\_and\_missing\_course\_errors ... ok\\
+    ----------------------------------------------------------------------\\
+    Ran 6 tests in 0.001s --- OK\\
+    {[PASS]} Clean-Room Rebuild Test passed all read-only adversarial\\
+    \ \ \ \ \ \ \ \ contract tests (REQ-0001..REQ-0006).
+    }
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgblue}{gblue}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gblue}{Defensive Roster Snapshot (\code{REQ-0006})}}\\[5pt]
+    $\bullet$ \code{test\_req0006} mutates the tuple/list returned by \code{get\_roster()} and verifies that internal course state is completely unaffected—proving deep immutability across the boundary.
+  }
+}
+
+% SLIDE 36
+\slideshell{36 / 36}{MODULE 07: COURSE GRADUATION \& SUMMARY}{Master Diagnostic Checklist \& Running \code{./self\_diagnose\_all.sh}}{Your complete toolkit for teaching and practicing Spec-Driven Development}{
+  \bcard{0}{0}{7.1}{4.0}{gbgred}{gred}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gred}{Top 4 Practitioner Traps to Avoid}}\\[6pt]
+    \textbf{1. Partial \code{MODIFIED} Block in OpenSpec:} \code{MODIFIED} replaces the \emph{entire} requirement block on archive. Always copy the full requirement + all existing scenarios before editing!\\[4pt]
+    \textbf{2. 3-Hashtag \code{\#\#\# Scenario:} Header:} OpenSpec's parser strictly requires \textbf{4 hashtags} (\code{\#\#\#\# Scenario:}); 3 hashtags silently drop scenarios.\\[4pt]
+    \textbf{3. \code{RENAMED} + \code{MODIFIED} Header Collision:} \code{MODIFIED} must reference the \textbf{new (\code{TO})} requirement name.\\[4pt]
+    \textbf{4. Archiving Mid-Stack:} Only run \code{/opsx:archive} in final PR \code{N+1}.
+  }
+  \bcard{7.6}{0}{7.1}{4.0}{gbggreen}{ggreen}{
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{ggreen}{Run the Full 6-Lab Self-Diagnosis Harness}}\\[5pt]
+    {\ttfamily\scriptsize
+    \$ git clone https://github.com/adkaspar-google/sdd-course.git\\
+    \$ cd sdd-course \&\& ./self\_diagnose\_all.sh\\[4pt]
+    {[PASS]} Lab 01: Greenfield Rate Limiter (6/6 tests)\\
+    {[PASS]} Lab 02: Brownfield Lease Lock Manager (6/6 tests)\\
+    {[PASS]} Lab 03: Circuit Breaker TDD State Machine (7/7 tests)\\
+    {[PASS]} Lab 04: Token Bucket Drift \& Scorecard Refactoring (6/6 tests)\\
+    {[PASS]} Lab 05: KVCache SDD Code Review \& Stacked PRs (6/6 tests)\\
+    {[PASS]} Lab 06: CoursePulse SPEC.md Clean-Room Rebuild (6/6 tests)\\
+    ========================================================\\
+    {[ALL PASSED]} 6/6 Hands-On Labs \& 37/37 Traceable Tests!
+    }
+  }
+
+  \bcard{0}{-4.25}{14.7}{2.05}{gbgblue}{gblue}{
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gblue}{Congratulations on Completing \code{SDD-Crash-Course}!}}\\[5pt]
+    $\bullet$ \textbf{Course Materials in This Repo:} 6 Executable Labs (\code{labs/}), 16-Page Practical Coursebook PDF (\code{Coursebook\_SDD\_Conductor\_OpenSpec.pdf}), Dual-Engine Playbook (\code{playbooks/}), \code{@writing-arch-specs} Skill (\code{.agents/skills/}), and 7 Step-by-Step Video Modules (\code{slides/}).
   }
 }
 
