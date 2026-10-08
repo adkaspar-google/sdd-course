@@ -26,3 +26,23 @@ Run `./self_diagnose.sh` to execute the Clean-Room Rebuild Test in an isolated t
 ```bash
 ./self_diagnose.sh
 ```
+
+---
+
+## Claude Code Track
+
+1. **Start in Learner Mode**: From the repository root on a personal branch, launch Claude Code with learner settings:
+   ```bash
+   claude --settings .claude/learner.settings.json
+   ```
+2. **Inspect the SSOT Contract**: In **plan mode**, read `labs/lab_06_capstone_ssot_and_rebuild_test/SPEC.md` and review its 8 sections with `/opsx:explore`.
+3. **Human Approval Checkpoint**: Read the spec and plan, run `git status --short`, and confirm only specification artifacts changed.
+4. **Clean Implementation Session**: Start a new session before implementing so that the implementing session receives `SPEC.md` as its only input.
+5. **Set Goal & Implement**: Provide `labs/lab_06_capstone_ssot_and_rebuild_test/SPEC.md` as the only input, set the session goal, and run `/conductor:conductor-implement` (or `/opsx:apply`) to generate `labs/lab_06_capstone_ssot_and_rebuild_test/work/coursepulse.py`:
+   ```text
+   /goal ./labs/lab_06_capstone_ssot_and_rebuild_test/self_diagnose.sh work exits 0, shown by running it; no file under adversarial_tests/ or expected_output/ is modified; or stop after 20 turns.
+   ```
+6. **Verify**: Run the self-diagnosis script against your `work/` directory:
+   ```bash
+   ./labs/lab_06_capstone_ssot_and_rebuild_test/self_diagnose.sh work
+   ```

@@ -26,14 +26,14 @@ You **never** need to re-run `/conductor:setup` to add new rules or connect a cu
 - When executing `/conductor:newTrack`, conduct the interactive interview to clarify scope and edge cases.
 - Upon user confirmation of questioning completion, the agent MUST invoke `@writing-arch-specs`
   (`.agents/skills/writing-arch-specs/SKILL.md`) and align with `openspec/specs/` to construct `spec.md`.
-- All specifications MUST adhere to the 7-Section Architecture Spec Anatomy:
-  1. Executive Summary, Legacy Diagnosis & Objective
-  2. Environment Prerequisites, Dependencies & Tech-Stack Lock
-  3. Technical Contracts, Schemas & Architecture
-  4. Concrete Deliverables & Target Files
-  5. Verification Gates & Acceptance Criteria (RFC 2119 SHALL/MUST + 4-Hashtag Gherkin WHEN/THEN)
-  6. Cost, Concurrency Trade-Offs & Rollback Safeguards
-  7. Explicit 'Out of Scope' Boundaries
+- All specifications MUST adhere to the 7-Section Track Specification Anatomy:
+  1. **Overview**: 2–3 sentences stating the business problem, target component, and outcome.
+  2. **Architecture & Component Topology**: Textual or Mermaid diagram showing affected modules, boundaries, and data flows.
+  3. **Functional Requirements**: Numbered `REQ-XXXX` statements using RFC 2119 (`MUST`, `SHALL`, `MUST NOT`) paired with explicit `WHEN / THEN` scenarios.
+  4. **Non-Functional Requirements**: Quantifiable latency, concurrency, memory, security, and test-coverage (`>80%`) invariants.
+  5. **Acceptance Criteria**: Binary pass/fail verification checklist mapped 1:1 to `REQ-XXXX` IDs.
+  6. **Out of Scope**: Explicit negative scope boundaries to prevent agent scope creep during implementation.
+  7. **Verification Commands**: Exact non-interactive shell commands (`CI=true ...`) required to prove compliance.
 ```
 
 ### 2. `conductor/index.md` (Capabilities Handshake)

@@ -49,3 +49,25 @@ Run `./self_diagnose.sh` to verify that the bugged implementation fails the `REQ
 ```bash
 ./self_diagnose.sh
 ```
+
+---
+
+## Claude Code Track
+
+1. **Start in Learner Mode**: From the repository root on a personal branch, launch Claude Code with learner settings:
+   ```bash
+   claude --settings .claude/learner.settings.json
+   ```
+2. **Drift Audit & Scoped Track**:
+   - Use **plan mode** for the drift audit with `/opsx:explore` and `/opsx:verify` across `specs/spec.md`, `service/quota_allocator.py`, and `scorecard.md`.
+   - Run `/conductor:conductor-new-track` with the new track scoped to `F-01` only (`F-02`, `F-03`, and `F-04` in Out of Scope), and save the track specification to `labs/lab_04_drift_detection_and_5step_refactoring/work/spec.md`.
+3. **Human Approval Checkpoint**: Read the spec and plan, run `git status --short`, and confirm only specification artifacts changed.
+4. **Clean Implementation Session**: Start a new session (or run `/clear`) before implementing.
+5. **Set Goal & Implement**: Set the session goal and run `/conductor:conductor-implement` and `/opsx:apply` to write `test_*.py` and the fixed module under `labs/lab_04_drift_detection_and_5step_refactoring/work/` (leaving `service/quota_allocator.py` unmodified):
+   ```text
+   /goal ./labs/lab_04_drift_detection_and_5step_refactoring/self_diagnose.sh work exits 0, shown by running it; no file under adversarial_tests/ or expected_output/ is modified; or stop after 20 turns.
+   ```
+6. **Verify**: Run the self-diagnosis script against your `work/` directory:
+   ```bash
+   ./labs/lab_04_drift_detection_and_5step_refactoring/self_diagnose.sh work
+   ```

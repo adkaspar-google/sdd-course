@@ -16,7 +16,7 @@ name: SDD-Crash-Course Self-Diagnosis & OpenSpec CI Gate
 
 on:
   push:
-    branches: [main]
+    branches: [main, claude]
   pull_request:
 
 jobs:
@@ -43,3 +43,7 @@ jobs:
         run: |
           chmod +x ./self_diagnose_all.sh ./labs/*/self_diagnose.sh
           ./self_diagnose_all.sh
+
+      - name: Run Claude Code Track Verification Suite
+        run: |
+          CI=true python3 -m unittest discover -s tests/claude_track -p "test_*.py" -v

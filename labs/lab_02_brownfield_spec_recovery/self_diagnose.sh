@@ -16,12 +16,36 @@
 set -euo pipefail
 LAB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+TARGET_ARG="${1:-expected_output}"
+if [[ "${TARGET_ARG}" = /* ]]; then
+  TARGET_DIR="${TARGET_ARG}"
+else
+  TARGET_DIR="${LAB_DIR}/${TARGET_ARG}"
+fi
+
 echo "=== Lab 02 Self-Diagnosis: Brownfield Spec Recovery (Lease Manager) ==="
 
-python3 -m unittest discover -s "${LAB_DIR}/service" -p "test_*.py" -v
+if [[ ! -d "${TARGET_DIR}" ]]; then
+  echo "[FAIL] Target directory does not exist: ${TARGET_DIR}"
+  exit 1
+fi
 
-SPEC_FILE="${LAB_DIR}/expected_output/openspec/specs/lease-manager/spec.md"
-ADR_FILE="${LAB_DIR}/expected_output/ADR-0001-fencing-tokens.md"
+SPEC_FILE="${TARGET_DIR}/openspec/specs/lease-manager/spec.md"
+ADR_FILE="${TARGET_DIR}/ADR-0001-fencing-tokens.md"
+
+for f in "$SPEC_FILE" "$ADR_FILE"; do
+  if [[ ! -s "$f" ]]; then
+    echo "[FAIL] Missing required artifact: $f"
+    exit 1
+  fi
+done
+
+TEST_OUT="$(python3 -m unittest discover -s "${LAB_DIR}/service" -p "test_*.py" -v 2>&1)" || {
+  echo "${TEST_OUT}"
+  echo "[FAIL] Brownfield service unit tests failed"
+  exit 1
+}
+echo "${TEST_OUT}"
 
 python3 - "$SPEC_FILE" "$ADR_FILE" << 'PYEOF'
 import sys

@@ -109,30 +109,30 @@ To supplement the 6 local labs in this repository, explore these public hands-on
 
 ---
 
-## 6. License & Mandatory Attribution (`CC BY 4.0` + Apache 2.0 `NOTICE`)
+## 6. Claude Code Native Track Quickstart (`claude` Branch)
 
-**Author:** **Alejandro Kaspar - AI Forward Deployed Engineer**
+This branch makes all six hands-on labs runnable natively in **Claude Code** using the Claude Code plugin support shipped by Conductor and OpenSpec. See [`playbooks/CLAUDE_CODE_PLAYBOOK.md`](./playbooks/CLAUDE_CODE_PLAYBOOK.md) for the full ownership table, session workflow, and `work/` target layout.
 
-This repository is open-access and dual-licensed so you can freely use, adapt, or teach with it in university courses, workshops, or engineering teams **as long as you attribute the author**:
+### Verified Tool Versions
+- **Claude Code**: `2.x` (`@anthropic-ai/claude-code` `>= 2.0.0`)
+- **Conductor**: `0.3.0` (`conductor@conductor` Claude Code plugin)
+- **OpenSpec**: `1.14.1` (`@fission-ai/openspec`)
 
-1. **Course Materials (Coursebook PDF, Presentation Slides, Lecture Videos, Playbooks & Walkthroughs)**:  
-   Licensed under **[Creative Commons Attribution 4.0 International (`CC BY 4.0`)](https://creativecommons.org/licenses/by/4.0/)**. You are free to share and adapt the materials for any purpose, provided you give visible credit to **"Alejandro Kaspar - AI Forward Deployed Engineer"** and link back to [`https://github.com/adkaspar-google/sdd-course`](https://github.com/adkaspar-google/sdd-course).
-2. **Source Code & Executable Scripts (`.py`, `.sh`, `.yaml`)**:  
-   Licensed under the **[Apache License, Version 2.0](./LICENSE)** with a mandatory **[`NOTICE`](./NOTICE)** file. Under Section 4(d) of the Apache 2.0 License, any redistribution or derivative work must retain the attribution notices in [`NOTICE`](./NOTICE).
+### Plugin & Permission Disclosure
+- **Third-Party Plugin**: `.claude/settings.json` enables the third-party `conductor@conductor` plugin (`gemini-cli-extensions/conductor`) at project scope, exposing `/conductor:conductor-setup`, `/conductor:conductor-new-track`, `/conductor:conductor-implement`, `/conductor:conductor-review`, `/conductor:conductor-revert`, and `/conductor:conductor-status`.
+- **Permission Rules**: `.claude/settings.json` ships a `permissions.deny` rule (`Edit(**/adversarial_tests/**)`) to keep adversarial test suites read-only, and `.claude/learner.settings.json` ships `Read(**/expected_output/**)` and `Edit(**/adversarial_tests/**)` so learners work without reading reference solutions.
 
-### How to Cite / Credit This Course
+### Installation & Learner Session Setup
 
-**Plain-Text Attribution (for slides, syllabi, or adapted repos):**
-> Adapted from *SDD-Crash-Course: The Hands-On Playground for Context-Driven & Spec-Driven Development* by **Alejandro Kaspar - AI Forward Deployed Engineer** (`https://github.com/adkaspar-google/sdd-course`), licensed under CC BY 4.0 / Apache 2.0.
+```bash
+# 1. Install the Conductor plugin for Claude Code and OpenSpec CLI
+claude plugin marketplace add gemini-cli-extensions/conductor
+claude plugin install conductor@conductor --scope project
+npm install -g @fission-ai/openspec@latest
 
-**BibTeX Citation (also available via GitHub's *"Cite this repository"* button from [`CITATION.cff`](./CITATION.cff)):**
-```bibtex
-@misc{kaspar2026sddcrashcourse,
-  author       = {Kaspar, Alejandro},
-  title        = {{SDD-Crash-Course: The Hands-On Playground for Context-Driven \& Spec-Driven Development}},
-  year         = {2026},
-  note         = {AI Forward Deployed Engineer},
-  howpublished = {\url{https://github.com/adkaspar-google/sdd-course}}
-}
+# 2. Launch Claude Code in learner mode from the repository root
+claude --settings .claude/learner.settings.json
+
+# 3. Grade your own work in labs/<lab>/work/ using targetable self-diagnosis
+./labs/lab_01_greenfield_proposals_to_specs/self_diagnose.sh work
 ```
-

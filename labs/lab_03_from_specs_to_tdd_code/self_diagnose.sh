@@ -16,11 +16,38 @@
 set -euo pipefail
 LAB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+TARGET_ARG="${1:-expected_output}"
+if [[ "${TARGET_ARG}" = /* ]]; then
+  TARGET_DIR="${TARGET_ARG}"
+else
+  TARGET_DIR="${LAB_DIR}/${TARGET_ARG}"
+fi
+
 echo "=== Lab 03 Self-Diagnosis: From Specs to TDD Code (Circuit Breaker) ==="
 
-python3 -m unittest discover -s "${LAB_DIR}/expected_output" -p "test_*.py" -v
+if [[ ! -d "${TARGET_DIR}" ]]; then
+  echo "[FAIL] Target directory does not exist: ${TARGET_DIR}"
+  exit 1
+fi
 
-python3 - "${LAB_DIR}/expected_output/test_circuitbreaker.py" << 'PYEOF'
+TEST_FILE="${TARGET_DIR}/test_circuitbreaker.py"
+if [[ ! -s "${TEST_FILE}" ]]; then
+  echo "[FAIL] Missing required artifact: ${TEST_FILE}"
+  exit 1
+fi
+
+TEST_OUT="$(PYTHONPATH="${TARGET_DIR}" python3 -m unittest discover -s "${TARGET_DIR}" -p "test_*.py" -v 2>&1)" || {
+  echo "${TEST_OUT}"
+  echo "[FAIL] Unit tests failed in ${TARGET_DIR}"
+  exit 1
+}
+echo "${TEST_OUT}"
+if [[ "${TEST_OUT}" == *"Ran 0 tests"* ]]; then
+  echo "[FAIL] No unit tests ran in ${TARGET_DIR}"
+  exit 1
+fi
+
+python3 - "${TEST_FILE}" << 'PYEOF'
 import sys
 
 with open(sys.argv[1], "r", encoding="utf-8") as f:

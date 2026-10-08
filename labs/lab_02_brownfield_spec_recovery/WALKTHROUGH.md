@@ -41,3 +41,20 @@ Run the diagnostic harness to execute the brownfield test suite and verify the r
 ```bash
 ./self_diagnose.sh
 ```
+
+---
+
+## Claude Code Track
+
+1. **Start in Learner Mode**: From the repository root on a personal branch, start Claude Code with learner settings:
+   ```bash
+   claude --settings .claude/learner.settings.json
+   ```
+2. **Audit & Recover Spec**:
+   - Use **plan mode** for the audit with `/opsx:explore`, and use **subagents** for tracing `service/leasemanager.py` and `service/test_leasemanager.py` without modifying source files.
+   - Run `/opsx:propose` to author the recovered OpenSpec contract and ADR, collecting your deliverables under `labs/lab_02_brownfield_spec_recovery/work/` (`openspec/specs/lease-manager/spec.md` and `ADR-0001-fencing-tokens.md`).
+3. **Human Approval Checkpoint**: Read the spec and plan, run `git status --short`, and confirm only specification artifacts changed.
+4. **Verify**: Run the self-diagnosis script against your `work/` directory:
+   ```bash
+   ./labs/lab_02_brownfield_spec_recovery/self_diagnose.sh work
+   ```

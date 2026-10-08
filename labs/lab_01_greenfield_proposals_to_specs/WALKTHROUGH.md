@@ -51,3 +51,20 @@ Compare your work against [`expected_output/`](./expected_output/) and run the a
 ```bash
 ./self_diagnose.sh
 ```
+
+---
+
+## Claude Code Track
+
+1. **Start in Learner Mode**: From the repository root on a personal branch, launch Claude Code with learner settings so `expected_output/` is hidden and `adversarial_tests/` is locked:
+   ```bash
+   claude --settings .claude/learner.settings.json
+   ```
+2. **Explore & Specify**:
+   - Enter **plan mode** to read `labs/lab_01_greenfield_proposals_to_specs/proposal.md` without writing files.
+   - Run `/opsx:propose` and `/conductor:conductor-new-track` to produce the OpenSpec capability contract, ADRs, and 7-section Conductor track specification, collecting your deliverables under `labs/lab_01_greenfield_proposals_to_specs/work/` (`openspec/specs/rate-limiter/spec.md`, `conductor/tracks/rate_limiter_mvp/spec.md`, `ADR-0001-storage-engine.md`, `ADR-0002-sync-protocol.md`; `test_*.py` is optional).
+3. **Human Approval Checkpoint**: Read the generated spec and plan, run `git status --short`, and confirm only specification artifacts changed.
+4. **Verify**: Run the targetable self-diagnosis script against your `work/` directory:
+   ```bash
+   ./labs/lab_01_greenfield_proposals_to_specs/self_diagnose.sh work
+   ```
