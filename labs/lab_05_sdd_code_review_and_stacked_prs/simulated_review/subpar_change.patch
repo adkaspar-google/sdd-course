@@ -1,0 +1,15 @@
+--- a/base/kvcache.py
++++ b/base/kvcache.py
+@@ -28,6 +28,12 @@ class KVCache:
+             self._store[key] = value
+ 
++    def put_with_ttl(self, key: str, value: Any, ttl_seconds: float) -> None:
++        # Un-specced feature added during vibe coding!
++        self._store[key] = (value, ttl_seconds)
++
+     def get(self, key: str) -> Optional[Any]:
+         with self._lock:
++            if key in self._store:
++                # Silently changes FIFO (REQ-0002) to LRU without spec change!
++                self._store.move_to_end(key)
+             return self._store.get(key)

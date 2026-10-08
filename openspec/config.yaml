@@ -1,0 +1,36 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+schema: spec-driven
+
+context: |
+  Project: SDD-Crash-Course & CoursePulse Reference Playground
+  Language: Python 3.11+ (Standard Library only, deterministic injectable clock)
+  Test Runner: python3 -m unittest
+  Conventions:
+    - Every requirement header MUST include a unique ID (REQ-0001, REQ-0002, ...)
+    - Requirement summaries MUST use RFC 2119 keywords (MUST, SHALL, MUST NOT)
+    - Scenarios MUST use 4-hashtag headers (#### Scenario:) and GIVEN/WHEN/THEN bullets
+    - Every unit test MUST include its requirement ID in the function name (test_req0001_...)
+
+rules:
+  proposal:
+    - Include Why, What Changes, Capabilities (New/Modified), and Impact sections.
+  specs:
+    - Use #### Scenario: with GIVEN / WHEN / THEN clauses.
+    - When modifying a requirement under ## MODIFIED Requirements, include the full requirement block.
+  design:
+    - Document architecture trade-offs and link to ADRs for major component decisions.
+  tasks:
+    - Organize implementation tasks into Stacked PR Batches (150-250 LOC per batch) with explicit dependencies.

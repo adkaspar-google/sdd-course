@@ -1,0 +1,23 @@
+# Development Workflow (`conductor/workflow.md`)
+
+## 1. Dual-Engine SDD Protocol
+When starting any feature, bugfix, or brownfield refactor via `/conductor:newTrack`:
+1. **Skill Activation**: Read and apply `.agents/skills/writing-arch-specs/SKILL.md`.
+2. **Contract Alignment**: Ensure `conductor/tracks/<track_id>/spec.md` follows the **7-Section Track Specification Anatomy** (`Overview`, `Architecture`, `Functional Requirements`, `Non-Functional Requirements`, `Acceptance Criteria`, `Out of Scope`, `Verification Commands`) and maps 1:1 to `REQ-XXXX` IDs in `openspec/specs/`.
+3. **Hierarchical Plan**: Generate `conductor/tracks/<track_id>/plan.md` broken into small, testable phases ending with `- [ ] Task: Conductor - User Manual Verification '<Phase Name>' (Protocol in workflow.md)`.
+
+## 2. Task TDD Lifecycle (`/conductor:implement`)
+For every task in `plan.md`:
+1. Mark task `[~]` in `plan.md`.
+2. **Red Phase**: Write failing unit test(s) named `test_reqXXXX_<behavior>` in `test_*.py` and run `CI=true python3 -m unittest` to confirm failure.
+3. **Green Phase**: Implement the minimal production code required to pass the test and satisfy the RFC 2119 contract.
+4. **Refactor Phase**: Clean up types, docstrings, and lock hygiene while keeping tests green.
+5. **Commit & Audit Trail**: Commit implementation (`feat:` / `fix:`), attach structured task summary via `git notes add -m "..." <sha>`, and update `plan.md` to `[x] Task: ... <7-char-sha>`.
+
+## 3. Phase Completion Verification & Checkpointing Protocol
+At the end of each phase:
+1. Verify all changed source files since the previous checkpoint have corresponding `test_reqXXXX_*` tests.
+2. Execute `CI=true python3 -m unittest` and `./self_diagnose.sh` (max 2 auto-fix retries on failure).
+3. Pause for **User Manual Verification** of the phase outputs.
+4. Create checkpoint commit (`conductor(checkpoint): ...`) and record `[checkpoint: <7-char-sha>]` on the phase header in `plan.md`.
+5. Synchronize `openspec/specs/` via `/opsx:verify` and `/opsx:archive`.
