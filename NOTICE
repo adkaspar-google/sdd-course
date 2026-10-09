@@ -1,0 +1,20 @@
+SDD-Crash-Course: The Hands-On Playground for Context-Driven & Spec-Driven Development
+Copyright 2026 Alejandro Kaspar & Google LLC
+
+Author: Alejandro Kaspar - AI Forward Deployed Engineer
+Repository: https://github.com/adkaspar-google/sdd-course
+
+MANDATORY ATTRIBUTION NOTICE (Apache License 2.0, Section 4(d) & CC BY 4.0):
+1. Source Code & Executable Scripts (.py, .sh, .yaml):
+   Licensed under the Apache License, Version 2.0. Pursuant to Section 4(d) of
+   the Apache License, Version 2.0, any redistribution or derivative work MUST
+   retain a readable copy of this NOTICE attribution:
+   "Created by Alejandro Kaspar - AI Forward Deployed Engineer (https://github.com/adkaspar-google/sdd-course)".
+
+2. Coursebook PDF, Presentation Slides, Lecture Videos & Walkthrough Guides:
+   Licensed under the Creative Commons Attribution 4.0 International License
+   (CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/). You are free to
+   share, teach with, and adapt these materials for any purpose, provided that
+   you give appropriate credit to:
+   "Alejandro Kaspar - AI Forward Deployed Engineer"
+   and link back to https://github.com/adkaspar-google/sdd-course.

@@ -1,0 +1,33 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+cff-version: 1.2.0
+title: "SDD-Crash-Course: The Hands-On Playground for Context-Driven & Spec-Driven Development"
+message: "If you use, adapt, or teach with this course, please cite the author as below."
+type: software
+authors:
+  - given-names: "Alejandro"
+    family-names: "Kaspar"
+    affiliation: "AI Forward Deployed Engineer"
+repository-code: "https://github.com/adkaspar-google/sdd-course"
+url: "https://github.com/adkaspar-google/sdd-course"
+license: "Apache-2.0 AND CC-BY-4.0"
+date-released: "2026-10-08"
+keywords:
+  - "Spec-Driven Development"
+  - "Context-Driven Development"
+  - "Conductor"
+  - "OpenSpec"
+  - "Single Source of Truth"
+  - "AI Coding Agents"

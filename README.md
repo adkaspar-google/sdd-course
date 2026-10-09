@@ -1,8 +1,9 @@
 # SDD-Crash-Course: The Hands-On Playground for Context-Driven & Spec-Driven Development
 
+> **Author:** **Alejandro Kaspar - AI Forward Deployed Engineer**  
 > **100% Hands-On, Self-Diagnosing Interactive Scenarios Playground**  
 > **Core Stack:** [Conductor](https://github.com/gemini-cli-extensions/conductor) + [OpenSpec (`@fission-ai/openspec`)](https://github.com/Fission-AI/OpenSpec) + `SPEC.md` (Single Source of Truth)  
-> **License:** Apache 2.0  
+> **License:** Code under **Apache 2.0** (with mandatory [`NOTICE`](./NOTICE) attribution) · Coursebook, Slides, Videos & Walkthroughs under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)** (*Attribution Required — must credit **Alejandro Kaspar - AI Forward Deployed Engineer***)  
 
 ---
 
@@ -105,3 +106,33 @@ To supplement the 6 local labs in this repository, explore these public hands-on
 3. **[Google Developers Blog: Introducing Context-Driven Development for Gemini CLI](https://developers.googleblog.com/conductor-introducing-context-driven-development-for-gemini-cli/)**
 4. **[OpenSpec Official Docs & Interactive `/opsx:onboard` Tutorial](https://openspec.dev/)** ([GitHub: `Fission-AI/OpenSpec`](https://github.com/Fission-AI/OpenSpec))
 5. **[Video Tutorial: OpenSpec Full Step-by-Step Walkthrough](https://www.youtube.com/watch?v=xwpmPP4mNBQ)** & **DeepLearning.AI Course: *"Spec-Driven Development with Coding Agents"***.
+
+---
+
+## 6. License & Mandatory Attribution (`CC BY 4.0` + Apache 2.0 `NOTICE`)
+
+**Author:** **Alejandro Kaspar - AI Forward Deployed Engineer**
+
+This repository is open-access and dual-licensed so you can freely use, adapt, or teach with it in university courses, workshops, or engineering teams **as long as you attribute the author**:
+
+1. **Course Materials (Coursebook PDF, Presentation Slides, Lecture Videos, Playbooks & Walkthroughs)**:  
+   Licensed under **[Creative Commons Attribution 4.0 International (`CC BY 4.0`)](https://creativecommons.org/licenses/by/4.0/)**. You are free to share and adapt the materials for any purpose, provided you give visible credit to **"Alejandro Kaspar - AI Forward Deployed Engineer"** and link back to [`https://github.com/adkaspar-google/sdd-course`](https://github.com/adkaspar-google/sdd-course).
+2. **Source Code & Executable Scripts (`.py`, `.sh`, `.yaml`)**:  
+   Licensed under the **[Apache License, Version 2.0](./LICENSE)** with a mandatory **[`NOTICE`](./NOTICE)** file. Under Section 4(d) of the Apache 2.0 License, any redistribution or derivative work must retain the attribution notices in [`NOTICE`](./NOTICE).
+
+### How to Cite / Credit This Course
+
+**Plain-Text Attribution (for slides, syllabi, or adapted repos):**
+> Adapted from *SDD-Crash-Course: The Hands-On Playground for Context-Driven & Spec-Driven Development* by **Alejandro Kaspar - AI Forward Deployed Engineer** (`https://github.com/adkaspar-google/sdd-course`), licensed under CC BY 4.0 / Apache 2.0.
+
+**BibTeX Citation (also available via GitHub's *"Cite this repository"* button from [`CITATION.cff`](./CITATION.cff)):**
+```bibtex
+@misc{kaspar2026sddcrashcourse,
+  author       = {Kaspar, Alejandro},
+  title        = {{SDD-Crash-Course: The Hands-On Playground for Context-Driven \& Spec-Driven Development}},
+  year         = {2026},
+  note         = {AI Forward Deployed Engineer},
+  howpublished = {\url{https://github.com/adkaspar-google/sdd-course}}
+}
+```
+
