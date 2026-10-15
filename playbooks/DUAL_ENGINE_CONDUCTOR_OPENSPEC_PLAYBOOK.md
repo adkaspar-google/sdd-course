@@ -140,3 +140,27 @@ Even in a simple everyday app like **`TaskFlow`**, a vague natural-language prom
 | **`Lab 04` (`daily_planner.py`)** | *"Don't exceed my daily minute budget."* | Off-by-one `>=` instead of `>` rejects a `60`-min task when exactly `60` minutes remain! | `REQ-0003` boundary contract (`<=` allowed) + 5-Step Scorecard Track (`F-01`) + `F-02..F-04` locked in `Out of Scope`. |
 | **`Lab 05` (`notes_board.py`)** | *"Add note pinning to the board."* | Teammate's patch reverses `list_notes()` order (breaking `REQ-0002`) and omits `REQ-0004` from `spec.md`. | `/conductor:review` + `/opsx:verify` spec-diff audit + Stacked PR batches (`Batch 1`, `Batch 2`, `Archive PR N+1`). |
 | **`Lab 06` (`taskflow_app.py`)** | *"Build a Kanban board with a WIP limit."* | Moving a card already in `"in_progress"` or exceeding `max_in_progress` corrupts column counts. | 8-Section `SPEC.md` (SSOT) + Clean-Room Rebuild Test against read-only (`chmod -w`) `adversarial_tests/`. |
+
+---
+
+## 9. 2026 SDD Tooling Ecosystem Comparison & Strict CI Validation Rules
+
+### 9.1 Why Combine Conductor + OpenSpec + `SPEC.md`?
+
+Industry evaluations (including Birgitta Böckeler's Thoughtworks analysis on `martinfowler.com` and OpenSpec's 2026 benchmarks) categorize SDD toolchains across three maturity tiers (`Spec-First`, `Spec-Anchored`, and `Spec-as-Source`):
+
+| Tool / Framework | Primary SDD Tier | Brownfield Fit | Agent / IDE Portability | Key Trade-Off Solved by the Dual-Engine Stack |
+| :--- | :--- | :--- | :--- | :--- |
+| **OpenSpec (`@fission-ai/openspec`)** | **Level 2: Spec-Anchored** | **Excellent (`1+N` friendly)** — isolates proposed deltas in `openspec/changes/<id>/` without reorganizing repo roots | **20+ CLI & IDE agents** (`Gemini CLI`, `Claude Code`, `Cursor`, `Copilot`, `Windsurf`) | Pairs with **Conductor** to add repo-wide context (`conductor/index.md`), Red-Green-Refactor TDD enforcement, and `git notes` phase checkpoints. |
+| **Conductor (`gemini-cli-extensions/conductor`)** | **Level 1–2: CDD + Phased TDD** | **Strong** — scans existing stack & enforces `Out of Scope` guardrails | `Gemini CLI`, `Antigravity CLI`, `Claude Code` (`/conductor:*` plugin) | Pairs with **OpenSpec** and `@writing-arch-specs` so track specs merge into evergreen capability contracts (`openspec/specs/`) instead of remaining isolated per-track history. |
+| **GitHub Spec Kit (`github/spec-kit`)** | **Level 1–2: Spec-First / Anchored** | Moderate — heavier ceremony and rigid phase gates for small brownfield changes | `Copilot`, `Claude Code`, `Gemini CLI` | Our **Change Tiering** rule (`conductor/workflow.md` §5) avoids ceremony bloat on trivial fixes while enforcing full Dual-Engine tracks on `REQ-XXXX` changes. |
+| **Amazon Kiro (`kiro.dev`)** | **Level 1–2: IDE Spec-First** | Moderate | **Locked to Kiro IDE** | Conductor + OpenSpec is 100% open-source, plain Markdown in Git, and portable across any terminal or IDE agent. |
+| **Tessl & Canonical `SPEC.md`** | **Level 3: Spec-as-Source (SSOT)** | Greenfield & Clean-Room Module Rebuilds | Tool-agnostic (`SPEC.md` + `adversarial_tests/`) | Taught in **Lab 06 (`TaskFlowBoard`)**: treats source code as a regenerable artifact verified against read-only (`chmod -w`) adversarial contract tests. |
+
+### 9.2 OpenSpec 2026 Strict CI Validation Rules (`openspec validate --strict`)
+
+When running `openspec validate --all --strict` in CI/CD pipelines, verify these quantitative parser invariants:
+1. **Concise Requirement Statements (`<= 500` chars)**: Requirement body descriptions exceeding `500` characters trigger strict validation warnings (`MAX_REQUIREMENT_DESCRIPTION_LENGTH = 500`). Keep `### Requirement: REQ-XXXX` statements crisp and push multi-branch cases into separate `#### Scenario:` blocks.
+2. **Exact 4-Hashtag Scenarios (`#### Scenario:`)**: Every requirement MUST have at least one `#### Scenario:` block (3 hashtags `### Scenario:` are silently ignored by the parser).
+3. **Verify-Before-Archive Gate**: Checking off all tracked `[x]` items in `tasks.md` cues `/opsx:verify` (and `/conductor:review`) before running `/opsx:archive`, keeping post-archive follow-ups in a separate change folder.
+

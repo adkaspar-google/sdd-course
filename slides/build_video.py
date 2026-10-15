@@ -20,9 +20,9 @@ Pipeline:
 3. Renders `segments/seg-01.mp4` .. `segments/seg-36.mp4` in parallel via `ffmpeg` (`1920x1080`).
 4. Concatenates each module's slides into 7 standalone MP4 videos under `modules/`:
    - `Module_01_Foundations_and_Dual_Engine.mp4` (Slides 01-06)
-   - `Module_02_Lab01_Greenfield_Rate_Limiter.mp4` (Slides 07-11)
-   - `Module_03_Lab02_Brownfield_Lease_Manager.mp4` (Slides 12-16)
-   - `Module_04_Lab03_TDD_Circuit_Breaker.mp4` (Slides 17-21)
+   - `Module_02_Lab01_Greenfield_Todo_List.mp4` (Slides 07-11)
+   - `Module_03_Lab02_Brownfield_Task_Organizer.mp4` (Slides 12-16)
+   - `Module_04_Lab03_TDD_Habit_Tracker.mp4` (Slides 17-21)
    - `Module_05_Lab04_Drift_and_Scorecard_Refactoring.mp4` (Slides 22-26)
    - `Module_06_Lab05_SDD_Code_Review_and_Stacked_PRs.mp4` (Slides 27-31)
    - `Module_07_Lab06_Capstone_SSOT_and_Rebuild_Test.mp4` (Slides 32-36)
@@ -50,9 +50,9 @@ VOICE = "Kore"
 
 MODULES = [
     ("Module_01_Foundations_and_Dual_Engine.mp4", 1, 6),
-    ("Module_02_Lab01_Greenfield_Rate_Limiter.mp4", 7, 11),
-    ("Module_03_Lab02_Brownfield_Lease_Manager.mp4", 12, 16),
-    ("Module_04_Lab03_TDD_Circuit_Breaker.mp4", 17, 21),
+    ("Module_02_Lab01_Greenfield_Todo_List.mp4", 7, 11),
+    ("Module_03_Lab02_Brownfield_Task_Organizer.mp4", 12, 16),
+    ("Module_04_Lab03_TDD_Habit_Tracker.mp4", 17, 21),
     ("Module_05_Lab04_Drift_and_Scorecard_Refactoring.mp4", 22, 26),
     ("Module_06_Lab05_SDD_Code_Review_and_Stacked_PRs.mp4", 27, 31),
     ("Module_07_Lab06_Capstone_SSOT_and_Rebuild_Test.mp4", 32, 36),
