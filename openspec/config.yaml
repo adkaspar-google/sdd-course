@@ -15,11 +15,11 @@
 schema: spec-driven
 
 context: |
-  Project: SDD-Crash-Course & CoursePulse Reference Playground
-  Language: Python 3.11+ (Standard Library only, deterministic injectable clock)
-  Test Runner: python3 -m unittest
+  Project: SDD-Crash-Course & TaskFlow Reference Playground
+  Language: Python 3.11+ (Standard Library only, zero external packages)
+  Test Runner: CI=true python3 -m unittest
   Conventions:
-    - Every requirement header MUST include a unique ID (REQ-0001, REQ-0002, ...)
+    - Every requirement header MUST include a unique ID (REQ-0001, REQ-0002, REQ-0003, REQ-0004)
     - Requirement summaries MUST use RFC 2119 keywords (MUST, SHALL, MUST NOT)
     - Scenarios MUST use 4-hashtag headers (#### Scenario:) and GIVEN/WHEN/THEN bullets
     - Every unit test MUST include its requirement ID in the function name (test_req0001_...)
@@ -33,4 +33,4 @@ rules:
   design:
     - Document architecture trade-offs and link to ADRs for major component decisions.
   tasks:
-    - Organize implementation tasks into Stacked PR Batches (150-250 LOC per batch) with explicit dependencies.
+    - Organize implementation tasks into Stacked PR Batches with explicit dependencies.

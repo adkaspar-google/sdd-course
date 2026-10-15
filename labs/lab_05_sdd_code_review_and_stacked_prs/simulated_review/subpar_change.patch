@@ -1,15 +1,18 @@
---- a/base/kvcache.py
-+++ b/base/kvcache.py
-@@ -28,6 +28,12 @@ class KVCache:
-             self._store[key] = value
+--- a/base/notes_board.py
++++ b/base/notes_board.py
+@@ -33,7 +33,15 @@ class NotesBoard:
  
-+    def put_with_ttl(self, key: str, value: Any, ttl_seconds: float) -> None:
-+        # Un-specced feature added during vibe coding!
-+        self._store[key] = (value, ttl_seconds)
+   def list_notes(self) -> list[dict[str, Any]]:
+-    """REQ-0002: Return all notes in chronological creation order."""
+-    return [dict(n) for n in self._notes.values()]
++    # VIOLATION 1 (Breaks REQ-0002): Reverses creation order to newest-first!
++    return [dict(n) for n in reversed(list(self._notes.values()))]
 +
-     def get(self, key: str) -> Optional[Any]:
-         with self._lock:
-+            if key in self._store:
-+                # Silently changes FIFO (REQ-0002) to LRU without spec change!
-+                self._store.move_to_end(key)
-             return self._store.get(key)
++  def pin_note(self, note_id: int) -> None:
++    # VIOLATION 2 (Un-specced feature: REQ-0004 missing from spec.md)
++    # VIOLATION 3 (Bug): Silently ignores missing note_id instead of raising KeyError!
++    if note_id in self._notes:
++      self._notes[note_id]["pinned"] = True
++
++  def get_pinned_notes(self) -> list[dict[str, Any]]:
++    return [dict(n) for n in self._notes.values() if n["pinned"]]

@@ -1,8 +1,9 @@
-# TDD Implementation Tasks (`circuit-breaker`)
+# Tasks: TaskFlow Daily Habit Streak Tracker (`habit-tracker`)
 
-## Batch 1: Core State Machine & CLOSED/OPEN Transitions
-- [x] 1.1 Write `test_req0001_closed_state_forwards_calls` and `test_req0007_success_resets_failure_streak`, then implement `CLOSED` state execution (`REQ-0001`, `REQ-0007`).
-- [x] 1.2 Write `test_req0002_failure_threshold_trips_to_open` and `test_req0003_open_state_fails_fast_without_invoking_callable`, then implement `OPEN` trip and `CircuitOpenError` (`REQ-0002`, `REQ-0003`).
+## Batch 1: Habit Registration & Consecutive Check-Ins (`REQ-0001..REQ-0002`)
+- [x] 1.1 Write `test_req0001_add_habit_starts_at_zero_and_rejects_blank` in `test_habit_tracker.py` and implement `add_habit` / `get_streak` in `habit_tracker.py`.
+- [x] 1.2 Write `test_req0002_consecutive_days_increment_streak` and implement consecutive-day increment in `check_in`.
 
-## Batch 2: Cooldown Probing (`HALF_OPEN`) & Recovery
-- [x] 2.1 Write `test_req0004_cooldown_transitions_to_half_open`, `test_req0005_probe_success_closes_circuit`, and `test_req0006_probe_failure_reopens_circuit`, then implement `HALF_OPEN` probe transitions (`REQ-0004`, `REQ-0005`, `REQ-0006`).
+## Batch 2: Idempotency & Skipped-Day Reset (`REQ-0003..REQ-0004`)
+- [x] 2.1 Write `test_req0003_same_day_check_in_is_idempotent` and handle `day == last_day`.
+- [x] 2.2 Write `test_req0004_skipped_day_resets_streak_and_past_day_raises` and handle `day > last_day + 1` reset and `day < last_day` validation.

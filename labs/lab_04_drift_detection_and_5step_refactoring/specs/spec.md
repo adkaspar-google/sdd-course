@@ -1,54 +1,43 @@
-# Token Bucket Quota Allocator Specification
+# Capability Specification: `daily-planner` (TaskFlow Daily Time-Budget Planner)
 
 ## Purpose
-The `quota-allocator` capability enforces per-tenant token-bucket rate and burst quotas with integer token accounting and deterministic fractional time preservation.
+Allows `TaskFlow` users to set a daily focus time budget in minutes (e.g., `120` minutes) and schedule tasks into their day without exceeding their daily limit.
 
 ## Requirements
 
-### Requirement: Initial Bucket Capacity Allocation (REQ-0001)
-Each new tenant key SHALL initialize with `tokens = capacity` and `last_replenished = now`.
+### Requirement: REQ-0001 — Initialize Daily Minute Budget
+The `DailyPlanner(daily_limit_minutes=240)` constructor SHALL initialize `used_minutes = 0` and `remaining_minutes = daily_limit_minutes`, and MUST raise `ValueError` if `daily_limit_minutes <= 0`.
 
-#### Scenario: First consumption for a new tenant starts from full capacity
-- **GIVEN** `capacity=10` and `refill_rate_per_sec=1.0`
-- **WHEN** new tenant `"t-1"` calls `consume("t-1", amount=4)` at `t=0.0`
-- **THEN** the call MUST return `True` and `available_tokens("t-1")` MUST be `6`
+#### Scenario: Initializing a 120-minute daily budget starts at 0 used and 120 remaining
+- **GIVEN** `planner = DailyPlanner(120)`
+- **WHEN** `planner.used_minutes` and `planner.remaining_minutes` are read
+- **THEN** `used_minutes` is `0` and `remaining_minutes` is `120`
 
-### Requirement: Atomic Token Consumption (REQ-0002)
-When `available_tokens >= amount`, `consume(key, amount)` SHALL deduct `amount` tokens and return `True`; otherwise it SHALL leave `tokens` unchanged and return `False`.
+### Requirement: REQ-0002 — Schedule Task Within Budget
+The `DailyPlanner.schedule_task(title, minutes)` method SHALL append the task to the day's schedule, add `minutes` to `used_minutes`, and return `True` when the task fits within the budget.
 
-#### Scenario: Insufficient tokens leaves bucket balance untouched
-- **GIVEN** tenant `"t-1"` has `3` tokens remaining
-- **WHEN** `"t-1"` calls `consume("t-1", amount=5)`
-- **THEN** the call MUST return `False` and `available_tokens("t-1")` MUST remain `3`
+#### Scenario: Scheduling a 45-minute task updates used and remaining minutes
+- **GIVEN** a `DailyPlanner(120)`
+- **WHEN** `schedule_task("Write report", 45)` is called
+- **THEN** it returns `True`, `used_minutes` is `45`, and `remaining_minutes` is `75`
 
-### Requirement: Linear Refill Capped at Capacity (REQ-0003)
-Tokens SHALL replenish at `refill_rate_per_sec` over elapsed time up to a maximum of `capacity`.
+### Requirement: REQ-0003 — Accept Exact Budget Fit and Reject Over-Budget Tasks
+The `DailyPlanner.schedule_task(title, minutes)` method SHALL return `True` whenever `used_minutes + minutes <= daily_limit_minutes` (including when `remaining_minutes` reaches `0` exactly), and SHALL return `False` without modifying state only when `used_minutes + minutes > daily_limit_minutes`.
 
-#### Scenario: Long idle period caps tokens at capacity
-- **GIVEN** `"t-1"` has `0` tokens at `t=0.0` with `capacity=10, refill_rate_per_sec=2.0`
-- **WHEN** the clock advances to `t=100.0`
-- **THEN** `available_tokens("t-1")` MUST be `10` (never exceeding `capacity`)
+#### Scenario: Scheduling a task that uses the exact remaining minutes succeeds
+- **GIVEN** a `DailyPlanner(120)` with `60` minutes already used (`60` minutes remaining)
+- **WHEN** `schedule_task("Deep work session", 60)` is called
+- **THEN** it returns `True`, `used_minutes` becomes `120`, and `remaining_minutes` becomes `0`
 
-### Requirement: Input Boundary Validation (REQ-0004)
-The allocator SHALL raise `ValueError` if `capacity < 1`, `refill_rate_per_sec <= 0`, `key` is empty, or `amount < 1`.
+#### Scenario: Scheduling a task that exceeds remaining minutes returns False
+- **GIVEN** a `DailyPlanner(120)` with `90` minutes already used (`30` minutes remaining)
+- **WHEN** `schedule_task("Long meeting", 45)` is called
+- **THEN** it returns `False` and `used_minutes` remains `90`
 
-#### Scenario: Non-positive consume amount raises ValueError
-- **GIVEN** an initialized allocator
-- **WHEN** `consume("t-1", amount=0)` is called
-- **THEN** `ValueError` MUST be raised
+### Requirement: REQ-0004 — Validate Task Inputs and Support Daily Reset
+The `DailyPlanner.schedule_task(title, minutes)` method MUST raise `ValueError` if `title` is blank or `minutes <= 0`, and `DailyPlanner.reset_day()` SHALL clear all scheduled tasks and reset `used_minutes = 0`.
 
-### Requirement: Fractional Elapsed Time Preservation Across Sub-Quantum Polls (REQ-0005)
-When `_replenish` is evaluated after a sub-quantum interval where `int(elapsed * refill_rate_per_sec) == 0`, the allocator SHALL NOT overwrite `last_replenished = now`; when `added > 0`, `last_replenished` SHALL advance by `added / refill_rate_per_sec` (or to `now` when `tokens == capacity`) so fractional time remainder is never lost.
-
-#### Scenario: Frequent sub-second polling still accumulates whole tokens
-- **GIVEN** `"t-1"` has `0` tokens at `t=0.0` with `capacity=5, refill_rate_per_sec=1.0`
-- **WHEN** `"t-1"` calls `consume("t-1", 1)` at `t=0.4`, `t=0.8`, and `t=1.2`
-- **THEN** the calls at `t=0.4` and `t=0.8` MUST return `False`, and the call at `t=1.2` MUST replenish `1` token and return `True`
-
-### Requirement: Thread-Safe Synchronization (REQ-0006)
-All bucket reads and mutations SHALL be protected by a `threading.RLock`.
-
-#### Scenario: Concurrent consumption never produces negative token balances
-- **GIVEN** `"t-1"` has `10` tokens
-- **WHEN** `20` threads concurrently call `consume("t-1", 1)`
-- **THEN** exactly `10` calls return `True` and `available_tokens("t-1")` equals `0`
+#### Scenario: Resetting the day clears scheduled tasks and restores full budget
+- **GIVEN** a `DailyPlanner(120)` with scheduled tasks
+- **WHEN** `reset_day()` is called
+- **THEN** `used_minutes` is `0`, `remaining_minutes` is `120`, and `get_scheduled_tasks()` is `[]`

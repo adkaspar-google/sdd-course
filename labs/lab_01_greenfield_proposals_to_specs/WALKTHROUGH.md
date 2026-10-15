@@ -1,53 +1,45 @@
-# Lab 01: Greenfield SDD — From Ambiguous Proposal to Dual-Engine Specs & ADRs
+# Lab 01 Walkthrough: Greenfield Proposals to Dual-Engine Specs (`TaskFlow` Core To-Do List)
 
-**Estimated Time**: 30–40 minutes  
-**Frameworks Practiced**: OpenSpec (`/opsx:propose`) + Conductor (`/conductor:newTrack`) + ADR Trade-Off Tables
+## 1. Scenario & Why Conversational Coding Fails Here
+Welcome to **Lab 01** of the **`TaskFlow`** journey! You have a short product note in [`proposal.md`](./proposal.md) asking for a **To-Do List (`todo_list.py`)** where users can add tasks, mark them complete, filter pending vs. completed tasks, and delete tasks.
 
----
+In **conversational coding ("Vibe Coding")**, a developer pastes `proposal.md` directly into an LLM chat and says *"Write the code."* The LLM silently guesses edge cases:
+- Does `add_task("   ")` create a blank task or raise `ValueError`?
+- Are task IDs random UUID strings or integers `1, 2, 3...`?
+- Does `delete_task(999)` crash with `KeyError` or return `False`?
 
-## 1. Learning Objective
-In real-world engineering, features rarely start as formal specifications—they start as messy, ambiguous Slack messages or 2-paragraph product proposals (`proposal.md`). If you feed a vague proposal directly to a coding agent, the agent will silently guess critical architectural boundaries (storage backend, clock synchronization, concurrency semantics, failure modes).
-
-In this hands-on lab, you will take an informal proposal for a **Distributed Rate Limiter** (`proposal.md`) and transform it into:
-1. **OpenSpec Capability Contract** (`openspec/specs/rate-limiter/spec.md`) with numbered requirements (`REQ-0001` through `REQ-0006`), normative RFC 2119 keywords (`MUST`, `SHALL`), and 4-hashtag `#### Scenario:` blocks (`GIVEN / WHEN / THEN`).
-2. **System Design & Architecture Decision Records** (`design.md`, `ADR-0001-storage-engine.md`, `ADR-0002-sync-protocol.md`) evaluating architectural trade-offs before writing code.
-3. **Conductor Track Specification & TDD Plan** (`conductor/tracks/rate_limiter_mvp/spec.md` & `plan.md`) using the **7-Section Track Spec Anatomy**.
+In **Specificational Coding (Spec-Driven Development)**, we collaborate with the agent on the **Spec Contract** *before* writing code.
 
 ---
 
-## 2. Starting Input
-Inspect [`proposal.md`](./proposal.md) in this directory. Notice what is missing or ambiguous:
-- What happens when `limit <= 0` or `window_seconds <= 0`?
-- Is the sliding window approximate or exact per-client key?
-- What should the rate limiter return when a request is rejected (`retry_after_seconds`, `remaining=0`)?
-- How is thread safety guaranteed under concurrent requests?
+## 2. Step-by-Step Instructions
 
----
+### Step 1: Run Interactive Socratic Grilling ("The Grill")
+Inspect [`proposal.md`](./proposal.md) using OpenSpec exploration so the agent identifies missing edge cases before generating any spec or code:
 
-## 3. Hands-On Exercise Steps
+- **OpenSpec Command**:
+  ```text
+  /opsx:explore Read labs/lab_01_greenfield_proposals_to_specs/proposal.md and list the 3 ambiguity questions we must lock down before writing the spec.
+  ```
+- **Socratic Grilling Answers to Lock In**:
+  1. **Blank Titles (`REQ-0001`)**: Trim whitespace and raise `ValueError` if empty.
+  2. **Task IDs (`ADR-0002`)**: Use sequential integers (`1, 2, 3...`) starting at `1`.
+  3. **Missing IDs (`REQ-0002` vs. `REQ-0004`)**: `complete_task(id)` raises `KeyError`, while `delete_task(id)` returns `False`.
 
-### Step 1: Generate the OpenSpec Capability Contract
-Using OpenSpec (`/opsx:propose "add-distributed-rate-limiter"`) or manual authoring, create your specification so that it defines `REQ-0001` through `REQ-0006`:
-- `REQ-0001`: Per-Key Sliding Window Allowance (`allow(key, cost=1)`)
-- `REQ-0002`: Rejection & Retry-After Calculation when quota is exhausted
-- `REQ-0003`: Configuration Validation (`limit >= 1`, `window_seconds > 0`, `cost >= 1`)
-- `REQ-0004`: Deterministic Clock Injection (`clock: Callable[[], float]`)
-- `REQ-0005`: Thread-Safe Concurrent Access (`threading.RLock`)
-- `REQ-0006`: Explicit Key Reset (`reset(key)`)
+### Step 2: Generate the OpenSpec Capability Contract & ADRs
+- **OpenSpec Command**:
+  ```text
+  /opsx:propose Create the todo-list capability spec (REQ-0001..REQ-0004) with 4-hashtag Scenarios and RFC 2119 SHALL/MUST keywords, plus ADR-0001-storage-engine.md and ADR-0002-id-assignment.md.
+  ```
 
-### Step 2: Author `design.md` and Two ADRs
-Document the component architecture in `design.md` and record two explicit Architecture Decision Records:
-- `ADR-0001-storage-engine.md`: Comparing In-Memory Thread-Safe Deque Store vs. External Redis Lua Script vs. Relational DB.
-- `ADR-0002-sync-protocol.md`: Comparing Exact Sliding-Window Timestamp Log vs. Fixed-Window Counter vs. Token Bucket.
+### Step 3: Generate the 7-Section Conductor Track Spec & Plan
+- **Conductor Command**:
+  ```text
+  /conductor:newTrack Create track todo_list_mvp using .agents/skills/writing-arch-specs/SKILL.md with all 7 required sections.
+  ```
 
-### Step 3: Author the 7-Section Conductor Track `spec.md` & `plan.md`
-Follow `.agents/skills/writing-arch-specs/SKILL.md` to create the 7-section Conductor track specification (`Overview`, `Architecture`, `Functional Requirements`, `Non-Functional Requirements`, `Acceptance Criteria`, `Out of Scope`, `Verification Commands`) and phased TDD `plan.md`.
-
----
-
-## 4. Self-Diagnosis & Grading
-Compare your work against [`expected_output/`](./expected_output/) and run the automated diagnostic script:
-
+### Step 4: Verify Your Deliverables
+Compare your generated files against [`expected_output/`](./expected_output/) and run the self-diagnosis script:
 ```bash
-./self_diagnose.sh
+./labs/lab_01_greenfield_proposals_to_specs/self_diagnose.sh
 ```

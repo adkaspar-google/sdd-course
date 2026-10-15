@@ -1,43 +1,31 @@
-# Lab 02: Brownfield Spec Recovery — Reverse-Engineering Legacy Code into Living Specs
+# Lab 02 Walkthrough: Brownfield Spec Recovery & Spec Sync (`TaskFlow` Tag & Priority Organizer)
 
-**Estimated Time**: 35–45 minutes  
-**Frameworks Practiced**: OpenSpec (`/opsx:explore` + Baseline Spec Extraction) + ADR Recovery
+## 1. Scenario & Spec-Driven Testing / Sync Spec
+In **Lab 02**, a teammate added [`service/task_organizer.py`](./service/task_organizer.py) and [`service/test_task_organizer.py`](./service/test_task_organizer.py) to `TaskFlow` so users can tag tasks (`["Work", "urgent"]`) and sort them by priority (`high` $\to$ `medium` $\to$ `low`). All 4 unit tests pass, but **no specification or ADR exists**.
 
----
-
-## 1. Learning Objective
-Most production engineering happens in **brownfield repositories** where critical business invariants live exclusively inside undocumented source code and unit tests. Before modifying a brownfield subsystem with an AI coding agent, you must extract its **baseline behavioral specification** so future changes can be expressed as clean, verified deltas.
-
-In this lab, you are given a working, undocumented **Distributed Lease Lock Manager** (`service/leasemanager.py` and `service/test_leasemanager.py`). Your mission is to reverse-engineer its exact behavioral invariants without breaking existing tests.
+In Spec-Driven Development, this is the **Sync Spec** operation: we inspect existing code and tests in read-only exploration mode and extract the living capability contract (`openspec/specs/task-organizer/spec.md`) and architecture decision record (`ADR-0001-tag-normalization.md`) *without modifying the working service code*.
 
 ---
 
-## 2. Starting Input
-Inspect the brownfield codebase in [`service/`](./service/):
-- [`service/leasemanager.py`](./service/leasemanager.py): Implements resource lease acquisition, monotonic 64-bit fencing tokens, lease renewal, holder-verified release, and automatic TTL expiration.
-- [`service/test_leasemanager.py`](./service/test_leasemanager.py): Existing unit tests.
+## 2. Step-by-Step Instructions
 
----
+### Step 1: Explore the Brownfield Code & Tests Without Editing Code
+- **OpenSpec Command**:
+  ```text
+  /opsx:explore Read labs/lab_02_brownfield_spec_recovery/service/task_organizer.py and test_task_organizer.py and list the 4 behavioral requirements (REQ-0001..REQ-0004).
+  ```
 
-## 3. Hands-On Exercise Steps
+### Step 2: Recover the OpenSpec Capability Contract (`REQ-0001..REQ-0004`)
+Document the 4 contracts in `openspec/specs/task-organizer/spec.md`:
+1. **`REQ-0001` (Tag Normalization)**: Trim, lowercase, and deduplicate tags; reject empty titles or empty tags with `ValueError`.
+2. **`REQ-0002` (Priority Validation)**: Only allow `"low"`, `"medium"`, or `"high"` (default `"medium"`).
+3. **`REQ-0003` (Case-Insensitive Tag Filter)**: `filter_by_tag(tag)` matches case-insensitively in creation order.
+4. **`REQ-0004` (Priority Sorting)**: `list_by_priority()` sorts `"high"` $\to$ `"medium"` $\to$ `"low"` with creation order (`id`) breaking ties.
 
-### Step 1: Audit the Brownfield Code & Tests (`/opsx:explore`)
-Trace every branch in `service/leasemanager.py` to uncover its 6 core behavioral invariants:
-- `REQ-0001`: Exclusive lease acquisition on free or expired resources.
-- `REQ-0002`: Monotonically increasing 64-bit fencing token across all acquisitions and renewals (`fencing_token` never resets even after release or expiration).
-- `REQ-0003`: Contended acquisition rejection when an active lease is held by another owner.
-- `REQ-0004`: Active lease renewal (`renew`) extending expiration and issuing a new monotonic fencing token for the current holder.
-- `REQ-0005`: Holder-verified release (`release`) rejecting non-holders or stale fencing tokens.
-- `REQ-0006`: Eviction of expired leases (`evict_expired`) and thread-safe `RLock` synchronization.
+### Step 3: Record `ADR-0001-tag-normalization.md`
+Document why tags are normalized to lowercase on write inside `add_task()`.
 
-### Step 2: Author `openspec/specs/lease-manager/spec.md`, `design.md`, and `ADR-0001-fencing-tokens.md`
-Write the complete RFC 2119 + `#### Scenario:` specification and document why monotonic fencing tokens are required to prevent split-brain storage corruption when a paused client's lease expires.
-
----
-
-## 4. Self-Diagnosis & Grading
-Run the diagnostic harness to execute the brownfield test suite and verify the recovered specification and ADR:
-
+### Step 4: Verify Your Deliverables
 ```bash
-./self_diagnose.sh
+./labs/lab_02_brownfield_spec_recovery/self_diagnose.sh
 ```

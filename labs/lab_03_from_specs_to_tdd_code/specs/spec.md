@@ -1,62 +1,38 @@
-# Circuit Breaker Capability Specification
+# Capability Specification: `habit-tracker` (TaskFlow Daily Habit Streak Tracker)
 
 ## Purpose
-The `circuit-breaker` capability prevents cascading failures across distributed service calls by wrapping downstream callables in a deterministic `CLOSED -> OPEN -> HALF_OPEN` state machine.
+Allows `TaskFlow` users to build daily habits (`"Drink water"`, `"Read 20 mins"`) and track consecutive daily check-in streaks using simple integer day numbers (`Day 1`, `Day 2`, `Day 3...`).
 
 ## Requirements
 
-### Requirement: Closed State Call Forwarding (REQ-0001)
-The circuit breaker SHALL initialize in the `CLOSED` state with `consecutive_failures=0` and SHALL execute wrapped callables, returning their result directly.
+### Requirement: REQ-0001 — Register Habit at Zero Streak
+The `HabitTracker.add_habit(name)` method SHALL trim `name`, initialize the habit with `streak = 0` and `last_day = None`, and MUST raise `ValueError` if the trimmed `name` is empty.
 
-#### Scenario: Healthy call succeeds in CLOSED state
-- **GIVEN** a newly initialized `CircuitBreaker(failure_threshold=3, recovery_timeout_seconds=30.0)`
-- **WHEN** `call(lambda: "ok")` is invoked
-- **THEN** the breaker MUST return `"ok"` and remain in `CircuitState.CLOSED`
+#### Scenario: Creating a valid habit starts streak at 0
+- **GIVEN** a new `HabitTracker`
+- **WHEN** `add_habit("  Read 20 mins  ")` is called
+- **THEN** `get_streak("Read 20 mins")` returns `0`
 
-### Requirement: Failure Threshold Trip to OPEN (REQ-0002)
-When `consecutive_failures` reaches `failure_threshold` in the `CLOSED` state, the circuit breaker SHALL transition immediately to `CircuitState.OPEN`, record `opened_at = now`, and re-raise the underlying exception.
+### Requirement: REQ-0002 — Consecutive-Day Check-In Increments Streak
+The `HabitTracker.check_in(name, day)` method SHALL set `streak = 1` on the first check-in (`last_day is None`), and SHALL increment `streak` by `1` whenever `day == last_day + 1`.
 
-#### Scenario: Reaching failure threshold trips breaker to OPEN
-- **GIVEN** a `CircuitBreaker(failure_threshold=3, recovery_timeout_seconds=30.0)` in `CLOSED` state
-- **WHEN** `3` consecutive calls raise `RuntimeError("downstream timeout")`
-- **THEN** after the 3rd failure the state MUST be `CircuitState.OPEN` with `consecutive_failures=3`
+#### Scenario: Checking in on Day 1, Day 2, and Day 3 builds a streak of 3
+- **GIVEN** a registered habit `"Exercise"`
+- **WHEN** `check_in("Exercise", 1)`, `check_in("Exercise", 2)`, and `check_in("Exercise", 3)` are called
+- **THEN** the streak advances from `1` to `2` to `3`
 
-### Requirement: Fast-Fail Rejection While OPEN (REQ-0003)
-While in `CircuitState.OPEN` and `now - opened_at < recovery_timeout_seconds`, the circuit breaker SHALL raise `CircuitOpenError` immediately without invoking the wrapped callable.
+### Requirement: REQ-0003 — Same-Day Duplicate Check-In Is Idempotent
+When `HabitTracker.check_in(name, day)` is called with `day == last_day`, it SHALL leave `streak` and `last_day` unchanged and return the current `streak`.
 
-#### Scenario: Calls during open cooldown fail fast without invoking target
-- **GIVEN** a breaker in `CircuitState.OPEN` opened at `t=100.0` with `recovery_timeout_seconds=30.0`
-- **WHEN** a caller invokes `call(fn)` at `t=115.0`
-- **THEN** `CircuitOpenError` MUST be raised and `fn` MUST NOT be executed (`call_count == 0`)
+#### Scenario: Checking in twice on Day 2 does not double-count
+- **GIVEN** `"Exercise"` checked in on Day `1` and Day `2` (`streak == 2`)
+- **WHEN** `check_in("Exercise", 2)` is called a second time
+- **THEN** `streak` remains `2`
 
-### Requirement: Automatic Cooldown Transition to HALF_OPEN (REQ-0004)
-When the breaker is in `CircuitState.OPEN` and `now - opened_at >= recovery_timeout_seconds`, the circuit breaker SHALL transition to `CircuitState.HALF_OPEN` and allow a probe call to execute.
+### Requirement: REQ-0004 — Skipped Day Resets Streak to 1 and Past Day Raises Error
+When `HabitTracker.check_in(name, day)` is called with `day > last_day + 1` (at least one day was skipped), it SHALL reset `streak` to `1` and update `last_day = day`. If `day < last_day` (or `day <= 0`), it MUST raise `ValueError`. If `name` is not registered, it MUST raise `KeyError`.
 
-#### Scenario: Cooldown expiry transitions state to HALF_OPEN
-- **GIVEN** a breaker opened at `t=100.0` with `recovery_timeout_seconds=30.0`
-- **WHEN** `state` is inspected or `call()` is invoked at `t=130.0`
-- **THEN** the breaker MUST transition to `CircuitState.HALF_OPEN`
-
-### Requirement: Probe Success Closes Circuit (REQ-0005)
-When a probe call succeeds in `CircuitState.HALF_OPEN`, the circuit breaker SHALL transition to `CircuitState.CLOSED` and reset `consecutive_failures = 0`.
-
-#### Scenario: Successful probe in HALF_OPEN restores CLOSED state
-- **GIVEN** a breaker in `CircuitState.HALF_OPEN` at `t=130.0`
-- **WHEN** `call(lambda: 200)` succeeds
-- **THEN** the breaker MUST return `200`, transition to `CircuitState.CLOSED`, and set `consecutive_failures=0`
-
-### Requirement: Probe Failure Re-Opens Circuit (REQ-0006)
-When a probe call raises an exception in `CircuitState.HALF_OPEN`, the circuit breaker SHALL immediately transition back to `CircuitState.OPEN`, update `opened_at = now` to restart the cooldown window, and re-raise the exception.
-
-#### Scenario: Failed probe in HALF_OPEN re-opens breaker and resets timer
-- **GIVEN** a breaker in `CircuitState.HALF_OPEN` at `t=130.0` (`recovery_timeout_seconds=30.0`)
-- **WHEN** `call(failing_fn)` raises `ConnectionError`
-- **THEN** the breaker MUST transition to `CircuitState.OPEN` and reject calls with `CircuitOpenError` until `t=160.0`
-
-### Requirement: Success in CLOSED Resets Failure Streak (REQ-0007)
-When a call succeeds in `CircuitState.CLOSED` after fewer than `failure_threshold` failures, the circuit breaker SHALL reset `consecutive_failures` to `0`.
-
-#### Scenario: Intermittent failure followed by success does not accumulate toward trip
-- **GIVEN** a breaker with `failure_threshold=3` that has recorded `2` consecutive failures
-- **WHEN** the next call succeeds, followed by `2` more failures
-- **THEN** `consecutive_failures` MUST be `2` and the state MUST remain `CircuitState.CLOSED`
+#### Scenario: Skipping Day 3 and checking in on Day 4 resets streak to 1
+- **GIVEN** `"Exercise"` checked in on Day `1` and Day `2` (`streak == 2`)
+- **WHEN** Day `3` is skipped and `check_in("Exercise", 4)` is called
+- **THEN** `streak` resets to `1` and `last_day` becomes `4`

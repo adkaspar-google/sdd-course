@@ -1,6 +1,8 @@
-# Brownfield Architecture Recovery: Distributed Lease Lock Manager
+# Technical Design: TaskFlow Tag & Priority Organizer (`task-organizer`)
 
-## Recovered Component Invariants
-1. **Lazy + Eager Expiration**: Expired leases are purged lazily on every per-resource operation (`_purge_if_expired`) and eagerly via `evict_expired()`.
-2. **Global Monotonic Token Counter**: `_next_token` increments on every `acquire()` and `renew()`, preventing ABA token reuse.
-3. **Token-Guarded Mutations**: Both `renew()` and `release()` require the caller to present the exact active `fencing_token`, preventing stale holders from accidentally releasing or extending a successor's lease.
+## Context
+Recovered design documentation for `service/task_organizer.py`.
+
+## Decisions
+1. **Write-Time Tag Normalization (`ADR-0001`)**: Every tag is stripped, lowercased (`tag_normalization`), and deduplicated before storage.
+2. **Deterministic Priority Sort**: `PRIORITY_RANK = {"high": 0, "medium": 1, "low": 2}` combined with the tuple sort key `(PRIORITY_RANK[t["priority"]], t["id"])` guarantees stable creation-order tie-breaking.

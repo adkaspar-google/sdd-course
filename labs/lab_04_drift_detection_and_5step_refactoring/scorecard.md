@@ -1,11 +1,8 @@
-# Brownfield Code Quality Scorecard (`quota_allocator.py`)
+# Brownfield Audit Scorecard: TaskFlow `DailyPlanner` (`service/daily_planner.py`)
 
-**Audit Date**: 2026-10-08  
-**Component**: `service/quota_allocator.py`
-
-| Finding ID | Severity | Category | Description | Target Track |
+| Finding ID | Severity | Category | Description | Action Decision |
 | :--- | :--- | :--- | :--- | :--- |
-| **F-01** | **CRITICAL** | Spec Drift (`REQ-0005`) | `_replenish()` overwrites `bucket.last_replenished = now` even when `added == 0` (sub-quantum elapsed interval), starving token replenishment under frequent polling. | **Track 1 (`quota_zero_token_fix`) — THIS LAB** |
-| **F-02** | MEDIUM | Observability | Missing Prometheus counter hook for rejected quota requests. | Deferred (Track 2 — Out of Scope for Track 1) |
-| **F-03** | LOW | Memory Hygiene | Inactive tenant buckets without activity for `>24h` are not background-compacted. | Deferred (Track 3 — Out of Scope for Track 1) |
-| **F-04** | LOW | API Ergonomics | Add batch `consume_many(keys)` helper for bulk ingestion jobs. | Deferred (Track 4 — Out of Scope for Track 1) |
+| **`F-01`** | **P0 Critical** | **Spec Drift (`REQ-0003`)** | `schedule_task()` uses `if self.used_minutes + minutes >= self.daily_limit_minutes: return False` instead of `>`, rejecting tasks that use 100% of the exact remaining budget (e.g., scheduling a `60`-min task when `60` mins remain). | **FIX NOW** in Track `daily_planner_exact_fit_fix` |
+| **`F-02`** | **P3 Low** | Feature Wish | Add `.ics` Google Calendar file export. | **DEFER (`Out of Scope`)** |
+| **`F-03`** | **P3 Low** | Feature Wish | Add desktop audio chime when a scheduled task finishes. | **DEFER (`Out of Scope`)** |
+| **`F-04`** | **P3 Low** | Cosmetic | Add ANSI terminal color themes for remaining budget bars. | **DEFER (`Out of Scope`)** |

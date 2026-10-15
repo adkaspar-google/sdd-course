@@ -1,28 +1,24 @@
-# Lab 06 (Capstone): The 8-Section `SPEC.md` (SSOT) & Clean-Room Rebuild Test
+# Lab 06 Walkthrough: Capstone — 8-Section `SPEC.md` (SSOT) & Clean-Room Rebuild Test (`TaskFlowBoard`)
 
-**Estimated Time**: 60 minutes  
-**Frameworks Practiced**: Canonical 8-Section `SPEC.md` (Spec-as-SSOT) + Adversarial Clean-Room Rebuild Test
+## 1. Scenario & Code as a Compiled Artifact of the Spec
+Welcome to the **Lab 06 Capstone**! The ultimate goal of Specificational Coding is to make **source code a compiled artifact of the specification**—just as machine code is a compiled artifact of source code.
 
----
-
-## 1. Learning Objective
-At **SDD Maturity Level 3 (Spec-as-Source / SSOT)**, your specification is complete enough that you can delete the implementation, copy `SPEC.md` into an empty `/tmp/` directory, and deterministically regenerate a working implementation that passes an independently authored, read-only adversarial test suite on the first run.
-
-In this capstone lab, you will inspect the **8-Section `SPEC.md`** for the **CoursePulse University Enrollment & Waitlist Service** and run the **Clean-Room Rebuild Verification Protocol**:
-1. Lock `adversarial_tests/test_rebuild_contract.py` read-only (`chmod -R a-w`) inside an isolated clean-room directory so the implementation under test cannot weaken or delete assertions.
-2. Verify that `expected_output/coursepulse.py` satisfies every contract in `SPEC.md` (`REQ-0001` through `REQ-0006`).
+In this lab, you are given [`SPEC.md`](./SPEC.md): the complete 8-section Single Source of Truth contract for **`TaskFlowBoard` (`taskflow_app.py`)**, a Kanban board that tracks cards across `"todo"`, `"in_progress"`, and `"done"`, enforces a `max_in_progress` Work-In-Progress limit, and computes a summary scorecard with completed story points.
 
 ---
 
-## 2. Starting Input
-- [`SPEC.md`](./SPEC.md): Complete 8-Section Single Source of Truth blueprint (`1. System Overview & Domain Intent`, `2. Architecture & Data Flow`, `3. Data Models & Schemas`, `4. Interface & API Contracts`, `5. Behavioral Workflows & State Machines`, `6. Repository Structure`, `7. Parameterized Deployment & Runtime Config`, `8. 3-Phase Rebuild Recipe & Acceptance Criteria`).
-- [`adversarial_tests/test_rebuild_contract.py`](./adversarial_tests/test_rebuild_contract.py): Read-only adversarial contract test suite verifying `REQ-0001` through `REQ-0006`.
+## 2. Step-by-Step Instructions
 
----
+### Step 1: Read the 8-Section `SPEC.md` Contract (`REQ-0001..REQ-0004`)
+1. **`REQ-0001` (`add_card`)**: Trim `title`, validate `priority in {"low", "medium", "high"}` and `points > 0`, and start in `"todo"`.
+2. **`REQ-0002` (`move_card`)**: Move cards across `"todo"`, `"in_progress"`, and `"done"` while raising `RuntimeError` if moving a card into `"in_progress"` would exceed `max_in_progress`.
+3. **`REQ-0003` (`get_by_status` & `get_by_priority`)**: Filter cards in creation order.
+4. **`REQ-0004` (`get_summary`)**: Return `total`, `todo`, `in_progress`, `done`, and `completed_points`.
 
-## 3. Self-Diagnosis & Clean-Room Rebuild Execution
-Run `./self_diagnose.sh` to execute the Clean-Room Rebuild Test in an isolated temporary directory with read-only adversarial tests:
+### Step 2: Synthesize `taskflow_app.py` from `SPEC.md` Alone
+Generate `taskflow_app.py` using [`SPEC.md`](./SPEC.md) as the only input, without editing [`adversarial_tests/test_rebuild_contract.py`](./adversarial_tests/test_rebuild_contract.py).
 
+### Step 3: Run the Clean-Room Rebuild Test
 ```bash
-./self_diagnose.sh
+./labs/lab_06_capstone_ssot_and_rebuild_test/self_diagnose.sh
 ```

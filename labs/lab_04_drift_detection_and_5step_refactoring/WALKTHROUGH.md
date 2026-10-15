@@ -1,51 +1,35 @@
-# Lab 04: Spec-to-Code Drift Detection & The 5-Step Brownfield Scorecard Refactoring Loop
+# Lab 04 Walkthrough: Spec Drift Detection & 5-Step Brownfield Refactoring (`TaskFlow` Daily Time-Budget Planner)
 
-**Estimated Time**: 40–50 minutes  
-**Frameworks Practiced**: OpenSpec (`/opsx:verify`) + Conductor (`/conductor:newTrack` + `/conductor:implement`) + 5-Step Brownfield Scorecard Refactoring
+## 1. Scenario & Why Spec Drift Happens
+In **Lab 04**, `TaskFlow` includes a **Daily Time-Budget Planner (`DailyPlanner`)** in [`service/daily_planner.py`](./service/daily_planner.py) governed by [`specs/spec.md`](./specs/spec.md). Users set a daily minute budget (such as `120` minutes) and schedule focus tasks into their day.
 
----
+Look at **`REQ-0003`** in [`specs/spec.md`](./specs/spec.md):
+> *`schedule_task(title, minutes)` SHALL return `True` whenever `used_minutes + minutes <= daily_limit_minutes` (including when `remaining_minutes` reaches `0` exactly).*
 
-## 1. Learning Objective
-In brownfield production systems, two forces degrade software quality over time:
-1. **Silent Spec-to-Code Drift**: A developer modifies production code without updating the specification (or introduces a subtle state bug that violates an existing `REQ-XXXX` invariant).
-2. **Accumulated Technical Debt**: Structural findings accumulate across a codebase, and attempting to fix all of them in a single "mega-prompt" causes catastrophic regressions.
-
-In this lab, you will practice both:
-1. **Detect & Fix Spec Drift (`REQ-0005`)**: Inspect `specs/spec.md` vs. `service/quota_allocator.py`. Discover why calling `_replenish()` when `added_tokens == 0` prematurely overwrites `last_replenished = now` and permanently starves fractional token accumulation (`REQ-0005`).
-2. **Execute the 5-Step Brownfield Scorecard Refactoring Loop**: Review `scorecard.md` (Findings `F-01` through `F-04`), isolate `F-01` (`REQ-0005` zero-token timestamp drift) into a surgical Conductor track (`expected_output/spec.md`) with `F-02..F-04` explicitly listed under **Out of Scope**, and verify the fix with a regression test.
-
----
-
-## 2. Starting Input
-- [`specs/spec.md`](./specs/spec.md): Normative specification for `TokenBucketQuotaAllocator` (`REQ-0001`..`REQ-0006`).
-- [`service/quota_allocator.py`](./service/quota_allocator.py): Bugged implementation containing the `REQ-0005` fractional replenishment starvation bug.
-- [`scorecard.md`](./scorecard.md): Engineering Audit Scorecard containing 4 findings (`F-01` through `F-04`).
-
----
-
-## 3. Hands-On Exercise Steps
-
-### Step 1: Audit `service/quota_allocator.py` Against `REQ-0005`
-Look closely at `_replenish` in `service/quota_allocator.py`:
+Now look at line 45 of [`service/daily_planner.py`](./service/daily_planner.py):
 ```python
-elapsed = max(0.0, now - bucket.last_replenished)
-added = int(elapsed * self._refill_rate_per_sec)
-bucket.tokens = min(self._capacity, bucket.tokens + added)
-bucket.last_replenished = now  # <-- BUG when added == 0!
+if self.used_minutes + minutes >= self.daily_limit_minutes:
+    return False
 ```
-If `refill_rate_per_sec = 1.0` and a caller polls `consume()` every `0.4` seconds, `int(0.4 * 1.0) == 0`, yet `bucket.last_replenished` is overwritten to `now` on every poll—so the bucket **never** replenishes a single token!
-
-### Step 2: Author the Surgical Track `spec.md` (`F-01` Only)
-Create a 7-section Conductor track specification (`expected_output/spec.md`) that scopes `F-01` (`REQ-0005`) and places `F-02`, `F-03`, and `F-04` in **Section 6: Out of Scope**.
-
-### Step 3: Write the Regression Test & Fix `quota_allocator_fixed.py`
-Update `_replenish` so `last_replenished` only advances by `added / self._refill_rate_per_sec` when `added > 0`, preserving fractional elapsed time (`REQ-0005`).
+Because the developer wrote `>=` instead of `>`, a user with `60` minutes left in their `120`-minute day who tries to schedule a `60`-minute task gets **`False`**!
 
 ---
 
-## 4. Self-Diagnosis & Grading
-Run `./self_diagnose.sh` to verify that the bugged implementation fails the `REQ-0005` test and the fixed implementation passes all `REQ-0001..REQ-0006` tests:
+## 2. Step-by-Step Instructions (The 5-Step Scorecard Refactoring Loop)
 
+### Step 1: Audit Spec vs. Code (`Semantic Diffing`)
+Compare [`specs/spec.md`](./specs/spec.md) against [`service/daily_planner.py`](./service/daily_planner.py) and review [`scorecard.md`](./scorecard.md):
+- **`F-01` (Critical P0)**: Off-by-one `>=` drift bug violating `REQ-0003`.
+- **`F-02`, `F-03`, `F-04` (Low P3)**: Feature ideas (`.ics` export, audio chimes, ANSI colors).
+
+### Step 2: Scope the Track Spec & Lock `F-02..F-04` in `## 6. Out of Scope`
+Write `expected_output/spec.md` targeting only **`F-01`** and placing **`F-02`**, **`F-03`**, and **`F-04`** inside `## 6. Out of Scope` (Karpathy's *Surgical Changes* rule).
+
+### Step 3: Write the Failing Regression Test (`Red`) & Surgical Fix (`Green`)
+1. Write `test_req0003_exact_remaining_budget_is_accepted_and_over_budget_rejected` in `test_daily_planner.py`.
+2. Change `>=` to `>` in `daily_planner_fixed.py`.
+
+### Step 4: Run Differential Self-Diagnosis
 ```bash
-./self_diagnose.sh
+./labs/lab_04_drift_detection_and_5step_refactoring/self_diagnose.sh
 ```

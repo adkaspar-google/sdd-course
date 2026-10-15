@@ -1,16 +1,24 @@
-# Informal Product Proposal: API Rate Limiter
+# Proposal: TaskFlow Core To-Do List (`todo-list`)
 
-**From**: Product Management  
-**Subject**: Need a rate limiter for our public API endpoints ASAP
+## Why
+We are launching **TaskFlow**, a simple personal productivity app. For our first release, users need a fast, reliable **To-Do List** where they can add tasks, mark tasks as completed, filter their pending vs. completed tasks, and delete tasks they no longer need.
 
-Hey team,
+## What Changes
+Build the core `TodoList` Python class (`todo_list.py`) supporting four operations:
+1. `add_task(title)` — add a new task and return its record.
+2. `complete_task(task_id)` — mark a task as completed.
+3. `get_pending()` and `get_completed()` — list incomplete vs. completed tasks.
+4. `delete_task(task_id)` — remove a task by ID.
 
-Several enterprise tenants are hammering our `/v1/query` endpoint with burst traffic and causing tail-latency spikes for everyone else. We need a rate limiter module that tracks requests per `client_id` and blocks callers when they exceed `N` requests in a sliding time window of `W` seconds.
+## Open Questions for Interactive Socratic Grilling ("The Grill")
+Before generating specifications or code, resolve these 3 edge cases:
+- **Q1 (Blank Titles)**: What should happen if a user calls `add_task("")` or `add_task("   ")`?
+- **Q2 (ID Format)**: Should task IDs be 36-character UUID strings or sequential integers (`1, 2, 3...`)?
+- **Q3 (Missing IDs)**: How should `complete_task(task_id)` vs. `delete_task(task_id)` behave when given an ID that does not exist?
 
-Key asks:
-1. Callers should be able to pass a `key` (like `tenant_123`) and optionally a `cost` (some heavy queries count as 5 tokens instead of 1).
-2. The response should tell the caller whether the request is allowed, how many requests they have left in the current window, and—if blocked—how many seconds they need to wait before retrying.
-3. Make sure it's thread-safe and easy to unit test without sleeping in CI.
-4. Provide a way for admins or tests to reset a specific key's quota.
+## Capabilities
+- **New Capabilities**: `todo-list`
+- **Modified Capabilities**: None (Greenfield)
 
-Let's get specs, ADRs, and a TDD execution plan ready before we write the implementation!
+## Impact
+- Pure Python 3.11+ standard library (`todo_list.py` + `test_todo_list.py`).

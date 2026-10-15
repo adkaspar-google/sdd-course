@@ -12,109 +12,93 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Adversarial Clean-Room Rebuild Contract Suite for CoursePulse (SPEC.md)."""
+"""Read-only adversarial contract tests for Lab 06 TaskFlowBoard (REQ-0001..REQ-0004)."""
 
 import unittest
-from coursepulse import (
-    CoursePulseService,
-    EnrollmentStatus,
-)
+from taskflow_app import TaskFlowBoard
 
 
-class TestCoursePulseRebuildContract(unittest.TestCase):
+class TestTaskFlowRebuildContract(unittest.TestCase):
+  """Adversarial verification suite for SPEC.md (REQ-0001..REQ-0004)."""
 
-    def test_req0001_course_creation_and_validation(self) -> None:
-        svc = CoursePulseService()
-        roster = svc.create_course("CS-401", "Spec-Driven Engineering", capacity=2)
-        self.assertEqual(roster.course_id, "CS-401")
-        self.assertEqual(roster.capacity, 2)
-        self.assertEqual(roster.enrolled, ())
-        self.assertEqual(roster.waitlist, ())
+  def test_req0001_add_card_and_validate_inputs(self) -> None:
+    """Verifies REQ-0001: add_card trims title, assigns sequential ID, and validates inputs."""
+    board = TaskFlowBoard(max_in_progress=2)
+    c1 = board.add_card("  Write SPEC.md  ", priority="high", points=3)
+    self.assertEqual(
+        c1,
+        {
+            "id": 1,
+            "title": "Write SPEC.md",
+            "priority": "high",
+            "points": 3,
+            "status": "todo",
+        },
+    )
+    with self.assertRaises(ValueError):
+      board.add_card("   ")
+    with self.assertRaises(ValueError):
+      board.add_card("Bad priority", priority="urgent")
+    with self.assertRaises(ValueError):
+      board.add_card("Zero points", points=0)
+    with self.assertRaises(ValueError):
+      TaskFlowBoard(max_in_progress=0)
 
-        with self.assertRaises(ValueError):
-            svc.create_course("CS-401", "Duplicate", capacity=2)
-        with self.assertRaises(ValueError):
-            svc.create_course("CS-000", "Zero Cap", capacity=0)
-        with self.assertRaises(ValueError):
-            svc.create_course("", "Empty ID", capacity=5)
+  def test_req0002_move_card_and_enforce_wip_limit(self) -> None:
+    """Verifies REQ-0002: move_card transitions statuses and enforces max_in_progress."""
+    board = TaskFlowBoard(max_in_progress=2)
+    board.add_card("Task 1")
+    board.add_card("Task 2")
+    board.add_card("Task 3")
+    board.move_card(1, "in_progress")
+    board.move_card(2, "in_progress")
+    # 3rd in_progress card must be blocked by WIP limit of 2
+    with self.assertRaises(RuntimeError):
+      board.move_card(3, "in_progress")
+    # Completing Task 1 frees a slot so Task 3 can move to in_progress
+    board.move_card(1, "done")
+    moved = board.move_card(3, "in_progress")
+    self.assertEqual(moved["status"], "in_progress")
+    with self.assertRaises(KeyError):
+      board.move_card(99, "done")
+    with self.assertRaises(ValueError):
+      board.move_card(1, "archived")
 
-    def test_req0002_seat_allocation_and_waitlist_overflow(self) -> None:
-        svc = CoursePulseService()
-        svc.create_course("CS-401", "Spec-Driven Engineering", capacity=2)
+  def test_req0003_filter_by_status_and_priority(self) -> None:
+    """Verifies REQ-0003: get_by_status and get_by_priority filter in creation order."""
+    board = TaskFlowBoard(max_in_progress=2)
+    board.add_card("Task A", priority="high")
+    board.add_card("Task B", priority="low")
+    board.add_card("Task C", priority="high")
+    board.move_card(2, "done")
+    self.assertEqual([c["title"] for c in board.get_by_status("done")], ["Task B"])
+    self.assertEqual(
+        [c["title"] for c in board.get_by_priority("high")], ["Task A", "Task C"]
+    )
+    with self.assertRaises(ValueError):
+      board.get_by_status("invalid")
+    with self.assertRaises(ValueError):
+      board.get_by_priority("invalid")
 
-        r1 = svc.enroll("CS-401", "stu-1")
-        self.assertEqual(r1.status, EnrollmentStatus.ENROLLED)
-        self.assertIsNone(r1.waitlist_position)
-
-        r2 = svc.enroll("CS-401", "stu-2")
-        self.assertEqual(r2.status, EnrollmentStatus.ENROLLED)
-        self.assertIsNone(r2.waitlist_position)
-
-        r3 = svc.enroll("CS-401", "stu-3")
-        self.assertEqual(r3.status, EnrollmentStatus.WAITLISTED)
-        self.assertEqual(r3.waitlist_position, 1)
-
-        r4 = svc.enroll("CS-401", "stu-4")
-        self.assertEqual(r4.status, EnrollmentStatus.WAITLISTED)
-        self.assertEqual(r4.waitlist_position, 2)
-
-    def test_req0003_idempotent_duplicate_enrollment(self) -> None:
-        svc = CoursePulseService()
-        svc.create_course("CS-401", "Spec-Driven Engineering", capacity=1)
-        svc.enroll("CS-401", "stu-1")
-        svc.enroll("CS-401", "stu-2")
-        svc.enroll("CS-401", "stu-3")
-
-        dup_enrolled = svc.enroll("CS-401", "stu-1")
-        self.assertEqual(dup_enrolled.status, EnrollmentStatus.ENROLLED)
-        self.assertIsNone(dup_enrolled.waitlist_position)
-
-        dup_waitlisted = svc.enroll("CS-401", "stu-3")
-        self.assertEqual(dup_waitlisted.status, EnrollmentStatus.WAITLISTED)
-        self.assertEqual(dup_waitlisted.waitlist_position, 2)
-
-        roster = svc.get_roster("CS-401")
-        self.assertEqual(roster.enrolled, ("stu-1",))
-        self.assertEqual(roster.waitlist, ("stu-2", "stu-3"))
-
-    def test_req0004_fifo_waitlist_promotion_on_enrolled_drop(self) -> None:
-        svc = CoursePulseService()
-        svc.create_course("CS-401", "Spec-Driven Engineering", capacity=1)
-        svc.enroll("CS-401", "stu-1")
-        svc.enroll("CS-401", "stu-2")
-        svc.enroll("CS-401", "stu-3")
-
-        drop_res = svc.drop("CS-401", "stu-1")
-        self.assertEqual(drop_res.status, EnrollmentStatus.DROPPED)
-        self.assertEqual(drop_res.promoted_student_id, "stu-2")
-
-        roster = svc.get_roster("CS-401")
-        self.assertEqual(roster.enrolled, ("stu-2",))
-        self.assertEqual(roster.waitlist, ("stu-3",))
-
-    def test_req0005_waitlist_drop_and_non_member_drop(self) -> None:
-        svc = CoursePulseService()
-        svc.create_course("CS-401", "Spec-Driven Engineering", capacity=1)
-        svc.enroll("CS-401", "stu-1")
-        svc.enroll("CS-401", "stu-2")
-
-        wl_drop = svc.drop("CS-401", "stu-2")
-        self.assertEqual(wl_drop.status, EnrollmentStatus.DROPPED)
-        self.assertIsNone(wl_drop.promoted_student_id)
-
-        missing_drop = svc.drop("CS-401", "stu-999")
-        self.assertEqual(missing_drop.status, EnrollmentStatus.NOT_FOUND)
-        self.assertIsNone(missing_drop.promoted_student_id)
-
-    def test_req0006_immutable_roster_snapshot_and_missing_course_errors(
-        self,
-    ) -> None:
-        svc = CoursePulseService()
-        with self.assertRaises(KeyError):
-            svc.get_roster("NO-SUCH-COURSE")
-        with self.assertRaises(KeyError):
-            svc.enroll("NO-SUCH-COURSE", "stu-1")
+  def test_req0004_board_summary_scorecard_and_completed_points(self) -> None:
+    """Verifies REQ-0004: get_summary counts columns and sums points of done cards."""
+    board = TaskFlowBoard(max_in_progress=2)
+    board.add_card("Card 1", points=3)
+    board.add_card("Card 2", points=5)
+    board.add_card("Card 3", points=2)
+    board.move_card(1, "done")
+    board.move_card(2, "in_progress")
+    self.assertEqual(
+        board.get_summary(),
+        {
+            "total": 3,
+            "todo": 1,
+            "in_progress": 1,
+            "done": 1,
+            "completed_points": 3,
+        },
+    )
 
 
 if __name__ == "__main__":
-    unittest.main()
+  unittest.main()

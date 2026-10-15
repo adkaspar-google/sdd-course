@@ -1,15 +1,10 @@
-# Stacked PR Task Decomposition (`add-kvcache-ttl`)
+# Stacked PR Task Decomposition: TaskFlow Note Pinning (`add-note-pinning`)
 
-## Batch 1 (PR 1/3 — ~120 LOC): Spec Delta & `_CacheEntry` Clock Plumbing
-- **Depends On**: None
-- [x] 1.1 Add `REQ-0006` (`put_with_ttl`) to `openspec/specs/kv-cache/spec.md` while keeping `REQ-0002` FIFO invariant intact.
-- [x] 1.2 Add injectable `clock: Callable[[], float] = time.monotonic` and `_CacheEntry(value, expires_at)` to `KVCache`.
+## Batch 1 (PR 1): Spec Delta & Baseline Preservation (`REQ-0001..REQ-0003`)
+- [x] 1.1 Add `REQ-0004` (`Pin Note and List Pinned Notes`) to the OpenSpec delta and verify `REQ-0001..REQ-0003` tests pass with chronological `list_notes()` order intact.
 
-## Batch 2 (PR 2/3 — ~140 LOC): TTL Expiration & Traceable Unit Tests (`REQ-0001`..`REQ-0006`)
-- **Depends On**: Batch 1
-- [x] 2.1 Implement `put_with_ttl` validation (`ttl_seconds > 0`) and `_purge_expired(now)` before FIFO eviction.
-- [x] 2.2 Add `test_req0001_...` through `test_req0006_...` in `test_kvcache.py`.
+## Batch 2 (PR 2): Note Pinning Implementation & Unit Tests (`REQ-0004`)
+- [x] 2.1 Implement `pin_note(note_id)` (raising `KeyError` on missing IDs) and `get_pinned_notes()` in `notes_board.py`, verified by `test_req0004_pin_note_and_raise_on_missing_id`.
 
-## Archive PR N+1 (PR 3/3): OpenSpec Verification & Archive
-- **Depends On**: Batch 2
-- [x] 3.1 Run `/opsx:verify` and `/opsx:archive` to promote `REQ-0006` into canonical `openspec/specs/kv-cache/spec.md`.
+## Archive PR N+1 (Final Spec Sync & Clean)
+- [x] 3.1 Run `/opsx:verify` and `/opsx:archive` in dedicated **Archive PR N+1** to merge `REQ-0004` into `openspec/specs/notes-board/spec.md`.

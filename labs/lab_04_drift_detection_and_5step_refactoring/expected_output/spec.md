@@ -1,28 +1,33 @@
-# Track Specification: Fix Zero-Token Timestamp Drift (`quota_zero_token_fix`)
+# Track Specification: Fix `REQ-0003` Exact-Budget Boundary Drift (`daily_planner_exact_fit_fix`)
 
 ## 1. Overview
-Remediate Scorecard Finding **F-01** (`REQ-0005` spec drift) in `TokenBucketQuotaAllocator._replenish()` where sub-quantum polling (`added == 0`) prematurely advances `bucket.last_replenished = now` and starves token refill.
+Remediate finding **`F-01`** from `scorecard.md` where `service/daily_planner.py` drifts from `REQ-0003` by rejecting tasks that use the exact remaining daily budget (`used_minutes + minutes == daily_limit_minutes`).
 
 ## 2. Architecture & Component Topology
-- **Target File**: `service/quota_allocator.py` -> `TokenBucketQuotaAllocator._replenish`
-- **State Invariant**: `bucket.last_replenished` represents the timestamp corresponding to the last integer token credited to `bucket.tokens`.
+- **Target Component**: `DailyPlanner.schedule_task()` in `daily_planner_fixed.py`.
+- **Root Cause**: Off-by-one comparison operator `>=` instead of `>` when checking `self.used_minutes + minutes` against `self.daily_limit_minutes`.
 
 ## 3. Functional Requirements
-- **REQ-0005**: When `added == 0`, `_replenish()` MUST NOT modify `bucket.last_replenished`. When `added > 0`, `_replenish()` SHALL advance `bucket.last_replenished` by `added / refill_rate_per_sec` (or set it to `now` if `bucket.tokens` reaches `capacity`).
+- **REQ-0001**: Initialize `DailyPlanner(daily_limit_minutes)` with `used_minutes = 0` and reject `daily_limit_minutes <= 0`.
+- **REQ-0002**: Schedule tasks that fit within the budget and increment `used_minutes`.
+- **REQ-0003**: Accept tasks when `used_minutes + minutes <= daily_limit_minutes` (exact budget fit) and return `False` only when `used_minutes + minutes > daily_limit_minutes`.
+- **REQ-0004**: Raise `ValueError` on blank `title` or `minutes <= 0`, and reset state in `reset_day()`.
 
 ## 4. Non-Functional Requirements
-- Maintain $O(1)$ time and space complexity per `_replenish()` call.
-- Zero regression across `REQ-0001` through `REQ-0006`.
+- **Surgical Changes**: Modify only the boundary check in `schedule_task()` and add the regression test for `REQ-0003`.
 
 ## 5. Acceptance Criteria
-- [x] `test_req0005_sub_quantum_polling_preserves_fractional_elapsed_time` fails on `service/quota_allocator.py` (Red) and passes on `expected_output/quota_allocator_fixed.py` (Green).
+- [x] `test_req0003_exact_remaining_budget_is_accepted` fails on `service/daily_planner.py` and passes on `expected_output/daily_planner_fixed.py`.
+- [x] All 4 requirement tests (`test_req0001_*` through `test_req0004_*`) pass.
 
 ## 6. Out of Scope
-- **F-02**: Prometheus counter hooks for rejected quota requests.
-- **F-03**: Background TTL compaction of idle tenant buckets.
-- **F-04**: Batch `consume_many(keys)` API helper.
+The following non-critical findings from `scorecard.md` are explicitly locked out of scope to prevent scope creep:
+- **F-02**: `.ics` calendar export.
+- **F-03**: Desktop audio chimes.
+- **F-04**: ANSI terminal color themes.
 
 ## 7. Verification Commands
 ```bash
-CI=true python3 -m unittest discover -s expected_output -p "test_*.py" -v
+CI=true python3 -m unittest discover -s labs/lab_04_drift_detection_and_5step_refactoring/expected_output -p "test_*.py" -v
+./labs/lab_04_drift_detection_and_5step_refactoring/self_diagnose.sh
 ```

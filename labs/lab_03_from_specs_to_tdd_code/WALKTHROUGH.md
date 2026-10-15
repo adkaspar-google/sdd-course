@@ -1,41 +1,30 @@
-# Lab 03: From Specs to TDD Code — Implementing a Circuit Breaker State Machine
+# Lab 03 Walkthrough: From Specs to TDD Code — Act on Spec (`TaskFlow` Daily Habit Streak Tracker)
 
-**Estimated Time**: 40–50 minutes  
-**Frameworks Practiced**: Conductor (`/conductor:implement` Red-Green-Refactor TDD) + OpenSpec (`/opsx:apply`) + 1:1 `REQ-XXXX` Test Traceability
+## 1. Scenario & "Act on Spec" (`Apply`)
+In **Lab 03**, you are given an approved specification in [`specs/spec.md`](./specs/spec.md) and [`specs/design.md`](./specs/design.md) for `TaskFlow`'s **Daily Habit Streak Tracker (`habit_tracker.py`)**—just like a Duolingo daily streak counter using simple integer day numbers (`Day 1`, `Day 2`, `Day 3...`).
 
----
-
-## 1. Learning Objective
-In this hands-on lab, you start with a finalized behavioral specification (`specs/spec.md`) and technical design (`specs/design.md`) for a **Circuit Breaker with Half-Open Recovery**. Your goal is to translate `REQ-0001` through `REQ-0007` into a sequenced TDD task breakdown (`tasks.md`), write traceable unit tests (`test_req0001_...` through `test_req0007_...`), and implement the state machine (`circuitbreaker.py`).
-
----
-
-## 2. Starting Input
-Inspect [`specs/spec.md`](./specs/spec.md) and [`specs/design.md`](./specs/design.md):
-- `REQ-0001`: Initial `CLOSED` state forwards calls and returns results.
-- `REQ-0002`: Consecutive failures reaching `failure_threshold` trip the breaker from `CLOSED` to `OPEN`.
-- `REQ-0003`: While `OPEN` (before `recovery_timeout_seconds` elapses), calls fail fast with `CircuitOpenError` without invoking the wrapped callable.
-- `REQ-0004`: Once `recovery_timeout_seconds` elapses, the breaker transitions to `HALF_OPEN` and permits at most `half_open_max_calls=1` probe call.
-- `REQ-0005`: A successful probe call in `HALF_OPEN` resets consecutive failures to `0` and transitions back to `CLOSED`.
-- `REQ-0006`: A failed probe call in `HALF_OPEN` immediately re-opens the circuit (`OPEN`) and resets the recovery timer.
-- `REQ-0007`: A successful call in `CLOSED` resets any prior consecutive failure count below threshold back to `0`.
+In Specificational Coding, once the human and agent agree on the spec, the agent executes **Act on Spec (`Apply`)**:
+1. Break the 4 requirements (`REQ-0001..REQ-0004`) into ordered tasks in `tasks.md`.
+2. For each requirement, write a failing unit test named `test_req000X_*` (**Red**), write the minimal Python code in `habit_tracker.py` to pass it (**Green**), and clean up (**Refactor**).
 
 ---
 
-## 3. Hands-On Exercise Steps
+## 2. Step-by-Step Instructions
 
-### Step 1: Decompose Requirements into TDD Tasks (`tasks.md`)
-Map each requirement to a Red-Green-Refactor task and organize them into logical implementation batches.
+### Step 1: Review the Approved 4-Requirement Contract
+Read [`specs/spec.md`](./specs/spec.md):
+- **`REQ-0001`**: `add_habit(name)` trims `name`, starts `streak = 0`, and raises `ValueError` if empty.
+- **`REQ-0002`**: `check_in(name, day)` sets `streak = 1` on first check-in and increments `streak += 1` when `day == last_day + 1`.
+- **`REQ-0003`**: Checking in again on the same day (`day == last_day`) leaves `streak` unchanged.
+- **`REQ-0004`**: Skipping a day (`day > last_day + 1`) resets `streak = 1`; checking in on a past day (`day < last_day`) raises `ValueError`.
 
-### Step 2: Execute Red-Green-Refactor (`/conductor:implement`)
-1. Write `test_req0001_...` through `test_req0007_...` in `test_circuitbreaker.py`.
-2. Implement `CircuitState`, `CircuitOpenError`, and `CircuitBreaker` in `circuitbreaker.py`.
+### Step 2: Execute TDD Implementation (`/conductor:implement` / `/opsx:apply`)
+- **Conductor / OpenSpec Command**:
+  ```text
+  /conductor:implement Implement HabitTracker in habit_tracker.py and test_habit_tracker.py from specs/spec.md using Red-Green-Refactor TDD with test_req0001..0004 naming.
+  ```
 
----
-
-## 4. Self-Diagnosis & Grading
-Run the automated diagnostic script to execute the unit test suite and verify 100% requirement-to-test traceability:
-
+### Step 3: Verify Your Deliverables
 ```bash
-./self_diagnose.sh
+./labs/lab_03_from_specs_to_tdd_code/self_diagnose.sh
 ```

@@ -1,22 +1,12 @@
-# Technical Design: Sliding-Window Rate Limiter
+# Technical Design: TaskFlow Core To-Do List (`todo-list`)
 
 ## Context
-Public API endpoints experience burst traffic from multi-tenant callers. We require a deterministic, zero-dependency Python reference implementation of the `rate-limiter` capability (`REQ-0001`..`REQ-0006`) that can be embedded in-process or wrapped behind a distributed Redis adapter.
+`TodoList` is the foundational task storage module in `TaskFlow`.
 
-## Architecture & Data Model
-
-```mermaid
-flowchart LR
-    Client["API Handler\nallow(key, cost)"] --> Lock["threading.RLock\n(REQ-0005)"]
-    Lock --> Evict["Evict Expired Entries\nt <= now - window (REQ-0001)"]
-    Evict --> Check{"used + cost <= limit?"}
-    Check -- "Yes" --> Admit["Append (now, cost)\nReturn allowed=True"]
-    Check -- "No" --> Reject["Compute retry_after\nReturn allowed=False (REQ-0002)"]
-```
-
-- **State Representation**: Each `key` maps to a `collections.deque[tuple[float, int]]` storing `(timestamp, cost)` pairs in chronological order.
-- **Amortized Complexity**: Expired entries sit at the head of the `deque` and are popped in $O(1)$ amortized time via `popleft()`.
-
-## Architecture Decision Records
-- [ADR-0001: Storage Engine Selection](./ADR-0001-storage-engine.md)
-- [ADR-0002: Rate-Limiting Window Algorithm](./ADR-0002-sync-protocol.md)
+## Decisions
+1. **Storage (`ADR-0001`)**: Use an insertion-ordered `dict[int, dict]` mapping `task_id` to `{"id": int, "title": str, "completed": bool}`.
+2. **ID Generation (`ADR-0002`)**: Increment `self._next_id` starting from `1` only after validating that `title.strip()` is non-empty.
+3. **Error Handling**:
+   - Blank title on `add_task` $\to$ `ValueError`.
+   - Unknown `task_id` on `complete_task` $\to$ `KeyError`.
+   - Unknown `task_id` on `delete_task` $\to$ returns `False` (idempotent deletion check).
