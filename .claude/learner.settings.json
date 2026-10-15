@@ -1,0 +1,11 @@
+{
+  "enabledPlugins": {
+    "conductor@conductor": true
+  },
+  "permissions": {
+    "deny": [
+      "Read(**/expected_output/**)",
+      "Edit(**/adversarial_tests/**)"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "enabledPlugins": {
+    "conductor@conductor": true
+  },
+  "permissions": {
+    "deny": [
+      "Edit(**/adversarial_tests/**)"
+    ]
+  }
+}

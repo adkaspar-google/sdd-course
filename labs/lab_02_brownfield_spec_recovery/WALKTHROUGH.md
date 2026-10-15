@@ -29,3 +29,21 @@ Document why tags are normalized to lowercase on write inside `add_task()`.
 ```bash
 ./labs/lab_02_brownfield_spec_recovery/self_diagnose.sh
 ```
+
+
+---
+
+## Claude Code Track
+
+1. **Start in Learner Mode**: From the repository root on a personal branch, start Claude Code with learner settings:
+   ```bash
+   claude --settings .claude/learner.settings.json
+   ```
+2. **Audit & Recover Spec**:
+   - Use **plan mode** for the audit with `/opsx:explore`, and use **subagents** for tracing `service/task_organizer.py` and `service/test_task_organizer.py` without modifying source files.
+   - Run `/opsx:propose` to author the recovered OpenSpec contract and ADR, collecting your deliverables under `labs/lab_02_brownfield_spec_recovery/work/` (`openspec/specs/task-organizer/spec.md` and `ADR-0001-tag-normalization.md`).
+3. **Human Approval Checkpoint**: Read the spec and plan, run `git status --short`, and confirm only specification artifacts changed.
+4. **Verify**: Run the self-diagnosis script against your `work/` directory:
+   ```bash
+   ./labs/lab_02_brownfield_spec_recovery/self_diagnose.sh work
+   ```
