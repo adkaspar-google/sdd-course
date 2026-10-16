@@ -4,6 +4,7 @@ This directory contains the complete widescreen (`16:9`) presentation slide deck
 
 ## 1. Files in `slides/`
 
+- **[`interactive_slides.html`](./interactive_slides.html)**: Interactive 36-slide widescreen (`16:9`) HTML5 presentation deck with inline vector SVG diagrams, hoverover tooltips, clickable `①`–`④` *Learn About* hotspot pins, live interactive `TaskFlow` simulators, *Common Misconception* / *Stop & Think* drawer, synced Speaker Notes drawer, and `contenteditable` Live Inline Edit Mode.
 - **[`SDD_Crash_Course_Slides.pdf`](./SDD_Crash_Course_Slides.pdf)**: Compiled 36-slide widescreen (`16:9`) presentation PDF covering Foundations + `TaskFlow` Labs 01–06 step-by-step.
 - **[`SDD_Crash_Course_Slides.tex`](./SDD_Crash_Course_Slides.tex)**: Editable LaTeX/TikZ source for all 36 slides.
 - **[`SPEAKER_NOTES.md`](./SPEAKER_NOTES.md)**: Complete 36-slide instructor script with `PURPOSE`, `VERBAL SCRIPT`, and `TRANSITION` for every slide.
