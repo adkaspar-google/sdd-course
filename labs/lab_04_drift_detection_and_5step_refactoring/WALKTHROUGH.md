@@ -25,10 +25,13 @@ Think of the **5-Step Scorecard Refactoring Loop** like an **emergency room tria
 
 ## 2. Step-by-Step Instructions (The 5-Step Scorecard Refactoring Loop)
 
-### Step 1: Audit Spec vs. Code (`Semantic Diffing`)
-Compare [`specs/spec.md`](./specs/spec.md) against [`service/daily_planner.py`](./service/daily_planner.py) and review [`scorecard.md`](./scorecard.md):
-- **`F-01` (Critical P0)**: Off-by-one `>=` drift bug on line 45 violating `REQ-0003` (`scorecard.md` starts at `0/10` on Boundary Accuracy).
-- **`F-02`, `F-03`, `F-04` (Low P3)**: Feature ideas (`.ics` export, audio chimes, ANSI colors).
+### Step 1: Audit Spec vs. Code (`Semantic Diffing` + `@systematic-debugging-gate`)
+Apply the **4-Phase Systematic Debugging Gate** ([`../../.agents/skills/systematic-debugging-gate/SKILL.md`](../../.agents/skills/systematic-debugging-gate/SKILL.md)) alongside OpenSpec Semantic Diffing to compare [`specs/spec.md`](./specs/spec.md) against [`service/daily_planner.py`](./service/daily_planner.py) and review [`scorecard.md`](./scorecard.md):
+- **Phase 1 (Spec-to-Code Semantic Diff)**: Compare `REQ-0003` (`used_minutes + minutes <= daily_limit_minutes`) against line 45 (`if self.used_minutes + minutes >= self.daily_limit_minutes:`).
+- **Phase 2 (Concrete Fixture Trace)**: Trace `daily_limit=120`, `used=60`, `minutes=60` $\implies$ `60 + 60 >= 120` evaluates to `True` and falsely returns `False`!
+- **Triage Scorecard**:
+  - **`F-01` (Critical P0)**: Off-by-one `>=` drift bug on line 45 violating `REQ-0003` (`scorecard.md` starts at `0/10` on Boundary Accuracy).
+  - **`F-02`, `F-03`, `F-04` (Low P3)**: Feature ideas (`.ics` export, audio chimes, ANSI colors).
 
 ### Step 2: Scope the Track Spec & Lock `F-02..F-04` in `## 6. Out of Scope`
 Write `expected_output/spec.md` targeting only **`F-01`** and placing **`F-02`**, **`F-03`**, and **`F-04`** inside `## 6. Out of Scope` (Karpathy's *Surgical Changes* rule).

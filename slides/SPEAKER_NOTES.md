@@ -29,10 +29,10 @@
 - **VERBAL SCRIPT:** Our second engine is OpenSpec, which separates your repository into two planes. Plane 1, openspec specs, is the Elephant—your living system of record organized by capability domain such as todo-list, task-organizer, and notes-board, written with RFC 2119 SHALL and MUST keywords and four-hashtag Gherkin scenarios. Plane 2, openspec changes, is the Goldfish—an isolated delta workspace. When you propose a change, OpenSpec compares the baseline spec against your request and runs Interactive Socratic Grilling—asking three to five targeted boundary questions before writing ADDED, MODIFIED, REMOVED, or RENAMED requirement deltas.
 - **TRANSITION:** Let's see how Conductor, OpenSpec, and our `@writing-arch-specs` skill lock together in one repository.
 
-### Slide 06 — Wiring Conductor + OpenSpec + `@writing-arch-specs`
-- **PURPOSE:** Show the `conductor/workflow.md` and `conductor/index.md` handshake and the canonical 7-section Track `spec.md` anatomy.
-- **VERBAL SCRIPT:** On Slide 6, we wire Conductor and OpenSpec together through conductor index dot MD and conductor workflow dot MD. Whenever a track begins, the agent loads our writing-arch-specs skill, maps every functional requirement in the seven-section Conductor track spec one-to-one to a bracketed REQ-XXXX contract in openspec specs, and enforces one-to-one test naming via test underscore reqXXXX. Together, OpenSpec provides permanent capability contracts and delta merges, while Conductor provides stack locks, TDD checkpoints, and logical git revert.
-- **TRANSITION:** Let's jump into Module 2 and apply this exact workflow step by step in Lab 1 on TaskFlow's core To-Do List!
+### Slide 06 — Wiring Conductor + OpenSpec + `Superpowers` (`.agents/skills/`)
+- **PURPOSE:** Show how `conductor/index.md` and `conductor/workflow.md` combine Outer-Loop living specifications (`Conductor` + `OpenSpec` + `SPEC.md`) with Inner-Loop `Superpowers` behavioral skills (`.agents/skills/`).
+- **VERBAL SCRIPT:** On Slide 6, we combine the best of every aspect: our Outer-Loop specification architecture—Conductor, OpenSpec, and SPEC dot MD—with the Inner-Loop behavioral discipline of Claude Superpowers inside dot agents slash skills. Used alone, Superpowers writes date-stamped design files that quickly rot into a historical graveyard. By wiring five skills into conductor index dot MD—writing-arch-specs, socratic-brainstorming, subagent-two-stage-review, systematic-debugging-gate, and verification-before-completion—every 1-question-at-a-time Socratic grill, two-stage Cold Auditor review, and 4-phase root-cause debug flows directly into living openspec specs and Conductor tracks.
+- **TRANSITION:** Let's jump into Module 2 and apply this exact unified workflow step by step in Lab 1 on TaskFlow's core To-Do List!
 
 ---
 

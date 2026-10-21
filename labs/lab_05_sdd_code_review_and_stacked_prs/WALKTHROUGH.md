@@ -18,10 +18,12 @@ Think of **SDD Code Review & Stacked PRs (`Batch 1 -> Batch 2 -> Archive PR N+1`
 
 ## 2. Step-by-Step Instructions
 
-### Step 1: Audit `subpar_change.patch` Against the Spec
-Run `/conductor:review` and `/opsx:verify` on [`simulated_review/subpar_change.patch`](./simulated_review/subpar_change.patch) against [`base/openspec/specs/notes-board/spec.md`](./base/openspec/specs/notes-board/spec.md):
+### Step 1: Two-Stage Cold Auditor Review on `subpar_change.patch` (`/conductor:review` + `@subagent-two-stage-review`)
+Run `/conductor:review` and `/opsx:verify` using the **Two-Stage Cold Auditor Protocol** ([`../../.agents/skills/subagent-two-stage-review/SKILL.md`](../../.agents/skills/subagent-two-stage-review/SKILL.md)) on [`simulated_review/subpar_change.patch`](./simulated_review/subpar_change.patch) against [`base/openspec/specs/notes-board/spec.md`](./base/openspec/specs/notes-board/spec.md):
+- **Stage 1 (`Spec Compliance & Regression Audit`)**: Catches the `reversed()` break on `REQ-0002` and the un-specced `pin_note` method (`REQ-0004` missing).
+- **Stage 2 (`Code Quality & Error Contract Audit`)**: Catches `pin_note(note_id)` returning `False` instead of raising `KeyError` on unknown IDs.
 ```text
-/conductor:review Audit labs/lab_05_sdd_code_review_and_stacked_prs/simulated_review/subpar_change.patch against base/openspec/specs/notes-board/spec.md and report all contract violations.
+/conductor:review Audit labs/lab_05_sdd_code_review_and_stacked_prs/simulated_review/subpar_change.patch against base/openspec/specs/notes-board/spec.md using @subagent-two-stage-review and report all contract violations.
 ```
 
 ### Step 2: Synchronize the Spec (`REQ-0004`) & Fix `notes_board.py`

@@ -22,8 +22,10 @@ Read [`SPEC.md`](./SPEC.md) and verify all 8 canonical sections (especially **Se
 3. **`REQ-0003` (`get_by_status` & `get_by_priority`)**: Return matching cards in creation order (`id`), raising `ValueError` on invalid status/priority filters.
 4. **`REQ-0004` (`get_summary`)**: Return `{"total": int, "todo": int, "in_progress": int, "done": int, "completed_points": int}` where `completed_points` sums `points` strictly for cards in `"done"`.
 
-### Step 2: Synthesize `taskflow_app.py` in a Clean Room from `SPEC.md` Alone
-Generate `taskflow_app.py` using [`SPEC.md`](./SPEC.md) as the sole architectural input. Notice that [`adversarial_tests/test_rebuild_contract.py`](./adversarial_tests/test_rebuild_contract.py) is locked read-only (`chmod -w`) so the implementer agent cannot weaken the test assertions!
+### Step 2: Synthesize `taskflow_app.py` in a Clean Room (`@subagent-two-stage-review` + `@verification-before-completion`)
+Dispatch a fresh, stateless ("Goldfish") Builder subagent to generate `taskflow_app.py` using [`SPEC.md`](./SPEC.md) as the sole architectural input:
+- **Adversarial Test Lock (`chmod -w` Invariant)**: [`adversarial_tests/test_rebuild_contract.py`](./adversarial_tests/test_rebuild_contract.py) is locked read-only (`chmod -w`) so the Builder subagent cannot weaken test assertions or reward-hack.
+- **4-State Builder Status & Two-Stage Audit**: The Builder reports `STATUS: DONE` only after passing Stage 1 (`Spec Compliance`) and Stage 2 (`Code Quality`), verified in-turn via [`@verification-before-completion`](../../.agents/skills/verification-before-completion/SKILL.md).
 
 ### Step 3: Run the Clean-Room Rebuild Test (Reference & Custom `work/` Grading)
 ```bash

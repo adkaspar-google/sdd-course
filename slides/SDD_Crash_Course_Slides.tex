@@ -233,18 +233,17 @@
 }
 
 % SLIDE 06
-\slideshell{06 / 36}{MODULE 01: DUAL-ENGINE WIRING}{Wiring Conductor + OpenSpec + \code{@writing-arch-specs}}{How \code{conductor/workflow.md} invokes dedicated spec skills and aligns tracks with \code{openspec/specs/}}{
+\slideshell{06 / 36}{MODULE 01: OUTER + INNER LOOP WIRING}{Wiring Conductor + OpenSpec + \code{Superpowers} (\code{.agents/skills/})}{Combining Outer-Loop Living Specs (\code{Conductor + OpenSpec + SPEC.md}) with Inner-Loop Behavioral Discipline}{
   \bcard{0}{0}{7.1}{4.0}{gbggray}{gborder}{
-    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{1. \code{conductor/workflow.md} \& \code{index.md} Handshake}}\\[6pt]
+    {\fontsize{15}{18.5}\selectfont\bfseries\textcolor{gnavy}{1. \code{conductor/index.md} \& 5 Inner-Loop Skills}}\\[6pt]
     {\ttfamily\scriptsize
-    \# conductor/index.md\\
-    - [Writing Arch Specs Skill](../.agents/skills/writing-arch-specs/SKILL.md)\\
-    - [OpenSpec Canonical Specs](../openspec/specs/)\\[5pt]
-    \# conductor/workflow.md\\
-    1. Skill Activation: Read .agents/skills/writing-arch-specs/SKILL.md\\
-    2. Contract Alignment: Map track spec.md 1:1 to REQ-XXXX in openspec/specs/\\
-    3. TDD Loop: Write failing test\_reqXXXX\_* first (Red -> Green -> Refactor)\\
-    4. Guardrails: Think Before Coding, Simplicity First, Surgical Changes, Immutable Verifiers
+    \# conductor/index.md (Outer-Loop Specs + Inner-Loop Superpowers)\\
+    - [Writing Arch Specs (@writing-arch-specs)](../.agents/skills/...)\\
+    - [Socratic Brainstorming (@socratic-brainstorming)](../.agents/...)\\
+    - [Two-Stage Subagent Review (@subagent-two-stage-review)](../...)\\
+    - [4-Phase Debugging Gate (@systematic-debugging-gate)](../...)\\
+    - [Verify Before Completion (@verification-before-completion)](../...)\\[4pt]
+    \# Routes brainstorming \& plans into openspec/specs/ \& conductor/tracks/
     }
   }
   \bcard{7.6}{0}{7.1}{4.0}{gbgblue}{gblue}{
@@ -259,9 +258,9 @@
   }
 
   \bcard{0}{-4.25}{14.7}{2.05}{gbgindigo}{gnavy}{
-    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Why Dual-Engine Beats Either Tool Alone}}\\[5pt]
-    $\bullet$ \textbf{OpenSpec alone} gives you clean capability contracts (\code{openspec/specs/}) and delta merges, but lacks Conductor's repo-wide \code{tech-stack.md} lock, \code{git notes} audit trail, and 4-phase logical \code{/conductor:revert}.\\[3pt]
-    $\bullet$ \textbf{Conductor alone} gives you disciplined TDD track execution, but without OpenSpec its track specs remain isolated per ticket instead of merging into a permanent capability tree. \textbf{Together, they form a closed loop.}
+    {\fontsize{14.5}{18}\selectfont\bfseries\textcolor{gnavy}{Why Combining Outer-Loop SDD + Inner-Loop Superpowers Gives the Best of Every Aspect}}\\[5pt]
+    $\bullet$ \textbf{Superpowers alone (\code{obra/superpowers})} gives disciplined inner-loop habits (\code{brainstorming}, 2-stage subagent review, 4-phase debugging), but writes date-stamped \code{YYYY-MM-DD-*.md} snapshots that rot into a graveyard.\\[3pt]
+    $\bullet$ \textbf{Conductor + OpenSpec + Superpowers} routes every spec and TDD task into living \code{openspec/specs/} and \code{conductor/tracks/} with Cold Independent Auditor two-stage reviews and 4-phase root-cause debugging.
   }
 }
 

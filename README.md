@@ -2,7 +2,7 @@
 
 > **Author:** **Alejandro Kaspar - AI Forward Deployed Engineer**  
 > **100% Hands-On, Beginner-Friendly Self-Diagnosing Playground (`TaskFlow` Unified App)**  
-> **Core Stack:** [Conductor](https://github.com/gemini-cli-extensions/conductor) + [OpenSpec (`@fission-ai/openspec`)](https://github.com/Fission-AI/OpenSpec) + `SPEC.md` (Single Source of Truth)  
+> **Core Stack:** **Outer Loop:** [Conductor](https://github.com/gemini-cli-extensions/conductor) + [OpenSpec (`@fission-ai/openspec`)](https://github.com/Fission-AI/OpenSpec) + `SPEC.md` (SSOT) $\times$ **Inner Loop:** [Claude Superpowers (`obra/superpowers`)](https://github.com/obra/superpowers) Behavioral Skills (`.agents/skills/`)  
 > **License:** Code under **Apache 2.0** (with mandatory [`NOTICE`](./NOTICE) attribution) · Coursebook, Slides, Videos & Walkthroughs under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)** (*Attribution Required — must credit **Alejandro Kaspar - AI Forward Deployed Engineer***)  
 
 ---
@@ -53,32 +53,43 @@ Instead of complicated distributed-systems math, you build and evolve **one simp
 
 ---
 
-## 3. Dual-Engine Architecture: Why Combine Conductor + OpenSpec?
+## 3. Unified Architecture: Outer-Loop (`Conductor` + `OpenSpec` + `SPEC.md`) $\times$ Inner-Loop (`Superpowers` Behavioral Skills)
+
+Why combine **Conductor + OpenSpec + `SPEC.md`** with **Claude Superpowers (`obra/superpowers`)**?
+- **Superpowers alone** gives you disciplined inner-loop agent habits (`brainstorming`, `writing-plans`, `subagent-driven-development`, `systematic-debugging`, `verification-before-completion`), but stores specs as chronological date-stamped snapshots (`docs/superpowers/specs/YYYY-MM-DD-*.md`) that quickly rot into a historical graveyard.
+- **Our Unified Stack** keeps all of Superpowers' inner-loop behavioral discipline (in [`.agents/skills/`](./.agents/skills/)) while routing every specification, delta, and TDD task into the living **Two-Plane OpenSpec (`openspec/specs/`) + Conductor (`conductor/tracks/`) + `SPEC.md` SSOT** outer loop:
 
 ```mermaid
 flowchart LR
-    subgraph CDD["1. Context-Driven Development (Conductor)"]
+    subgraph CDD["1. Outer Loop: Constitution & Living Specs (Conductor + OpenSpec)"]
         direction TB
-        A1["Repo Architecture & Stack Lock\n(conductor/tech-stack.md)"] --> A4["Agent Context Envelope\n(conductor/index.md)"]
-        A2["Living Guardrails & TDD Rules\n(conductor/workflow.md)"] --> A4
-        A3["Review Scorecard & Styleguides\n(conductor/code_styleguides/)"] --> A4
+        A1["Repo Constitution & Tech-Stack Lock\n(conductor/tech-stack.md & workflow.md)"] --> A4["Living Capability Truth\n(openspec/specs/<cap>/spec.md & SPEC.md)"]
+        A2["Proposed Delta Algebra\n(openspec/changes/<id>/ ADDED/MODIFIED)"] --> A4
+        A3["7-Section Track Spec & Phased Plan\n(conductor/tracks/<id>/spec.md & plan.md)"] --> A4
     end
 
-    subgraph SDD["2. Spec-Driven Development (OpenSpec + @writing-arch-specs)"]
+    subgraph INNER["2. Inner Loop: Behavioral Discipline (Superpowers + .agents/skills/)"]
         direction TB
-        B1["Interactive Socratic Grilling\n(/opsx:explore & /conductor:newTrack)"] --> B2["Evergreen Capability Specs\n(openspec/specs/<cap>/spec.md)"]
-        B2 --> B3["7-Section Track Spec & Phased Plan\n(conductor/tracks/<id>/spec.md & plan.md)"]
+        B1["@socratic-brainstorming\n(1-question-at-a-time + ADRs + YAGNI)"] --> B2["@subagent-two-stage-review\n(Fresh Goldfish Worker + chmod -w Lock)"]
+        B2 --> B3["@systematic-debugging-gate\n(4-Phase Root-Cause Gate after 2 fails)"]
     end
 
-    subgraph EXEC["3. Phased TDD Execution & Multi-Axis Verification"]
+    subgraph EXEC["3. Verified Execution, Two-Stage Review & Archive"]
         direction TB
-        C1["Act on Spec: Red -> Green -> Refactor\n(/conductor:implement & /opsx:apply)"] --> C2["Atomic Commits + git notes\n& Phase Checkpoints"]
-        C2 --> C3["Sync & Clean Spec\n(/conductor:review + /opsx:archive)"]
+        C1["Two-Stage Subagent Review\n(Stage 1 Spec -> Stage 2 Code Quality)"] --> C2["@verification-before-completion\n(Fresh CI=true test + git notes SHA)"]
+        C2 --> C3["Sync & Archive Into Living Truth\n(/conductor:review + /opsx:archive)"]
     end
 
-    CDD --> SDD
-    SDD --> EXEC
+    CDD --> INNER
+    INNER --> EXEC
 ```
+
+### The 5 Built-In `.agents/skills/` (Outer-Loop SDD $\times$ Inner-Loop Superpowers)
+1. **[`@writing-arch-specs`](./.agents/skills/writing-arch-specs/SKILL.md)**: Enforces the 7-Section Track Specification Anatomy and OpenSpec RFC 2119 + 4-hashtag `#### Scenario:` contract rules.
+2. **[`@socratic-brainstorming`](./.agents/skills/socratic-brainstorming/SKILL.md)**: Enforces 1-question-at-a-time Socratic grilling, 2–3 `ADR-XXXX` trade-off proposals, 200–300 word incremental validation, and YAGNI—routing directly into `openspec/changes/` and `conductor/tracks/` instead of dead `YYYY-MM-DD-*-design.md` files.
+3. **[`@subagent-two-stage-review`](./.agents/skills/subagent-two-stage-review/SKILL.md)**: Dispatches a fresh stateless ("Goldfish") worker per task (`Audit -> RED -> GREEN -> Verify`) with a read-only (`chmod -w`) test lock, gated by **Stage 1 (`Spec Compliance Review`)** before **Stage 2 (`Code Quality & Constitution Review`)**.
+4. **[`@systematic-debugging-gate`](./.agents/skills/systematic-debugging-gate/SKILL.md)**: Triggers automatically after 2 test failures or during Spec Drift triage (`Lab 04`), enforcing a 4-phase root-cause protocol (Spec-to-Code Semantic Diff $\to$ Fixture Trace $\to$ Minimal Reproduction Test $\to$ Surgical Fix).
+5. **[`@verification-before-completion`](./.agents/skills/verification-before-completion/SKILL.md)**: Enforces the iron law that no task is marked `[x]`, checkpointed, or archived without fresh, in-turn execution of `CI=true python3 -m unittest` and `./self_diagnose.sh`.
 
 ---
 
