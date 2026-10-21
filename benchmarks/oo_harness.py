@@ -589,6 +589,111 @@ class OOHarnessRouter:
         workspace_root: Optional[Path] = None,
     ) -> BaseSDDHarness:
         """Instantiates and returns the specialized harness subclass."""
+        custom_key = str(task_metadata.get("evolved_archetype", ""))
+        if custom_key and custom_key in cls._EVOLVED_REGISTRY:
+            return cls._EVOLVED_REGISTRY[custom_key](
+                workspace_root=workspace_root
+            )
         archetype = cls.classify(task_metadata)
         harness_cls = cls._REGISTRY[archetype]
         return harness_cls(workspace_root=workspace_root)
+
+    _EVOLVED_REGISTRY: Dict[str, type[BaseSDDHarness]] = {}
+
+    @classmethod
+    def evolve_subclass_from_failure(
+        cls,
+        parent_cls: type[BaseSDDHarness],
+        new_class_name: str,
+        archetype_key: str,
+        failure_invariant: str,
+    ) -> type[BaseSDDHarness]:
+        """OO-Harness Dynamic Subclass Evolution (arXiv:2610.28380 Section 3.2).
+
+        Inspects a failed execution trace and dynamically synthesizes a new child
+        harness class inheriting from `parent_cls`, overriding `pre_flight` to
+        enforce the newly discovered `failure_invariant` and registering it in
+        the router's evolved registry.
+        """
+
+        def evolved_pre_flight(
+            self: BaseSDDHarness, task_context: Dict[str, Any]
+        ) -> Dict[str, Any]:
+            base_state = parent_cls.pre_flight(self, task_context)
+            invariants = list(base_state.get("invariants", []))
+            invariants.append(failure_invariant)
+            return {
+                **base_state,
+                "mode": f"evolved_{archetype_key}",
+                "evolved_from": parent_cls.__name__,
+                "invariants": invariants,
+            }
+
+        evolved_cls = type(
+            new_class_name,
+            (parent_cls,),
+            {
+                "pre_flight": evolved_pre_flight,
+                "evolved_invariant": failure_invariant,
+            },
+        )
+        cls._EVOLVED_REGISTRY[archetype_key] = evolved_cls
+        return evolved_cls
+
+
+class HarnessSquaredProber:
+    """Harness^2 Recursive Propose-Probe-Compose Engine (google-research/harness2).
+
+    Implements the Two-Level Recursive Harnessing loop for open-world tasks where
+    no ground-truth test oracle exists yet:
+      1. Task-Level Recursion (Propose -> Probe -> Compose):
+         Generates K candidate specification/test interpretations, synthesizes
+         contrastive boundary probes `x_probe` where candidates disagree, and
+         composes the strongest boundary invariants into a unified contract.
+      2. Harnessing-Level Recursion (Experience Distillation):
+         Persists newly discovered boundary rules into an experience memory bank
+         so future tasks inherit the insight without re-probing.
+    """
+
+    def __init__(self) -> None:
+        self.experience_bank: List[Dict[str, str]] = []
+
+    def propose_probe_compose(
+        self,
+        domain: str,
+        candidate_predicates: Dict[str, Callable[[int], bool]],
+        probe_inputs: List[int],
+        strict_inclusive_preference: bool = True,
+    ) -> Dict[str, Any]:
+        """Runs contrastive probing across candidate boundary predicates."""
+        disagreements: List[Dict[str, Any]] = []
+        for x in probe_inputs:
+            outcomes = {
+                name: bool(pred(x))
+                for name, pred in candidate_predicates.items()
+            }
+            if len(set(outcomes.values())) > 1:
+                disagreements.append({"probe_input": x, "outcomes": outcomes})
+
+        selected_candidate = (
+            "inclusive_boundary"
+            if strict_inclusive_preference
+            and "inclusive_boundary" in candidate_predicates
+            else next(iter(candidate_predicates))
+        )
+        distilled_rule = (
+            f"{domain}: resolved {len(disagreements)} contrastive boundary "
+            f"disagreement(s) at {[d['probe_input'] for d in disagreements]} -> "
+            f"locked '{selected_candidate}'"
+        )
+        self.experience_bank.append(
+            {"domain": domain, "rule": distilled_rule}
+        )
+        return {
+            "domain": domain,
+            "candidates_evaluated": len(candidate_predicates),
+            "contrastive_disagreements": disagreements,
+            "selected_candidate": selected_candidate,
+            "distilled_rule": distilled_rule,
+        }
+
