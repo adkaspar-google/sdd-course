@@ -123,6 +123,8 @@ To empirically validate our unified **Outer-Loop SDD (`Conductor` + `OpenSpec` +
   3. **Track C (`FeatureBench` & `SWE-bench Verified`)**: 3-Sprint sequential feature evolution (`Sprint 1 -> Sprint 2 -> Sprint 3`), brownfield reverse-engineering, and boundary drift remediation (`>` vs. `<`) with `Out of Scope` scorecards.
   4. **Track D (`SkillsBench` & Mutation Testing)**: Paired skill lift and syntactic/semantic fault injection measuring **Mutation Kill Rate (%)**.
 
+> **Methodology status:** only the live `AB-01` (`OrderPulse`) trial is measured (n=1 per arm). The other numbers below are **projected hypotheses**, not measured results; third-party frameworks were not run. See [`benchmarks/BENCHMARK_REPORT.md`](./benchmarks/BENCHMARK_REPORT.md).
+
 | Experimental Arm | Strict Pass@1 (`12` Tasks) | `AutomationBench` Partial-Credit Objective Score | 3-Sprint Spec-Sync Survival Rate | Mutation Kill Rate (`24` Mutants) | Anti-Reward-Hacking (`chmod -w`) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | **Arm 1: Baseline Vibe Coding** (Monolithic Prompt, No SDD) | `8.3%` (`1/12`) | `58.5%` (`79/135`) | `0.0%` | `33.3%` (`8/24`) | `0.0%` |
