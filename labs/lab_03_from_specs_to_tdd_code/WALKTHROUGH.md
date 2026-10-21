@@ -22,14 +22,18 @@ Read [`specs/spec.md`](./specs/spec.md) and verify how the 4 requirements partit
 - **`REQ-0003` (`check_in` Same-Day Idempotence)**: Checking in again on the same day (`day == last_check_in_day`) leaves `streak` unchanged.
 - **`REQ-0004` (`check_in` Gap Reset & Back-Dating Rejection)**: Skipping one or more days (`day > last_check_in_day + 1`) resets `streak = 1`; checking in on a past day (`day < last_check_in_day`) or `day < 1` raises `ValueError`.
 
-### Step 2: Execute TDD Implementation (`/conductor:implement` / `/opsx:apply`)
-1. Break `REQ-0001..REQ-0004` into ordered tasks in `tasks.md`.
-2. Write the 4 failing unit tests in `test_habit_tracker.py` (`test_req0001_*` through `test_req0004_*`, each with a docstring `Verifies REQ-000X: ...`) and confirm they fail (**Red**).
-3. Implement `HabitTracker` in `habit_tracker.py` to make all 4 tests pass (**Green**), then clean up (**Refactor**).
+### Step 2: Execute TDD Implementation with Subagent Two-Stage Review (`/conductor:implement` + `@subagent-two-stage-review`)
+Apply the **Outer-Loop (`Conductor` + `OpenSpec`) + Inner-Loop (`@subagent-two-stage-review`)** protocol ([`../../.agents/skills/subagent-two-stage-review/SKILL.md`](../../.agents/skills/subagent-two-stage-review/SKILL.md)):
+1. **Bite-Sized Task Plan (`tasks.md`)**: Break `REQ-0001..REQ-0004` into ordered 2–5 minute tasks (`Audit -> RED -> GREEN -> REFACTOR & Verify`) with zero topological inversions.
+2. **Red Phase (TDD Iron Law)**: Write the 4 failing unit tests in `test_habit_tracker.py` (`test_req0001_*` through `test_req0004_*`, each with a docstring `Verifies REQ-000X: ...`) and confirm they fail (**Red**). Delete any implementation code written before a failing test.
+3. **Green & Refactor Phase**: Implement `HabitTracker` in `habit_tracker.py` to make all 4 tests pass (**Green**), then clean up (**Refactor**).
+4. **Mandatory Two-Stage Cold Auditor Gate**:
+   - **Stage 1 (`Spec Compliance & Anti-Reward-Hacking`)**: Confirm 1:1 `REQ-0001..0004` coverage and real behavioral assertions (no smoke tests).
+   - **Stage 2 (`Code Quality & Constitution`)**: Confirm `conductor/tech-stack.md` compliance and run `@verification-before-completion`.
 
 - **Conductor / OpenSpec Command**:
   ```text
-  /conductor:implement Implement HabitTracker in habit_tracker.py and test_habit_tracker.py from specs/spec.md using Red-Green-Refactor TDD with test_req0001..0004 naming.
+  /conductor:implement Implement HabitTracker in habit_tracker.py and test_habit_tracker.py from specs/spec.md using @subagent-two-stage-review and Red-Green-Refactor TDD with test_req0001..0004 naming.
   ```
 
 ### Step 3: Verify Your Deliverables (Reference & Custom `work/` Grading)

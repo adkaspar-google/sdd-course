@@ -15,8 +15,8 @@ Think of **Brownfield Spec Recovery (`Sync Spec`)** like **laser-scanning an his
 
 ## 2. Step-by-Step Instructions
 
-### Step 1: Explore the Brownfield Code & Tests in Read-Only Mode
-Use OpenSpec's exploration mode (`/opsx:explore`) to trace the exact behavior of [`service/task_organizer.py`](./service/task_organizer.py) and [`service/test_task_organizer.py`](./service/test_task_organizer.py) without modifying a single line of Python:
+### Step 1: Pre-Flight Workspace Audit & Read-Only Exploration (`/opsx:explore`)
+Before touching any brownfield module, apply the **Pre-Flight Workspace Hygiene & Read-Only Audit** rule (`conductor/workflow.md`) and OpenSpec exploration mode (`/opsx:explore`) to trace the exact behavior of [`service/task_organizer.py`](./service/task_organizer.py) and [`service/test_task_organizer.py`](./service/test_task_organizer.py) without modifying a single line of Python:
 
 - **OpenSpec Command**:
   ```text

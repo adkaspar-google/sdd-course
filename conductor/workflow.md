@@ -1,18 +1,21 @@
 # Development Workflow (`conductor/workflow.md`)
 
-## 1. Dual-Engine SDD Protocol
-When starting any feature, bugfix, or brownfield refactor via `/conductor:newTrack`:
-1. **Skill Activation**: Read and apply `.agents/skills/writing-arch-specs/SKILL.md`.
-2. **Contract Alignment**: Ensure `conductor/tracks/<track_id>/spec.md` follows the **7-Section Track Specification Anatomy** (`Overview`, `Architecture & Component Topology`, `Functional Requirements`, `Non-Functional Requirements`, `Acceptance Criteria`, `Out of Scope`, `Verification Commands`) and maps 1:1 to `REQ-XXXX` IDs in `openspec/specs/`.
-3. **Hierarchical Plan**: Generate `conductor/tracks/<track_id>/plan.md` broken into small, testable phases ending with `- [ ] Task: Conductor - User Manual Verification '<Phase Name>' (Protocol in workflow.md)`.
+> **Architecture:** **Outer-Loop Specification & State Governance (`Conductor` + `OpenSpec` + `SPEC.md`)** $\times$ **Inner-Loop Agent Behavioral Discipline (`Claude Superpowers` / `.agents/skills/`)**
 
-## 2. Task TDD Lifecycle (`/conductor:implement`)
-For every task in `plan.md`:
-1. Mark task `[~]` in `plan.md`.
-2. **Red Phase**: Write failing unit test(s) named `test_reqXXXX_<behavior>` in `test_*.py` and run `CI=true python3 -m unittest` to confirm failure.
+## 1. Outer-Loop + Inner-Loop SDD Protocol (`/conductor:newTrack` & `/opsx:propose`)
+When starting any feature, bugfix, or brownfield refactor via `/conductor:newTrack` or `/opsx:propose`:
+1. **Socratic Brainstorming (`@socratic-brainstorming`)**: Read and apply `.agents/skills/socratic-brainstorming/SKILL.md` (1-question-at-a-time Socratic grilling, 2–3 `ADR-XXXX` trade-offs, 200–300 word incremental validation, and YAGNI). Route all specifications directly into `openspec/changes/<id>/` and `conductor/tracks/<track_id>/` (never orphan date-stamped `YYYY-MM-DD-*.md` files).
+2. **Contract Alignment (`@writing-arch-specs`)**: Read and apply `.agents/skills/writing-arch-specs/SKILL.md`. Ensure `conductor/tracks/<track_id>/spec.md` follows the **7-Section Track Specification Anatomy** (`Overview`, `Architecture & Component Topology`, `Functional Requirements`, `Non-Functional Requirements`, `Acceptance Criteria`, `Out of Scope`, `Verification Commands`) and maps 1:1 to `REQ-XXXX` IDs in `openspec/specs/`.
+3. **Hierarchical Plan**: Generate `conductor/tracks/<track_id>/plan.md` broken into small, testable 2–5 minute phases ending with `- [ ] Task: Conductor - User Manual Verification '<Phase Name>' (Protocol in workflow.md)`.
+
+## 2. Task TDD & Subagent Lifecycle (`/conductor:implement` & `/opsx:apply`)
+For every task in `plan.md` (governed by `.agents/skills/subagent-two-stage-review/SKILL.md`):
+1. Mark task `[~]` in `plan.md` and dispatch a fresh, stateless ("Goldfish") Builder context (`Audit -> RED -> GREEN -> REFACTOR & Verify`).
+2. **Red Phase (TDD Iron Law)**: Write failing unit test(s) named `test_reqXXXX_<behavior>` in `test_*.py` and run `CI=true python3 -m unittest` to confirm failure.
 3. **Green Phase**: Implement the minimal production code required to pass the test and satisfy the RFC 2119 contract.
-4. **Refactor Phase**: Clean up types, docstrings, and lock hygiene while keeping tests green.
-5. **Commit & Audit Trail**: Commit implementation (`feat:` / `fix:`), attach structured task summary via `git notes add -m "..." <sha>`, and update `plan.md` to `[x] Task: ... <7-char-sha>`.
+4. **4-Phase Systematic Debugging Gate (`@systematic-debugging-gate`)**: If any test or command fails twice in a row, HALT blind edits and execute `.agents/skills/systematic-debugging-gate/SKILL.md` (Spec-to-Code Semantic Diff $\to$ Fixture Trace $\to$ Minimal Reproduction Test $\to$ Surgical Fix).
+5. **Mandatory Two-Stage Review (`@subagent-two-stage-review`)**: Run Stage 1 (`Spec Compliance & Anti-Reward-Hacking`) followed by Stage 2 (`Code Quality & Constitution`).
+6. **Verification Before Completion (`@verification-before-completion`) & Commit**: Execute fresh `CI=true python3 -m unittest` and `./self_diagnose.sh` in the current turn, commit implementation (`feat:` / `fix:`), attach structured task summary via `git notes add -m "..." <sha>`, and update `plan.md` to `[x] Task: ... <7-char-sha>`.
 
 ## 3. Phase Completion Verification & Checkpointing Protocol
 At the end of each phase:

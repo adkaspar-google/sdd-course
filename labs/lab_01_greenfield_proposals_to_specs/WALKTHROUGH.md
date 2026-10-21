@@ -16,12 +16,14 @@ Think of [`proposal.md`](./proposal.md) as a **back-of-napkin sketch for a kitch
 
 ## 2. Step-by-Step Instructions
 
-### Step 1: Run Interactive Socratic Grilling ("The Grill")
-Inspect [`proposal.md`](./proposal.md) using OpenSpec exploration so the agent surfaces every hidden edge case before generating any spec or code:
+### Step 1: Run Interactive Socratic Grilling ("The Grill" + `@socratic-brainstorming`)
+Inspect [`proposal.md`](./proposal.md) using OpenSpec exploration paired with our Inner-Loop Socratic Brainstorming skill ([`../../.agents/skills/socratic-brainstorming/SKILL.md`](../../.agents/skills/socratic-brainstorming/SKILL.md)):
+- **Inner-Loop Superpowers Discipline (`brainstorming`)**: Ask clarifying questions **one at a time**, propose 2–3 architectural alternatives with explicit trade-offs (`ADR-0001` & `ADR-0002`), validate in concise 200–300 word blocks, and apply ruthless YAGNI (`## 6. Out of Scope`).
+- **Outer-Loop Destination Rule**: Unlike standalone Superpowers (which writes date-stamped `docs/superpowers/specs/YYYY-MM-DD-*-design.md` files that rot over time), route all validated specs directly into the living `openspec/specs/todo-list/spec.md` and `conductor/tracks/` tree.
 
 - **OpenSpec Command**:
   ```text
-  /opsx:explore Read labs/lab_01_greenfield_proposals_to_specs/proposal.md and list the 3 ambiguity questions we must lock down before writing the spec.
+  /opsx:explore Read labs/lab_01_greenfield_proposals_to_specs/proposal.md using @socratic-brainstorming and list the 3 ambiguity questions we must lock down before writing the spec.
   ```
 - **Socratic Grilling Answers to Lock In**:
   1. **Blank Titles (`REQ-0001`)**: Strip leading/trailing whitespace and raise `ValueError` if the resulting title is empty.
