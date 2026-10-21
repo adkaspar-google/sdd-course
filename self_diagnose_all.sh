@@ -37,6 +37,12 @@ for lab in "${LABS[@]}"; do
   PASSED=$((PASSED + 1))
 done
 
+if [[ -f "${ROOT_DIR}/benchmarks/test_oo_harness_benchmark.py" ]]; then
+  echo ""
+  echo "--- [Benchmark Suite: Open SDD & OO-Harness Verification] ---"
+  python3 "${ROOT_DIR}/benchmarks/test_oo_harness_benchmark.py"
+fi
+
 echo ""
 echo "========================================================================"
 echo "  [ALL PASSED] ${PASSED}/${#LABS[@]} Hands-On SDD-Crash-Course Labs Verified!"

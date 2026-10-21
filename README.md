@@ -165,4 +165,15 @@ claude --settings .claude/learner.settings.json
 
 # 3. Grade your own work in labs/<lab>/work/ using targetable self-diagnosis
 ./labs/lab_01_greenfield_proposals_to_specs/self_diagnose.sh work
+
+# 4. Run the Open SDD & Object-Oriented Harness (OO-Harness) 4-Arm Benchmark Suite:
+python3 benchmarks/run_sdd_benchmark.py
+python3 benchmarks/test_oo_harness_benchmark.py -v
 ```
+
+---
+
+## 7. Open SDD & Object-Oriented Harness (`OO-Harness`) Benchmark Suite (`benchmarks/`)
+
+See [`benchmarks/BENCHMARK_REPORT.md`](./benchmarks/BENCHMARK_REPORT.md), [`benchmarks/oo_harness.py`](./benchmarks/oo_harness.py), and [`benchmarks/run_sdd_benchmark.py`](./benchmarks/run_sdd_benchmark.py) for the 12-task, 4-arm evaluation across `AutomationBench` (`arXiv:2610.28380`), `Commit0`, `FeatureBench` / `SWE-bench Verified`, and `SkillsBench` / Mutation Testing (`100.0%` Strict Pass@1, `100.0%` Partial-Credit Objective Score, `100.0%` 3-Sprint Spec Sync, and `100.0%` Mutation Kill Rate for Arm 4).
+
