@@ -57,62 +57,14 @@ All track specifications (`conductor/tracks/<track_id>/spec.md`) MUST adhere to 
 
 ### 2. `conductor/index.md` (Capabilities & Inner-Loop Superpowers Handshake)
 ```markdown
-## 1. Outer-Loop Repository Constitution & Living Specifications
-- [Product Definition](./product.md)
-- [Product Guidelines](./product-guidelines.md)
-- [Tech Stack](./tech-stack.md)
-- [Development Workflow](./workflow.md)
-- [Tracks Registry](./tracks.md)
-- [OpenSpec Canonical Specifications](../openspec/specs/)
-
-## 2. Inner-Loop Behavioral & Specification Skills (`.agents/skills/` — Superpowers + SDD Synthesis)
+## Outer-Loop Constitution & Inner-Loop Superpowers Skills
 - [Writing Architecture Specs (`@writing-arch-specs`)](../.agents/skills/writing-arch-specs/SKILL.md)
-- [Socratic Brainstorming & Design Validation (`@socratic-brainstorming`)](../.agents/skills/socratic-brainstorming/SKILL.md)
-- [Subagent Execution & Two-Stage Review (`@subagent-two-stage-review`)](../.agents/skills/subagent-two-stage-review/SKILL.md)
-- [4-Phase Systematic Debugging Gate (`@systematic-debugging-gate`)](../.agents/skills/systematic-debugging-gate/SKILL.md)
+- [Socratic Brainstorming (`@socratic-brainstorming`)](../.agents/skills/socratic-brainstorming/SKILL.md)
+- [Subagent Two-Stage Review (`@subagent-two-stage-review`)](../.agents/skills/subagent-two-stage-review/SKILL.md)
+- [4-Phase Debugging Gate (`@systematic-debugging-gate`)](../.agents/skills/systematic-debugging-gate/SKILL.md)
 - [Verification Before Completion (`@verification-before-completion`)](../.agents/skills/verification-before-completion/SKILL.md)
+- [OpenSpec Canonical Specifications](../openspec/specs/)
 ```
-
----
-
-## 2.5 The Outer-Loop + Inner-Loop Architecture: Combining `Conductor` + `OpenSpec` + `SPEC.md` with Claude Superpowers (`obra/superpowers`)
-
-Many engineers use **Claude Superpowers (`obra/superpowers` by Jesse Vincent)** for inner-loop agent discipline (`brainstorming`, `writing-plans`, `subagent-driven-development`, `test-driven-development`, `systematic-debugging`, `verification-before-completion`).
-
-However, used alone, Superpowers operates at **SDD Maturity Level 1 (Spec-First Task Snapshots)**: `brainstorming` writes chronological files like `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and `writing-plans` writes `docs/superpowers/plans/YYYY-MM-DD-<feature>.md`. After 6 months and 60 features, `docs/superpowers/specs/` becomes a graveyard of 60 conflicting historical design snapshots—none of which represents the current living truth of the system.
-
-By combining **Outer-Loop Specification & State Governance (`Conductor` + `OpenSpec` + `SPEC.md`)** with **Inner-Loop Behavioral Discipline (`obra/superpowers` / `.agents/skills/`)**, you get the **best of every aspect**:
-
-```mermaid
-flowchart TB
-    subgraph OUTER["OUTER LOOP: Multi-Month Repository Constitution & Living Spec Architecture"]
-        direction LR
-        O1["Layer 1: Repo Constitution\n(conductor/product.md, tech-stack.md,\nworkflow.md, policies/)"] --> O2["Layer 2: Living System Truth\n(openspec/specs/<cap>/spec.md\n& 8-Section SPEC.md SSOT)"]
-        O2 --> O3["Layer 3: Delta Algebra & Track Plan\n(openspec/changes/<id>/ ADDED/MODIFIED\n& conductor/tracks/<id>/plan.md)"]
-        O3 --> O4["Layer 4: Archive & Logical Revert\n(/opsx:verify -> /opsx:archive &\n/conductor:revert 4-Phase Git SHA)"]
-    end
-
-    subgraph INNER["INNER LOOP: Per-Task Agent Behavioral Discipline (Superpowers + .agents/skills/)"]
-        direction LR
-        I1["1. @socratic-brainstorming\n(1-question-at-a-time + 2-3 ADRs\n+ 200w blocks + YAGNI)"] --> I2["2. @subagent-two-stage-review\n(Fresh Goldfish Worker per [~] task\n+ chmod -w Test Lock)"]
-        I2 --> I3["3. @systematic-debugging-gate\n(4-Phase Root-Cause Protocol\nafter 2 failures — zero guessing)"]
-        I3 --> I4["4. @verification-before-completion\n(Fresh CI=true test & self_diagnose\nbefore [x] + Two-Stage Review)"]
-    end
-
-    OUTER ==>|"Feeds each atomic [~] task into"| INNER
-    INNER ==>|"Writes verified deltas & SHA notes back to"| OUTER
-```
-
-### Side-by-Side Synergy Matrix (`Superpowers Inner Loop` $\times$ `Conductor + OpenSpec + SPEC.md Outer Loop`)
-
-| Lifecycle Stage | What **Claude Superpowers (`obra/superpowers`)** Contributes (Inner Loop) | What **`Conductor` + `OpenSpec` + `SPEC.md`** Contributes (Outer Loop) | Unified Best-of-Both-Worlds Workflow in This Repo |
-| :--- | :--- | :--- | :--- |
-| **1. Discovery & Grilling** | **`brainstorming`**: Asks questions **one at a time**, proposes 2–3 trade-offs, validates in 200–300 word chunks, enforces YAGNI. | **`/opsx:explore` & `/conductor:newTrack`**: Formalizes requirements into `REQ-XXXX` (`SHALL`/`MUST`), `#### Scenario:`, and `ADR-XXXX`. | **[`@socratic-brainstorming`](../.agents/skills/socratic-brainstorming/SKILL.md)** (`Lab 01`): Runs 1-at-a-time Socratic grilling and writes directly into `openspec/changes/<id>/` & `conductor/tracks/<id>/spec.md` (zero orphan `YYYY-MM-DD-*-design.md` files). |
-| **2. Repo Governance** | General `CLAUDE.md` prompt context. | **`conductor/product.md` & `tech-stack.md`**: Enforces a hard **Tech-Stack Deviation Gate** (`[~]` halt before adding any new dependency). | **[`conductor/workflow.md`](../conductor/workflow.md)** (`Lab 02`): Combines read-only workspace pre-flight audits with constitutional `tech-stack.md` and `## 6. Out of Scope` locks. |
-| **3. Task Planning** | **`writing-plans`**: Breaks work into bite-sized 2–5 minute tasks (`Audit -> RED -> GREEN -> Verify`) with exact file paths. | **Bi-Directional Traceability & SHA Ledger**: Links `REQ-XXXX` $\leftrightarrow$ `Task X.Y` $\leftrightarrow$ `test_reqXXXX_*` + `[x] <7-char-sha>` + `git notes`. | **`plan.md` & `tasks.md`** (`Lab 03`): Every 2–5 minute TDD task is mapped 1:1 to a `REQ-XXXX` ID and stamped with its commit SHA and `git notes` summary. |
-| **4. Subagent Execution & Review** | **`subagent-driven-development`**: Fresh subagent per task + **Two-Stage Review** (`Stage 1: Spec Compliance` $\to$ `Stage 2: Code Quality`). | **Stateless "Goldfish" Context + Read-Only Test Lock (`chmod -w`)** + **`/conductor:review`** + **`/opsx:verify`**. | **[`@subagent-two-stage-review`](../.agents/skills/subagent-two-stage-review/SKILL.md)** (`Labs 03, 05, 06`): Fresh worker per task with `chmod -w` test protection, gated by Stage 1 (`Spec Compliance`) before Stage 2 (`Code Quality & Constitution`). |
-| **5. Debugging & Drift Recovery** | **`systematic-debugging`**: 4-phase root-cause investigation triggered after 2 failures; prohibits blind guessing. | **Semantic Diffing + 5-Step Weighted Scorecard Refactoring** (`scorecard.md` + `FIX NOW` vs. `Out of Scope`). | **[`@systematic-debugging-gate`](../.agents/skills/systematic-debugging-gate/SKILL.md)** (`Lab 04`): Uses Phase 1 Spec-to-Code Semantic Diffing to catch the `>=` vs. `>` boundary bug in `daily_planner.py` while keeping `F-02..F-04` locked in `Out of Scope`. |
-| **6. Verification, Archive & Revert** | **`verification-before-completion`** & **`finishing-a-development-branch`**: Iron law requiring fresh test output before claiming completion. | **`/opsx:archive`** (merges delta into `openspec/specs/`), **`$N+1$ Stacked PRs`**, **`/conductor:revert`** (4-phase logical SHA revert), & **`SPEC.md` Rebuild Test**. | **[`@verification-before-completion`](../.agents/skills/verification-before-completion/SKILL.md)** (`Labs 05 & 06`): Requires fresh `CI=true python3 -m unittest` + `./self_diagnose.sh` + `openspec validate --strict` before marking `[x]` or merging deltas into `openspec/specs/`. |
 
 ---
 
@@ -192,6 +144,45 @@ Even in a simple everyday app like **`TaskFlow`**, a vague natural-language prom
 | **`Lab 04` (`daily_planner.py`)** | *"Don't exceed my daily minute budget."* | Off-by-one `>=` instead of `>` rejects a `60`-min task when exactly `60` minutes remain! | `REQ-0003` boundary contract (`<=` allowed) + 5-Step Scorecard Track (`F-01`) + `F-02..F-04` locked in `Out of Scope`. |
 | **`Lab 05` (`notes_board.py`)** | *"Add note pinning to the board."* | Teammate's patch reverses `list_notes()` order (breaking `REQ-0002`) and omits `REQ-0004` from `spec.md`. | `/conductor:review` + `/opsx:verify` spec-diff audit + Stacked PR batches (`Batch 1`, `Batch 2`, `Archive PR N+1`). |
 | **`Lab 06` (`taskflow_app.py`)** | *"Build a Kanban board with a WIP limit."* | Moving a card already in `"in_progress"` or exceeding `max_in_progress` corrupts column counts. | 8-Section `SPEC.md` (SSOT) + Clean-Room Rebuild Test against read-only (`chmod -w`) `adversarial_tests/`. |
+
+---
+
+## 7. The Outer-Loop + Inner-Loop Architecture: Combining `Conductor` + `OpenSpec` + `SPEC.md` with Claude Superpowers (`obra/superpowers`)
+
+Many engineers use **Claude Superpowers (`obra/superpowers` by Jesse Vincent)** for inner-loop agent discipline (`brainstorming`, `writing-plans`, `subagent-driven-development`, `test-driven-development`, `systematic-debugging`, `verification-before-completion`).
+
+Used alone, Superpowers operates at **SDD Maturity Level 1 (Spec-First Task Snapshots)**: `brainstorming` writes chronological files like `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and `writing-plans` writes `docs/superpowers/plans/YYYY-MM-DD-<feature>.md`. After 6 months and 60 features, `docs/superpowers/specs/` becomes a graveyard of 60 conflicting historical design snapshots—none of which represents the current living truth of the system.
+
+By combining **Outer-Loop Specification & State Governance (`Conductor` + `OpenSpec` + `SPEC.md`)** with **Inner-Loop Behavioral Discipline (`obra/superpowers` / `.agents/skills/`)**, you get the **best of every aspect**:
+
+```mermaid
+flowchart TB
+    subgraph OUTER["OUTER LOOP: Multi-Month Repository Constitution & Living Spec Architecture"]
+        direction LR
+        O1["Layer 1: Repo Constitution\n(conductor/product.md, tech-stack.md,\nworkflow.md, policies/)"] --> O2["Layer 2: Living System Truth\n(openspec/specs/<cap>/spec.md\n& 8-Section SPEC.md SSOT)"]
+        O2 --> O3["Layer 3: Delta Algebra & Track Plan\n(openspec/changes/<id>/ ADDED/MODIFIED\n& conductor/tracks/<id>/plan.md)"]
+        O3 --> O4["Layer 4: Archive & Logical Revert\n(/opsx:verify -> /opsx:archive &\n/conductor:revert 4-Phase Git SHA)"]
+    end
+
+    subgraph INNER["INNER LOOP: Per-Task Agent Behavioral Discipline (Superpowers + .agents/skills/)"]
+        direction LR
+        I1["@socratic-brainstorming\n(1-question-at-a-time + 2-3 ADRs\n+ 200w blocks + YAGNI)"] --> I2["@subagent-two-stage-review\n(Fresh Goldfish Worker per [~] task\n+ chmod -w Test Lock)"]
+        I2 --> I3["@systematic-debugging-gate\n(4-Phase Root-Cause Protocol\nafter 2 failures — zero guessing)"]
+        I3 --> I4["@verification-before-completion\n(Fresh CI=true test & self_diagnose\nbefore [x] + Two-Stage Review)"]
+    end
+
+    OUTER ==>|"Feeds each atomic [~] task into"| INNER
+    INNER ==>|"Writes verified deltas & SHA notes back to"| OUTER
+```
+
+| Lifecycle Stage | What **Claude Superpowers (`obra/superpowers`)** Contributes (Inner Loop) | What **`Conductor` + `OpenSpec` + `SPEC.md`** Contributes (Outer Loop) | Unified Best-of-Both-Worlds Workflow in This Repo |
+| :--- | :--- | :--- | :--- |
+| **Discovery & Grilling** | **`brainstorming`**: Asks questions **one at a time**, proposes 2–3 trade-offs, validates in 200–300 word chunks, enforces YAGNI. | **`/opsx:explore` & `/conductor:newTrack`**: Formalizes requirements into `REQ-XXXX` (`SHALL`/`MUST`), `#### Scenario:`, and `ADR-XXXX`. | **[`@socratic-brainstorming`](../.agents/skills/socratic-brainstorming/SKILL.md)** (`Lab 01`): Runs 1-at-a-time Socratic grilling and writes directly into `openspec/changes/<id>/` & `conductor/tracks/<id>/spec.md` (zero orphan `YYYY-MM-DD-*-design.md` files). |
+| **Repo Governance** | General `CLAUDE.md` prompt context. | **`conductor/product.md` & `tech-stack.md`**: Enforces a hard **Tech-Stack Deviation Gate** (`[~]` halt before adding any new dependency). | **[`conductor/workflow.md`](../conductor/workflow.md)** (`Lab 02`): Combines read-only workspace pre-flight audits with constitutional `tech-stack.md` and `## 6. Out of Scope` locks. |
+| **Task Planning** | **`writing-plans`**: Breaks work into bite-sized 2–5 minute tasks (`Audit -> RED -> GREEN -> Verify`) with exact file paths. | **Bi-Directional Traceability & SHA Ledger**: Links `REQ-XXXX` $\leftrightarrow$ `Task X.Y` $\leftrightarrow$ `test_reqXXXX_*` + `[x] <7-char-sha>` + `git notes`. | **`plan.md` & `tasks.md`** (`Lab 03`): Every 2–5 minute TDD task is mapped 1:1 to a `REQ-XXXX` ID and stamped with its commit SHA and `git notes` summary. |
+| **Subagent Execution & Review** | **`subagent-driven-development`**: Fresh subagent per task + **Two-Stage Review** (`Stage 1: Spec Compliance` $\to$ `Stage 2: Code Quality`). | **Stateless "Goldfish" Context + Read-Only Test Lock (`chmod -w`)** + **`/conductor:review`** + **`/opsx:verify`**. | **[`@subagent-two-stage-review`](../.agents/skills/subagent-two-stage-review/SKILL.md)** (`Labs 03, 05, 06`): Fresh worker per task with `chmod -w` test protection, gated by Stage 1 (`Spec Compliance`) before Stage 2 (`Code Quality & Constitution`). |
+| **Debugging & Drift Recovery** | **`systematic-debugging`**: 4-phase root-cause investigation triggered after 2 failures; prohibits blind guessing. | **Semantic Diffing + 5-Step Weighted Scorecard Refactoring** (`scorecard.md` + `FIX NOW` vs. `Out of Scope`). | **[`@systematic-debugging-gate`](../.agents/skills/systematic-debugging-gate/SKILL.md)** (`Lab 04`): Uses Phase 1 Spec-to-Code Semantic Diffing to catch the `>=` vs. `>` boundary bug in `daily_planner.py` while keeping `F-02..F-04` locked in `Out of Scope`. |
+| **Verification, Archive & Revert** | **`verification-before-completion`** & **`finishing-a-development-branch`**: Iron law requiring fresh test output before claiming completion. | **`/opsx:archive`** (merges delta into `openspec/specs/`), **`$N+1$ Stacked PRs`**, **`/conductor:revert`** (4-phase logical SHA revert), & **`SPEC.md` Rebuild Test**. | **[`@verification-before-completion`](../.agents/skills/verification-before-completion/SKILL.md)** (`Labs 05 & 06`): Requires fresh `CI=true python3 -m unittest` + `./self_diagnose.sh` + `openspec validate --strict` before marking `[x]` or merging deltas into `openspec/specs/`. |
 
 ---
 
