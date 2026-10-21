@@ -105,11 +105,34 @@ npm install -g @fission-ai/openspec@latest
 
 # 3. Or run self-diagnosis on an individual lab as you work through it:
 ./labs/lab_03_from_specs_to_tdd_code/self_diagnose.sh
+
+# 4. Run the Open SDD & Object-Oriented Harness (OO-Harness) 4-Arm Benchmark Suite:
+python3 benchmarks/run_sdd_benchmark.py
+python3 benchmarks/test_oo_harness_benchmark.py -v
 ```
 
 ---
 
-## 5. External Hands-On Codelabs & Video Tutorials
+## 5. Open SDD & Object-Oriented Harness (`OO-Harness`) Benchmark Suite (`benchmarks/`)
+
+To empirically validate our unified **Outer-Loop SDD (`Conductor` + `OpenSpec` + `SPEC.md`) $\times$ Inner-Loop `Claude Superpowers` (`.agents/skills/`) $\times$ Object-Oriented Harness (`OO-Harness`)** architecture, [`benchmarks/`](./benchmarks/) includes a reproducible 12-task, 4-arm evaluation harness ([`benchmarks/run_sdd_benchmark.py`](./benchmarks/run_sdd_benchmark.py), [`benchmarks/oo_harness.py`](./benchmarks/oo_harness.py), and [`benchmarks/BENCHMARK_REPORT.md`](./benchmarks/BENCHMARK_REPORT.md)) grounded in:
+- **`OO-Harness` (`arXiv:2610.28380`)** — *Object-Oriented Harness: Evolving Agent Harnesses through Object-Oriented Design* (UIUC & Google Cloud AI Research, Oct 2026): Dynamic `OOHarnessRouter` dispatching `BaseSDDHarness` subclasses (`GreenfieldSpecHarness`, `BrownfieldSyncHarness`, `TDDActuationHarness`, `DriftRemediationHarness`, `MultiAppWorkflowHarness`, `CleanRoomRebuildHarness`).
+- **4 Open Benchmark Tracks (`12` Tasks, `135` Programmatic State Assertions, `24` Injected Fault Mutants)**:
+  1. **Track A (`AutomationBench`, `zapier/AutomationBench`)**: Multi-application workflow state machines, replay-safe idempotency, and transactional saga rollbacks.
+  2. **Track B (`Commit0`, `commit-0/commit0`)**: Level-3 Clean-Room Spec-to-Library synthesis from 8-section `SPEC.md` blueprints in `/tmp` with read-only (`chmod -w`) adversarial test locks.
+  3. **Track C (`FeatureBench` & `SWE-bench Verified`)**: 3-Sprint sequential feature evolution (`Sprint 1 -> Sprint 2 -> Sprint 3`), brownfield reverse-engineering, and boundary drift remediation (`>` vs. `<`) with `Out of Scope` scorecards.
+  4. **Track D (`SkillsBench` & Mutation Testing)**: Paired skill lift and syntactic/semantic fault injection measuring **Mutation Kill Rate (%)**.
+
+| Experimental Arm | Strict Pass@1 (`12` Tasks) | `AutomationBench` Partial-Credit Objective Score | 3-Sprint Spec-Sync Survival Rate | Mutation Kill Rate (`24` Mutants) | Anti-Reward-Hacking (`chmod -w`) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Arm 1: Baseline Vibe Coding** (Monolithic Prompt, No SDD) | `8.3%` (`1/12`) | `58.5%` (`79/135`) | `0.0%` | `33.3%` (`8/24`) | `0.0%` |
+| **Arm 2: Standalone `Claude Superpowers`** (Dated `YYYY-MM-DD` Docs) | `25.0%` (`3/12`) | `83.7%` (`113/135`) | `0.0%` *(Spec Rot)* | `70.8%` (`17/24`) | `0.0%` |
+| **Arm 3: Flat Outer-Loop SDD** (`Conductor` + `OpenSpec` Monolithic) | `66.7%` (`8/12`) | `94.8%` (`128/135`) | `100.0%` | `87.5%` (`21/24`) | `91.7%` |
+| **Arm 4: Unified SDD $\times$ Superpowers $\times$ `OO-Harness` (Ours)** | **`100.0%` (`12/12`)** | **`100.0%` (`135/135`)** | **`100.0%`** | **`100.0%` (`24/24`)** | **`100.0%`** |
+
+---
+
+## 6. External Hands-On Codelabs & Video Tutorials
 
 To supplement the 6 local `TaskFlow` labs in this repository, explore these public hands-on resources:
 1. **[Google Codelab: Plan and Build Apps with Gemini CLI Conductor (69 min)](https://codelabs.developers.google.com/next26/advanced-planning)** — Build a greenfield web app from scratch, then iterate on it as a brownfield app adding Firebase Auth & Storage.
@@ -120,7 +143,7 @@ To supplement the 6 local `TaskFlow` labs in this repository, explore these publ
 
 ---
 
-## 6. License & Mandatory Attribution (`CC BY 4.0` + Apache 2.0 `NOTICE`)
+## 7. License & Mandatory Attribution (`CC BY 4.0` + Apache 2.0 `NOTICE`)
 
 **Author:** **Alejandro Kaspar - AI Forward Deployed Engineer**
 
