@@ -2,7 +2,7 @@
 
 > **Author:** **Alejandro Kaspar - AI Forward Deployed Engineer**  
 > **100% Hands-On, Beginner-Friendly Self-Diagnosing Playground (`TaskFlow` Unified App)**  
-> **Core Stack:** [Conductor](https://github.com/gemini-cli-extensions/conductor) + [OpenSpec (`@fission-ai/openspec`)](https://github.com/Fission-AI/OpenSpec) + `SPEC.md` (Single Source of Truth)  
+> **Core Stack:** **Outer Loop:** [Conductor](https://github.com/gemini-cli-extensions/conductor) + [OpenSpec (`@fission-ai/openspec`)](https://github.com/Fission-AI/OpenSpec) + `SPEC.md` (SSOT) $\times$ **Inner Loop:** [Claude Superpowers (`obra/superpowers`)](https://github.com/obra/superpowers) Behavioral Skills (`.agents/skills/`)  
 > **License:** Code under **Apache 2.0** (with mandatory [`NOTICE`](./NOTICE) attribution) · Coursebook, Slides, Videos & Walkthroughs under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)** (*Attribution Required — must credit **Alejandro Kaspar - AI Forward Deployed Engineer***)  
 
 ---
@@ -30,13 +30,13 @@ Instead of complicated distributed-systems math, you build and evolve **one simp
 | **`05`** | **SDD Code Review & Stacked PRs** (*Verify + Sync + Clean/Archive*) | **Quick Notes Board** (`notes_board.py`) | Review `subpar_change.patch` adding `pin_note`, catch 3 SDD violations (reversed `list_notes()` breaking `REQ-0002`, missing `REQ-0004` spec, missing `KeyError`), and batch `tasks.md` into Stacked PRs. | `./labs/lab_05_sdd_code_review_and_stacked_prs/self_diagnose.sh` |
 | **`06`** | **Capstone: `SPEC.md` (SSOT) & Clean-Room Rebuild Test** (*Code as Compiled Artifact*) | **Unified Kanban Board** (`taskflow_app.py`) | Rebuild `TaskFlowBoard` (`todo` $\to$ `in_progress` $\to$ `done` with WIP limit & story points) in `/tmp` from `SPEC.md` alone and pass read-only (`chmod -w`) `adversarial_tests/`. | `./labs/lab_06_capstone_ssot_and_rebuild_test/self_diagnose.sh` |
 
-### Engineering Playbooks, Interactive Visual Companion, 36-Slide Deck & Printable Coursebook
+### Engineering Playbooks, Interactive Visual Companions, Dual-Book PDF Manuals & 36-Slide Deck
 - **[Interactive Widescreen HTML5 Slide Deck (`slides/interactive_slides.html`)](./slides/interactive_slides.html)**: Complete 36-slide widescreen (`16:9`) browser presentation deck featuring inline vector SVG diagrams, rich hoverover tooltips, clickable `①`–`④` *Learn About* hotspot pins, live interactive simulators for all 6 `TaskFlow` labs, a *Common Misconception* (`✕` vs. `✓`) & *Stop & Think* drawer, synced Speaker Notes drawer, and `contenteditable` Live Inline Edit Mode.
 - **[Interactive Visual Study Companion (`docs/interactive_visual_guide.html`)](./docs/interactive_visual_guide.html)**: Self-contained *Learn About* HTML5 companion featuring an **Everyday Metaphor vs. Under-the-Hood** toggle, clickable `①`–`⑤` architecture hotspot pins, interactive `TaskFlow` Lab 01–06 walkthroughs & boundary simulator, *Common Misconception* (`✕` vs. `✓`) cards, and a causal mastery check with a 3-rung graduated hint ladder.
 - **[Dual-Engine Engineering Playbook (`playbooks/DUAL_ENGINE_CONDUCTOR_OPENSPEC_PLAYBOOK.md`)](./playbooks/DUAL_ENGINE_CONDUCTOR_OPENSPEC_PLAYBOOK.md)**: Complete reference covering **Specificational Coding vs. Conversational Coding**, the **User–Spec–Agent / Spec–Code–Tests Triangle** (`Apply`, `Sync`, `Clean`), OpenSpec's **Semantic Diffing + Socratic Grilling ("The Grill")**, Karpathy's 4 Coding Agent Rules, and Joel Spolsky's **Law of Leaky Abstractions** mapped across all 6 `TaskFlow` labs.
 - **[Student Textbook & Practical Field Guide PDF (`Coursebook_SDD_Conductor_OpenSpec.pdf`)](./Coursebook_SDD_Conductor_OpenSpec.pdf)**: Concise visual reference manual with final-print-size TikZ architecture blueprints, numbered *Learn About* hotspot pins (`①`–`④`), *Common Misconception* (`✕` vs. `✓`) and *Stop & Think* callouts, command tables, and copy-pasteable templates.
 - **[Lecturer & Professor Instructor Manual PDF (`Lecturer_Manual_SDD_Conductor_OpenSpec.pdf`)](./Lecturer_Manual_SDD_Conductor_OpenSpec.pdf)**: Companion faculty and workshop instructor guide featuring 3 turnkey syllabi (8-Week University Seminar, 2-Day Bootcamp, 4-Session Workshop), slide-by-slide teaching playbooks for Slides 01–36, 6 live projector terminal demos, Socratic discussion prompts, 3-Rung Hint Ladders, complete Lab 01–06 answer keys, and a 100-point capstone rubric.
-- **[36-Slide Widescreen `16:9` Presentation Deck (`slides/SDD_Crash_Course_Slides.pdf`)](./slides/SDD_Crash_Course_Slides.pdf), [Speaker Notes (`slides/SPEAKER_NOTES.md`)](./slides/SPEAKER_NOTES.md) & [Master Full-Course `1080p` Lecture Video (`slides/SDD_Crash_Course_Lecture.mp4`)](./slides/SDD_Crash_Course_Lecture.mp4)**: Complete step-by-step lecture deck and narrated `1080p` video series walking through Foundations and all 6 `TaskFlow` labs end-to-end.
+- **[36-Slide Widescreen `16:9` Presentation Deck (`slides/SDD_Crash_Course_Slides.pdf`)](./slides/SDD_Crash_Course_Slides.pdf), [Speaker Notes (`slides/SPEAKER_NOTES.md`)](./slides/SPEAKER_NOTES.md) & [Master Full-Course `1080p` Lecture Video (`slides/SDD_Crash_Course_Lecture.mp4`)](./slides/SDD_Crash_Course_Lecture.mp4)**: Complete step-by-step lecture deck (backed by 100% native editable vector shapes in Google Slides) and narrated `1080p` video series walking through Foundations and all 6 `TaskFlow` labs end-to-end.
 
 ### Step-by-Step End-to-End Video Curriculum (7 Narrated `1080p` Modules + Full Course Video)
 
@@ -53,32 +53,43 @@ Instead of complicated distributed-systems math, you build and evolve **one simp
 
 ---
 
-## 3. Dual-Engine Architecture: Why Combine Conductor + OpenSpec?
+## 3. Unified Architecture: Outer-Loop (`Conductor` + `OpenSpec` + `SPEC.md`) $\times$ Inner-Loop (`Superpowers` Behavioral Skills)
+
+Why combine **Conductor + OpenSpec + `SPEC.md`** with **Claude Superpowers (`obra/superpowers`)**?
+- **Superpowers alone** gives you disciplined inner-loop agent habits (`brainstorming`, `writing-plans`, `subagent-driven-development`, `systematic-debugging`, `verification-before-completion`), but stores specs as chronological date-stamped snapshots (`docs/superpowers/specs/YYYY-MM-DD-*.md`) that quickly rot into a historical graveyard.
+- **Our Unified Stack** keeps all of Superpowers' inner-loop behavioral discipline (in [`.agents/skills/`](./.agents/skills/)) while routing every specification, delta, and TDD task into the living **Two-Plane OpenSpec (`openspec/specs/`) + Conductor (`conductor/tracks/`) + `SPEC.md` SSOT** outer loop:
 
 ```mermaid
 flowchart LR
-    subgraph CDD["1. Context-Driven Development (Conductor)"]
+    subgraph CDD["1. Outer Loop: Constitution & Living Specs (Conductor + OpenSpec)"]
         direction TB
-        A1["Repo Architecture & Stack Lock\n(conductor/tech-stack.md)"] --> A4["Agent Context Envelope\n(conductor/index.md)"]
-        A2["Living Guardrails & TDD Rules\n(conductor/workflow.md)"] --> A4
-        A3["Review Scorecard & Styleguides\n(conductor/code_styleguides/)"] --> A4
+        A1["Repo Constitution & Tech-Stack Lock\n(conductor/tech-stack.md & workflow.md)"] --> A4["Living Capability Truth\n(openspec/specs/<cap>/spec.md & SPEC.md)"]
+        A2["Proposed Delta Algebra\n(openspec/changes/<id>/ ADDED/MODIFIED)"] --> A4
+        A3["7-Section Track Spec & Phased Plan\n(conductor/tracks/<id>/spec.md & plan.md)"] --> A4
     end
 
-    subgraph SDD["2. Spec-Driven Development (OpenSpec + @writing-arch-specs)"]
+    subgraph INNER["2. Inner Loop: Behavioral Discipline (Superpowers + .agents/skills/)"]
         direction TB
-        B1["Interactive Socratic Grilling\n(/opsx:explore & /conductor:newTrack)"] --> B2["Evergreen Capability Specs\n(openspec/specs/<cap>/spec.md)"]
-        B2 --> B3["7-Section Track Spec & Phased Plan\n(conductor/tracks/<id>/spec.md & plan.md)"]
+        B1["@socratic-brainstorming\n(1-question-at-a-time + ADRs + YAGNI)"] --> B2["@subagent-two-stage-review\n(Fresh Goldfish Worker + chmod -w Lock)"]
+        B2 --> B3["@systematic-debugging-gate\n(4-Phase Root-Cause Gate after 2 fails)"]
     end
 
-    subgraph EXEC["3. Phased TDD Execution & Multi-Axis Verification"]
+    subgraph EXEC["3. Verified Execution, Two-Stage Review & Archive"]
         direction TB
-        C1["Act on Spec: Red -> Green -> Refactor\n(/conductor:implement & /opsx:apply)"] --> C2["Atomic Commits + git notes\n& Phase Checkpoints"]
-        C2 --> C3["Sync & Clean Spec\n(/conductor:review + /opsx:archive)"]
+        C1["Two-Stage Subagent Review\n(Stage 1 Spec -> Stage 2 Code Quality)"] --> C2["@verification-before-completion\n(Fresh CI=true test + git notes SHA)"]
+        C2 --> C3["Sync & Archive Into Living Truth\n(/conductor:review + /opsx:archive)"]
     end
 
-    CDD --> SDD
-    SDD --> EXEC
+    CDD --> INNER
+    INNER --> EXEC
 ```
+
+### The 5 Built-In `.agents/skills/` (Outer-Loop SDD $\times$ Inner-Loop Superpowers)
+1. **[`@writing-arch-specs`](./.agents/skills/writing-arch-specs/SKILL.md)**: Enforces the 7-Section Track Specification Anatomy and OpenSpec RFC 2119 + 4-hashtag `#### Scenario:` contract rules.
+2. **[`@socratic-brainstorming`](./.agents/skills/socratic-brainstorming/SKILL.md)**: Enforces 1-question-at-a-time Socratic grilling, 2–3 `ADR-XXXX` trade-off proposals, 200–300 word incremental validation, and YAGNI—routing directly into `openspec/changes/` and `conductor/tracks/` instead of dead `YYYY-MM-DD-*-design.md` files.
+3. **[`@subagent-two-stage-review`](./.agents/skills/subagent-two-stage-review/SKILL.md)**: Dispatches a fresh stateless ("Goldfish") worker per task (`Audit -> RED -> GREEN -> Verify`) with a read-only (`chmod -w`) test lock, gated by **Stage 1 (`Spec Compliance Review`)** before **Stage 2 (`Code Quality & Constitution Review`)**.
+4. **[`@systematic-debugging-gate`](./.agents/skills/systematic-debugging-gate/SKILL.md)**: Triggers automatically after 2 test failures or during Spec Drift triage (`Lab 04`), enforcing a 4-phase root-cause protocol (Spec-to-Code Semantic Diff $\to$ Fixture Trace $\to$ Minimal Reproduction Test $\to$ Surgical Fix).
+5. **[`@verification-before-completion`](./.agents/skills/verification-before-completion/SKILL.md)**: Enforces the iron law that no task is marked `[x]`, checkpointed, or archived without fresh, in-turn execution of `CI=true python3 -m unittest` and `./self_diagnose.sh`.
 
 ---
 
@@ -94,11 +105,41 @@ npm install -g @fission-ai/openspec@latest
 
 # 3. Or run self-diagnosis on an individual lab as you work through it:
 ./labs/lab_03_from_specs_to_tdd_code/self_diagnose.sh
+
+# 4. Run the Open SDD & Object-Oriented Harness (OO-Harness) 4-Arm Benchmark Suite:
+python3 benchmarks/run_sdd_benchmark.py
+python3 benchmarks/test_oo_harness_benchmark.py -v
 ```
 
 ---
 
-## 5. External Hands-On Codelabs & Video Tutorials
+## 5. Dual-Loop Measured Benchmark Suite (`benchmarks/`)
+
+To empirically validate our **Outer-Loop SDD (`Conductor` + `OpenSpec` + `SPEC.md`) $\times$ Inner-Loop (`Hardened Superpowers` + `OO-Harness` + `Harness²`)** architecture, [`benchmarks/`](./benchmarks/) contains **36 real agent-generated workspaces** ([`benchmarks/measured_eval/`](./benchmarks/measured_eval/)) and a sealed programmatic oracle grader ([`benchmarks/grade_measured_eval.py`](./benchmarks/grade_measured_eval.py) & [`benchmarks/run_sdd_benchmark.py`](./benchmarks/run_sdd_benchmark.py)):
+
+### Suite 1 — Measured Inner-Loop Benchmark (`24` Blind Agent Workspaces: `4 Harnesses × 3 Tasks × 2 Regimes`)
+
+| Inner-Loop Execution Harness | Regime 1 (Formal Spec Prompt) Oracle | Regime 2 (Natural Brownfield Ticket) Oracle | Combined Functional Oracle (`60` Checks) | Agent Test Suite Mutation Kill Rate (`30` Mutants) | Read-Only Test Lock (`chmod 444`) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Arm A: Baseline ReAct (No Skills)** | `30 / 30` (`100.0%`) | `29 / 30` (`96.7%`) | `59 / 60` (`98.3%`) | `18 / 30` (`60.0%`) | `0 / 6` (`0.0%`) |
+| **Arm B: Vanilla `Claude Superpowers` (`obra/superpowers`)** | `30 / 30` (`100.0%`) | `29 / 30` (`96.7%`) | `59 / 60` (`98.3%`) | `19 / 30` (`63.3%`) | `0 / 6` (`0.0%`) |
+| **Arm C: `OO-Harness` (`arXiv:2610.28380`) + `Harness²`** | **`30 / 30` (`100.0%`)** | **`30 / 30` (`100.0%`)** | **`60 / 60` (`100.0%`)** | **`25 / 30` (`83.3%`)** | `0 / 6` (`0.0%`) |
+| **Arm D: Our Unified Inner Loop (`Superpowers` $\times$ `OO-Harness` $\times$ `Harness²`)** | **`30 / 30` (`100.0%`)** | **`30 / 30` (`100.0%`)** | **`60 / 60` (`100.0%`)** | **`25 / 30` (`83.3%`)** | **`6 / 6` (`100.0%`)** |
+
+### Suite 2 — Measured Outer-Loop Multi-Milestone & Clean-Room Rebuild Benchmark (`12` Workspaces across `M1 -> M4 -> M5`)
+
+| Outer-Loop SDD Framework | `M4` Evolved Code Pass Rate (`.py` in-place) | Active Spec Contradictions (`M1` vs `M3`) | `M5-Primary-Spec` Clean-Room Rebuild (`12` Checks) | `M5-All-Docs` Clean-Room Rebuild (`12` Checks) | Full Delta Archive + 8-Section `SPEC.md` |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Outer A: Date-Stamped Sprint Docs** (`docs/specs/2026-10-01..04.md`) | `12 / 12` (`100.0%`) | **`2` contradictions** in `4` files | **`4 / 12` (`33.3%`)** | `12 / 12` (`100.0%`) | No |
+| **Outer B: `GitHub Spec Kit` Feature Folders** (`specs/001..004/spec.md`) | `12 / 12` (`100.0%`) | **`3` contradictions** in `4` files | **`4 / 12` (`33.3%`)** | `12 / 12` (`100.0%`) | No |
+| **Outer C: `Amazon Kiro` In-Place EARS** (`requirements.md`) | `12 / 12` (`100.0%`) | **`0` contradictions** in `1` file | **`12 / 12` (`100.0%`)** | `12 / 12` (`100.0%`) | No (Overwrites history; no `SPEC.md`) |
+| **Outer D: Our Unified Outer Loop (`Conductor` + `OpenSpec` + `SPEC.md`)** | **`12 / 12` (`100.0%`)** | **`0` contradictions** in `2` SSOT files | **`12 / 12` (`100.0%`)** | **`12 / 12` (`100.0%`)** | **Yes (`openspec/changes/archive/` + `SPEC.md`)** |
+
+See [`benchmarks/BENCHMARK_REPORT.md`](./benchmarks/BENCHMARK_REPORT.md) for the complete empirical methodology and failure traces.
+
+---
+
+## 6. External Hands-On Codelabs & Video Tutorials
 
 To supplement the 6 local `TaskFlow` labs in this repository, explore these public hands-on resources:
 1. **[Google Codelab: Plan and Build Apps with Gemini CLI Conductor (69 min)](https://codelabs.developers.google.com/next26/advanced-planning)** — Build a greenfield web app from scratch, then iterate on it as a brownfield app adding Firebase Auth & Storage.
@@ -109,7 +150,7 @@ To supplement the 6 local `TaskFlow` labs in this repository, explore these publ
 
 ---
 
-## 6. License & Mandatory Attribution (`CC BY 4.0` + Apache 2.0 `NOTICE`)
+## 7. License & Mandatory Attribution (`CC BY 4.0` + Apache 2.0 `NOTICE`)
 
 **Author:** **Alejandro Kaspar - AI Forward Deployed Engineer**
 
@@ -135,45 +176,3 @@ This repository is open-access and dual-licensed so you can freely use, adapt, o
   howpublished = {\url{https://github.com/adkaspar-google/sdd-course}}
 }
 ```
-
-
----
-
-## 7. Claude Code Native Track Quickstart (`claude` Branch)
-
-This branch makes all six hands-on `TaskFlow` labs runnable natively in **Claude Code** using the Claude Code plugin support shipped by Conductor and OpenSpec. See [`playbooks/CLAUDE_CODE_PLAYBOOK.md`](./playbooks/CLAUDE_CODE_PLAYBOOK.md) for the full ownership table, session workflow, and `work/` target layout.
-
-### Verified Tool Versions
-- **Claude Code**: `2.x` (`@anthropic-ai/claude-code` `>= 2.0.0`)
-- **Conductor**: `0.3.0` (`conductor@conductor` Claude Code plugin)
-- **OpenSpec**: `1.14.1` (`@fission-ai/openspec`)
-
-### Plugin & Permission Disclosure
-- **Third-Party Plugin**: `.claude/settings.json` enables the third-party `conductor@conductor` plugin (`gemini-cli-extensions/conductor`) at project scope, exposing `/conductor:conductor-setup`, `/conductor:conductor-new-track`, `/conductor:conductor-implement`, `/conductor:conductor-review`, `/conductor:conductor-revert`, and `/conductor:conductor-status`.
-- **Permission Rules**: `.claude/settings.json` ships a `permissions.deny` rule (`Edit(**/adversarial_tests/**)`) to keep adversarial test suites read-only, and `.claude/learner.settings.json` ships `Read(**/expected_output/**)` and `Edit(**/adversarial_tests/**)` so learners work without reading reference solutions.
-
-### Installation & Learner Session Setup
-
-```bash
-# 1. Install the Conductor plugin for Claude Code and OpenSpec CLI
-claude plugin marketplace add gemini-cli-extensions/conductor
-claude plugin install conductor@conductor --scope project
-npm install -g @fission-ai/openspec@latest
-
-# 2. Launch Claude Code in learner mode from the repository root
-claude --settings .claude/learner.settings.json
-
-# 3. Grade your own work in labs/<lab>/work/ using targetable self-diagnosis
-./labs/lab_01_greenfield_proposals_to_specs/self_diagnose.sh work
-
-# 4. Run the Open SDD & Object-Oriented Harness (OO-Harness) 4-Arm Benchmark Suite:
-python3 benchmarks/run_sdd_benchmark.py
-python3 benchmarks/test_oo_harness_benchmark.py -v
-```
-
----
-
-## 7. Open SDD & Object-Oriented Harness (`OO-Harness`) Benchmark Suite (`benchmarks/`)
-
-See [`benchmarks/BENCHMARK_REPORT.md`](./benchmarks/BENCHMARK_REPORT.md), [`benchmarks/oo_harness.py`](./benchmarks/oo_harness.py), and [`benchmarks/run_sdd_benchmark.py`](./benchmarks/run_sdd_benchmark.py) for the 12-task, 4-arm evaluation across `AutomationBench` (`arXiv:2610.28380`), `Commit0`, `FeatureBench` / `SWE-bench Verified`, and `SkillsBench` / Mutation Testing (`100.0%` Strict Pass@1, `100.0%` Partial-Credit Objective Score, `100.0%` 3-Sprint Spec Sync, and `100.0%` Mutation Kill Rate for Arm 4).
-

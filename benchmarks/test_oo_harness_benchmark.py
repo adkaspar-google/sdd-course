@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Copyright 2026 Alejandro Kaspar - AI Forward Deployed Engineer
 # Licensed under the Apache License, Version 2.0 (the "License") and CC BY 4.0.
-"""Unit & integration test suite for the Dual-Loop Open SDD & OO-Harness Benchmark Suite."""
+"""Unit & integration test suite for the Dual-Loop Measured SDD & OO-Harness Benchmark Suite."""
 
 from __future__ import annotations
 
@@ -25,11 +25,7 @@ from oo_harness import (  # noqa: E402
     OOHarnessRouter,
     TDDActuationHarness,
 )
-from run_sdd_benchmark import (  # noqa: E402
-    evaluate_inner_loop_harnesses,
-    evaluate_outer_loop_sdd_frameworks,
-    run_all_benchmarks,
-)
+from run_sdd_benchmark import run_all_benchmarks  # noqa: E402
 
 
 class TestDualLoopBenchmarkSuite(unittest.TestCase):
@@ -112,61 +108,34 @@ class TestDualLoopBenchmarkSuite(unittest.TestCase):
             self.assertFalse(audit.approved)
             self.assertLess(audit.readiness_score, 9.0)
 
-    def test_inner_loop_and_outer_loop_suites(self) -> None:
-        inner = evaluate_inner_loop_harnesses()
-        outer = evaluate_outer_loop_sdd_frameworks()
-        self.assertEqual(len(inner), 6)
-        self.assertEqual(len(outer), 5)
+    def test_measured_inner_loop_and_outer_loop_results(self) -> None:
+        report = run_all_benchmarks()
+        self.assertEqual(report["methodology"]["total_evaluated_workspaces"], 36)
+        measured = report["measured_results"]
+        comb = measured["inner_loop_combined_24_runs"]
 
-        # Verify our Unified Inner Loop (Inner-6) beats Vanilla Superpowers (Inner-3),
-        # Standalone OO-Harness (Inner-4), and Standalone Harness^2 (Inner-5)
-        by_id = {r["inner_id"]: r for r in inner}
-        self.assertLess(
-            by_id["inner_3_vanilla_superpowers"]["single_task_pass_at_1_pct"],
-            by_id["inner_6_unified_superpowers_ooharness_h2"]["single_task_pass_at_1_pct"],
+        # Verify Arm D (Unified Inner Loop) achieves 100% functional oracle (60/60),
+        # beats Baseline and Vanilla Superpowers on mutation kill rate, and locks 6/6 test files
+        self.assertEqual(comb["arm_d_unified_inner"]["oracle_passed"], 60)
+        self.assertEqual(comb["arm_d_unified_inner"]["readonly_locks"], "6/6")
+        self.assertGreater(
+            comb["arm_d_unified_inner"]["mutation_pct"],
+            comb["arm_b_superpowers"]["mutation_pct"],
         )
-        self.assertLess(
-            by_id["inner_4_oo_harness_standalone"]["single_task_pass_at_1_pct"],
-            by_id["inner_6_unified_superpowers_ooharness_h2"]["single_task_pass_at_1_pct"],
-        )
-        self.assertLess(
-            by_id["inner_5_harness_squared_standalone"]["single_task_pass_at_1_pct"],
-            by_id["inner_6_unified_superpowers_ooharness_h2"]["single_task_pass_at_1_pct"],
+        self.assertGreater(
+            comb["arm_d_unified_inner"]["mutation_pct"],
+            comb["arm_a_baseline"]["mutation_pct"],
         )
 
-        # Verify our Unified Outer Loop (Outer-5) beats Ephemeral Queues (Outer-1),
-        # BMAD (Outer-2), GitHub Spec Kit (Outer-3), and Kiro (Outer-4) across M1->M5
-        outer_by_id = {r["framework_id"]: r for r in outer}
-        for competitor in (
-            "outer_1_ephemeral_task_queues",
-            "outer_2_bmad_agile_personas",
-            "outer_3_github_spec_kit",
-            "outer_4_amazon_kiro_ears",
-        ):
-            self.assertLess(
-                outer_by_id[competitor]["m1_to_m5_cumulative_pass_pct"],
-                outer_by_id["outer_5_unified_conductor_openspec_ssot"][
-                    "m1_to_m5_cumulative_pass_pct"
-                ],
-            )
-
-    def test_four_arm_benchmark_monotonic_lift(self) -> None:
-        report = run_all_benchmarks(live_ablation_dir=None)
-        self.assertEqual(report["tasks_total"], 12)
-        arms = {a["arm_id"]: a for a in report["arms"]}
-        self.assertLess(
-            arms["arm1"]["partial_credit_avg_pct"],
-            arms["arm2"]["partial_credit_avg_pct"],
-        )
-        self.assertLess(
-            arms["arm2"]["partial_credit_avg_pct"],
-            arms["arm3"]["partial_credit_avg_pct"],
-        )
-        self.assertLess(
-            arms["arm3"]["partial_credit_avg_pct"],
-            arms["arm4"]["partial_credit_avg_pct"],
-        )
-        self.assertEqual(arms["arm4"]["strict_pass_at_1_pct"], 100.0)
+        # Verify Outer-Loop M5-Primary-Spec Clean-Room Rebuild results:
+        # Dated Docs and Spec Kit drop to 33.3% (4/12), while Unified Conductor+OpenSpec achieves 100% (12/12)
+        ol = measured["outer_loop"]
+        self.assertEqual(ol["outer_a_dated_docs"]["m5_primary_spec_pct"], 33.3)
+        self.assertEqual(ol["outer_b_speckit_folders"]["m5_primary_spec_pct"], 33.3)
+        self.assertEqual(ol["outer_d_unified_outer"]["m5_primary_spec_pct"], 100.0)
+        self.assertEqual(ol["outer_d_unified_outer"]["spec_hygiene"]["spec_contradictions"], 0)
+        self.assertTrue(ol["outer_d_unified_outer"]["spec_hygiene"]["has_clean_room_spec_md"])
+        self.assertTrue(ol["outer_d_unified_outer"]["spec_hygiene"]["has_openspec_ssot"])
 
 
 if __name__ == "__main__":
