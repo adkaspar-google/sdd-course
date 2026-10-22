@@ -1,3 +1,16 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 """Unit tests for DependencyReleasePlanner."""
 
 from __future__ import annotations
@@ -88,15 +101,21 @@ class TestDependencyReleasePlanner(unittest.TestCase):
             depends_on=["worker_ok"],
             critical=False,
         )
+        planner.register_service(
+            "billing",
+            "1.0.0",
+            depends_on=["critical_api"],
+            critical=False,
+        )
 
         result = planner.simulate_rollout(failed_services=["db_noncrit", "critical_api"])
         self.assertEqual(
             result["waves"],
-            [["cache_ok", "db_noncrit"], ["critical_api", "worker_ok"], ["frontend"]],
+            [["cache_ok", "db_noncrit"], ["critical_api", "worker_ok"], ["billing", "frontend"]],
         )
         self.assertFalse(result["halt_triggered"])
         self.assertEqual(result["failed"], ["db_noncrit"])
-        self.assertEqual(result["blocked"], ["critical_api"])
+        self.assertEqual(result["blocked"], ["billing", "critical_api"])
         self.assertEqual(result["deployed"], ["cache_ok", "frontend", "worker_ok"])
 
     def test_simulate_rollout_prior_wave_critical_halt(self) -> None:
