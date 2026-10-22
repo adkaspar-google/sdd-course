@@ -113,24 +113,29 @@ python3 benchmarks/test_oo_harness_benchmark.py -v
 
 ---
 
-## 5. Open SDD & Object-Oriented Harness (`OO-Harness`) Benchmark Suite (`benchmarks/`)
+## 5. Dual-Loop Measured Benchmark Suite (`benchmarks/`)
 
-To empirically validate our unified **Outer-Loop SDD (`Conductor` + `OpenSpec` + `SPEC.md`) $\times$ Inner-Loop `Claude Superpowers` (`.agents/skills/`) $\times$ Object-Oriented Harness (`OO-Harness`)** architecture, [`benchmarks/`](./benchmarks/) includes a reproducible 12-task, 4-arm evaluation harness ([`benchmarks/run_sdd_benchmark.py`](./benchmarks/run_sdd_benchmark.py), [`benchmarks/oo_harness.py`](./benchmarks/oo_harness.py), and [`benchmarks/BENCHMARK_REPORT.md`](./benchmarks/BENCHMARK_REPORT.md)) grounded in:
-- **`OO-Harness` (`arXiv:2610.28380`)** — *Object-Oriented Harness: Evolving Agent Harnesses through Object-Oriented Design* (UIUC & Google Cloud AI Research, Oct 2026): Dynamic `OOHarnessRouter` dispatching `BaseSDDHarness` subclasses (`GreenfieldSpecHarness`, `BrownfieldSyncHarness`, `TDDActuationHarness`, `DriftRemediationHarness`, `MultiAppWorkflowHarness`, `CleanRoomRebuildHarness`).
-- **4 Open Benchmark Tracks (`12` Tasks, `135` Programmatic State Assertions, `24` Injected Fault Mutants)**:
-  1. **Track A (`AutomationBench`, `zapier/AutomationBench`)**: Multi-application workflow state machines, replay-safe idempotency, and transactional saga rollbacks.
-  2. **Track B (`Commit0`, `commit-0/commit0`)**: Level-3 Clean-Room Spec-to-Library synthesis from 8-section `SPEC.md` blueprints in `/tmp` with read-only (`chmod -w`) adversarial test locks.
-  3. **Track C (`FeatureBench` & `SWE-bench Verified`)**: 3-Sprint sequential feature evolution (`Sprint 1 -> Sprint 2 -> Sprint 3`), brownfield reverse-engineering, and boundary drift remediation (`>` vs. `<`) with `Out of Scope` scorecards.
-  4. **Track D (`SkillsBench` & Mutation Testing)**: Paired skill lift and syntactic/semantic fault injection measuring **Mutation Kill Rate (%)**.
+To empirically validate our **Outer-Loop SDD (`Conductor` + `OpenSpec` + `SPEC.md`) $\times$ Inner-Loop (`Hardened Superpowers` + `OO-Harness` + `Harness²`)** architecture, [`benchmarks/`](./benchmarks/) contains **36 real agent-generated workspaces** ([`benchmarks/measured_eval/`](./benchmarks/measured_eval/)) and a sealed programmatic oracle grader ([`benchmarks/grade_measured_eval.py`](./benchmarks/grade_measured_eval.py) & [`benchmarks/run_sdd_benchmark.py`](./benchmarks/run_sdd_benchmark.py)):
 
-> **Methodology status:** only the live `AB-01` (`OrderPulse`) trial is measured (n=1 per arm). The other numbers below are **projected hypotheses**, not measured results; third-party frameworks were not run. See [`benchmarks/BENCHMARK_REPORT.md`](./benchmarks/BENCHMARK_REPORT.md).
+### Suite 1 — Measured Inner-Loop Benchmark (`24` Blind Agent Workspaces: `4 Harnesses × 3 Tasks × 2 Regimes`)
 
-| Experimental Arm | Strict Pass@1 (`12` Tasks) | `AutomationBench` Partial-Credit Objective Score | 3-Sprint Spec-Sync Survival Rate | Mutation Kill Rate (`24` Mutants) | Anti-Reward-Hacking (`chmod -w`) |
+| Inner-Loop Execution Harness | Regime 1 (Formal Spec Prompt) Oracle | Regime 2 (Natural Brownfield Ticket) Oracle | Combined Functional Oracle (`60` Checks) | Agent Test Suite Mutation Kill Rate (`30` Mutants) | Read-Only Test Lock (`chmod 444`) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Arm 1: Baseline Vibe Coding** (Monolithic Prompt, No SDD) | `8.3%` (`1/12`) | `58.5%` (`79/135`) | `0.0%` | `33.3%` (`8/24`) | `0.0%` |
-| **Arm 2: Standalone `Claude Superpowers`** (Dated `YYYY-MM-DD` Docs) | `25.0%` (`3/12`) | `83.7%` (`113/135`) | `0.0%` *(Spec Rot)* | `70.8%` (`17/24`) | `0.0%` |
-| **Arm 3: Flat Outer-Loop SDD** (`Conductor` + `OpenSpec` Monolithic) | `66.7%` (`8/12`) | `94.8%` (`128/135`) | `100.0%` | `87.5%` (`21/24`) | `91.7%` |
-| **Arm 4: Unified SDD $\times$ Superpowers $\times$ `OO-Harness` (Ours)** | **`100.0%` (`12/12`)** | **`100.0%` (`135/135`)** | **`100.0%`** | **`100.0%` (`24/24`)** | **`100.0%`** |
+| **Arm A: Baseline ReAct (No Skills)** | `30 / 30` (`100.0%`) | `29 / 30` (`96.7%`) | `59 / 60` (`98.3%`) | `18 / 30` (`60.0%`) | `0 / 6` (`0.0%`) |
+| **Arm B: Vanilla `Claude Superpowers` (`obra/superpowers`)** | `30 / 30` (`100.0%`) | `29 / 30` (`96.7%`) | `59 / 60` (`98.3%`) | `19 / 30` (`63.3%`) | `0 / 6` (`0.0%`) |
+| **Arm C: `OO-Harness` (`arXiv:2610.28380`) + `Harness²`** | **`30 / 30` (`100.0%`)** | **`30 / 30` (`100.0%`)** | **`60 / 60` (`100.0%`)** | **`25 / 30` (`83.3%`)** | `0 / 6` (`0.0%`) |
+| **Arm D: Our Unified Inner Loop (`Superpowers` $\times$ `OO-Harness` $\times$ `Harness²`)** | **`30 / 30` (`100.0%`)** | **`30 / 30` (`100.0%`)** | **`60 / 60` (`100.0%`)** | **`25 / 30` (`83.3%`)** | **`6 / 6` (`100.0%`)** |
+
+### Suite 2 — Measured Outer-Loop Multi-Milestone & Clean-Room Rebuild Benchmark (`12` Workspaces across `M1 -> M4 -> M5`)
+
+| Outer-Loop SDD Framework | `M4` Evolved Code Pass Rate (`.py` in-place) | Active Spec Contradictions (`M1` vs `M3`) | `M5-Primary-Spec` Clean-Room Rebuild (`12` Checks) | `M5-All-Docs` Clean-Room Rebuild (`12` Checks) | Full Delta Archive + 8-Section `SPEC.md` |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Outer A: Date-Stamped Sprint Docs** (`docs/specs/2026-10-01..04.md`) | `12 / 12` (`100.0%`) | **`2` contradictions** in `4` files | **`4 / 12` (`33.3%`)** | `12 / 12` (`100.0%`) | No |
+| **Outer B: `GitHub Spec Kit` Feature Folders** (`specs/001..004/spec.md`) | `12 / 12` (`100.0%`) | **`3` contradictions** in `4` files | **`4 / 12` (`33.3%`)** | `12 / 12` (`100.0%`) | No |
+| **Outer C: `Amazon Kiro` In-Place EARS** (`requirements.md`) | `12 / 12` (`100.0%`) | **`0` contradictions** in `1` file | **`12 / 12` (`100.0%`)** | `12 / 12` (`100.0%`) | No (Overwrites history; no `SPEC.md`) |
+| **Outer D: Our Unified Outer Loop (`Conductor` + `OpenSpec` + `SPEC.md`)** | **`12 / 12` (`100.0%`)** | **`0` contradictions** in `2` SSOT files | **`12 / 12` (`100.0%`)** | **`12 / 12` (`100.0%`)** | **Yes (`openspec/changes/archive/` + `SPEC.md`)** |
+
+See [`benchmarks/BENCHMARK_REPORT.md`](./benchmarks/BENCHMARK_REPORT.md) for the complete empirical methodology and failure traces.
 
 ---
 

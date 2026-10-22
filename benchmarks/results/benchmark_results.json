@@ -1,1317 +1,961 @@
 {
-  "benchmark_suite": "Dual-Loop Open SDD & Agentic Harness Benchmark Suite v2.0",
-  "citations": [
-    "Li, Mishra, Ming, Chen, et al. (UIUC & Google Cloud AI Research, Oct 2026), 'Object-Oriented Harness: Evolving Agent Harnesses through Object-Oriented Design', arXiv:2610.28380",
-    "Google Research (Oct 2026), 'Harness^2: Recursive Agent Harnessing for an Open World', github.com/google-research/harness2",
-    "SWE-Milestone (2026), 'Continuous Software Evolution via Milestone DAG Streams', swe-milestone.com",
-    "SWE-EVO (2026), 'Benchmarking Coding Agents in Long-Horizon Software Evolution Scenarios'",
-    "SWE-Bench-CL (2025/2026), 'Continual Learning for Software Engineering Agents'",
-    "AutomationBench, github.com/zapier/AutomationBench",
-    "Commit0, github.com/commit-0/commit0",
-    "SkillsBench, github.com/benchflow-ai/skillsbench"
-  ],
-  "tasks_total": 12,
-  "objective_assertions_total": 135,
-  "injected_mutants_total": 24,
-  "inner_loop_harness_comparison": [
-    {
-      "inner_id": "inner_1_react_vibe",
-      "harness_name": "Inner-1: Baseline ReAct / Vibe Loop (No Skills)",
-      "single_task_pass_at_1_pct": 8.3,
-      "partial_credit_objective_pct": 58.5,
-      "mutation_kill_rate_pct": 33.3,
-      "contrastive_probe_coverage_pct": 0.0,
-      "dynamic_subclass_evolution": false,
-      "immutable_verifier_lock_pct": 0.0,
-      "strengths": "Zero setup overhead on trivial 1-file scripts.",
-      "blind_spots": "Guesses on boundary inequalities (> vs >=); weak happy-path tests."
-    },
-    {
-      "inner_id": "inner_2_gsd_atomic",
-      "harness_name": "Inner-2: GSD (`get-shit-done`) Fresh Subagent Slices",
-      "single_task_pass_at_1_pct": 50.0,
-      "partial_credit_objective_pct": 82.2,
-      "mutation_kill_rate_pct": 62.5,
-      "contrastive_probe_coverage_pct": 0.0,
-      "dynamic_subclass_evolution": false,
-      "immutable_verifier_lock_pct": 0.0,
-      "strengths": "Eliminates context-window degradation via fresh subagent slices per task.",
-      "blind_spots": "No 2-Stage Cold Auditor, no `chmod -w` test lock, no contrastive boundary probing."
-    },
-    {
-      "inner_id": "inner_3_vanilla_superpowers",
-      "harness_name": "Inner-3: Vanilla `Claude Superpowers` (`obra/superpowers`)",
-      "single_task_pass_at_1_pct": 66.7,
-      "partial_credit_objective_pct": 88.9,
-      "mutation_kill_rate_pct": 79.2,
-      "contrastive_probe_coverage_pct": 50.0,
-      "dynamic_subclass_evolution": false,
-      "immutable_verifier_lock_pct": 0.0,
-      "strengths": "Strong Socratic Grill, Red-Green-Refactor TDD, 4-phase debugging, and 2-stage review.",
-      "blind_spots": "Monolithic skill injection (no OOP class routing), writable test files (`chmod -w` absent), single-draft tests without `Harness^2` contrastive probing."
-    },
-    {
-      "inner_id": "inner_4_oo_harness_standalone",
-      "harness_name": "Inner-4: Standalone `OO-Harness` (`arXiv:2610.28380`)",
-      "single_task_pass_at_1_pct": 75.0,
-      "partial_credit_objective_pct": 91.1,
-      "mutation_kill_rate_pct": 75.0,
-      "contrastive_probe_coverage_pct": 50.0,
-      "dynamic_subclass_evolution": true,
-      "immutable_verifier_lock_pct": 0.0,
-      "strengths": "OOP class hierarchy + test-time router + dynamic subclass evolution (AsyncDeadlockRemediationHarness).",
-      "blind_spots": "Lacks `Superpowers` 1-at-a-time Socratic Grill, 2-Stage Cold Auditor, and `chmod -w` test lock."
-    },
-    {
-      "inner_id": "inner_5_harness_squared_standalone",
-      "harness_name": "Inner-5: Standalone `Harness^2` (`google-research/harness2`)",
-      "single_task_pass_at_1_pct": 75.0,
-      "partial_credit_objective_pct": 92.6,
-      "mutation_kill_rate_pct": 83.3,
-      "contrastive_probe_coverage_pct": 100.0,
-      "dynamic_subclass_evolution": false,
-      "immutable_verifier_lock_pct": 0.0,
-      "strengths": "Task-level Propose-Probe-Compose catches unseen boundary disagreements (1 probe caught at x=60).",
-      "blind_spots": "Flat prompt/tool experience bank (no OOP class tree) and no `chmod -w` anti-reward-hacking lock."
-    },
-    {
-      "inner_id": "inner_6_unified_superpowers_ooharness_h2",
-      "harness_name": "Inner-6: Our Unified Inner Loop (`Superpowers` x `OO-Harness` x `Harness^2`)",
-      "single_task_pass_at_1_pct": 100.0,
-      "partial_credit_objective_pct": 100.0,
-      "mutation_kill_rate_pct": 100.0,
-      "contrastive_probe_coverage_pct": 100.0,
-      "dynamic_subclass_evolution": true,
-      "immutable_verifier_lock_pct": 100.0,
-      "strengths": "Combines Superpowers TDD/Cold Auditor (`chmod -w`) + OO-Harness Subclass Router/Evolution + Harness^2 Propose-Probe-Compose.",
-      "blind_spots": "Requires Change Tiering Router (`Tier 0/1/2`) to skip probing on trivial 2-line edits."
-    }
-  ],
-  "outer_loop_sdd_framework_comparison": [
-    {
-      "framework_id": "outer_1_ephemeral_task_queues",
-      "framework_name": "Outer-1: Ephemeral Dated Docs / Task Queues (`Superpowers` Dated Docs / `GSD` / `Task-Master`)",
-      "milestone_survival_scores": {
-        "M1_Greenfield": 100.0,
-        "M2_Expansion": 85.0,
-        "M3_Rename_Modify": 40.0,
-        "M4_Logical_Revert": 30.0,
-        "M5_Clean_Room_Rebuild": 0.0
+  "benchmark_suite": "Dual-Loop Measured SDD & Agentic Harness Benchmark Suite v3.0 (36 Real Blind Agent Workspaces)",
+  "methodology": {
+    "status": "100% Empirically Measured from Blind Agent Executions",
+    "inner_loop_runs": 24,
+    "outer_loop_workspaces": 12,
+    "total_evaluated_workspaces": 36,
+    "fairness_guarantees": [
+      "Identical task/ticket prompts across all compared arms within each regime",
+      "Identical starter files across all compared arms",
+      "Zero failure coaching in any prompt",
+      "Task-agnostic harness preambles",
+      "Sealed programmatic oracle graders and mutation tests"
+    ],
+    "oo_harness_evolution_verified": "SlidingWindowBoundaryHarness",
+    "harness_squared_probe_disagreements_caught": 1
+  },
+  "measured_results": {
+    "inner_loop_combined_24_runs": {
+      "arm_a_baseline": {
+        "oracle_passed": 59,
+        "oracle_total": 60,
+        "oracle_pct": 98.3,
+        "mutants_killed": 18,
+        "mutants_total": 30,
+        "mutation_pct": 60.0,
+        "readonly_locks": "0/6",
+        "regime1_oracle_pct": 100.0,
+        "regime1_mutation_pct": 60.0,
+        "regime2_oracle_pct": 96.7,
+        "regime2_mutation_pct": 60.0
       },
-      "m1_to_m5_cumulative_pass_pct": 51.0,
-      "spec_contradiction_free_pct": 0.0,
-      "backward_regression_free_pct": 45.0,
-      "logical_git_revert_precision_pct": 25.0,
-      "m5_clean_room_rebuild_pct": 0.0,
-      "context_token_efficiency_pct": 65.0,
-      "primary_bottleneck": "100% Spec Rot by M3: dated `YYYY-MM-DD-*.md` files and checked-off task queues never merge deltas, leaving contradictory rules and zero clean-room rebuild spec at M5."
-    },
-    {
-      "framework_id": "outer_2_bmad_agile_personas",
-      "framework_name": "Outer-2: Multi-Persona Waterfall-Agile (`BMAD-METHOD` 12+ Role Agents)",
-      "milestone_survival_scores": {
-        "M1_Greenfield": 100.0,
-        "M2_Expansion": 80.0,
-        "M3_Rename_Modify": 55.0,
-        "M4_Logical_Revert": 45.0,
-        "M5_Clean_Room_Rebuild": 60.0
+      "arm_b_superpowers": {
+        "oracle_passed": 59,
+        "oracle_total": 60,
+        "oracle_pct": 98.3,
+        "mutants_killed": 19,
+        "mutants_total": 30,
+        "mutation_pct": 63.3,
+        "readonly_locks": "0/6",
+        "regime1_oracle_pct": 100.0,
+        "regime1_mutation_pct": 73.3,
+        "regime2_oracle_pct": 96.7,
+        "regime2_mutation_pct": 53.3
       },
-      "m1_to_m5_cumulative_pass_pct": 68.0,
-      "spec_contradiction_free_pct": 50.0,
-      "backward_regression_free_pct": 65.0,
-      "logical_git_revert_precision_pct": 40.0,
-      "m5_clean_room_rebuild_pct": 60.0,
-      "context_token_efficiency_pct": 35.0,
-      "primary_bottleneck": "High token overhead across 12+ role handoffs; monolithic PRD/Architecture docs lack deterministic `RENAMED -> REMOVED -> MODIFIED -> ADDED` delta merge on brownfield M3-M4 iterations."
-    },
-    {
-      "framework_id": "outer_3_github_spec_kit",
-      "framework_name": "Outer-3: Numbered Feature-Folder SDD (`GitHub Spec Kit` `specs/001..005/`)",
-      "milestone_survival_scores": {
-        "M1_Greenfield": 100.0,
-        "M2_Expansion": 90.0,
-        "M3_Rename_Modify": 65.0,
-        "M4_Logical_Revert": 60.0,
-        "M5_Clean_Room_Rebuild": 70.0
+      "arm_c_ooharness_h2": {
+        "oracle_passed": 60,
+        "oracle_total": 60,
+        "oracle_pct": 100.0,
+        "mutants_killed": 25,
+        "mutants_total": 30,
+        "mutation_pct": 83.3,
+        "readonly_locks": "0/6",
+        "regime1_oracle_pct": 100.0,
+        "regime1_mutation_pct": 93.3,
+        "regime2_oracle_pct": 100.0,
+        "regime2_mutation_pct": 73.3
       },
-      "m1_to_m5_cumulative_pass_pct": 77.0,
-      "spec_contradiction_free_pct": 40.0,
-      "backward_regression_free_pct": 75.0,
-      "logical_git_revert_precision_pct": 50.0,
-      "m5_clean_room_rebuild_pct": 70.0,
-      "context_token_efficiency_pct": 60.0,
-      "primary_bottleneck": "Folder Fragmentation: creates `specs/001-m1/`, `specs/002-m2/`, `specs/003-m3/` without merging into a single per-capability spec; by M5 the agent must reconcile 5 historical folders."
+      "arm_d_unified_inner": {
+        "oracle_passed": 60,
+        "oracle_total": 60,
+        "oracle_pct": 100.0,
+        "mutants_killed": 25,
+        "mutants_total": 30,
+        "mutation_pct": 83.3,
+        "readonly_locks": "6/6",
+        "regime1_oracle_pct": 100.0,
+        "regime1_mutation_pct": 93.3,
+        "regime2_oracle_pct": 100.0,
+        "regime2_mutation_pct": 73.3
+      }
     },
-    {
-      "framework_id": "outer_4_amazon_kiro_ears",
-      "framework_name": "Outer-4: In-Place EARS Spec Mode (`Amazon Kiro` `requirements.md` + `design.md` + `tasks.md`)",
-      "milestone_survival_scores": {
-        "M1_Greenfield": 100.0,
-        "M2_Expansion": 95.0,
-        "M3_Rename_Modify": 85.0,
-        "M4_Logical_Revert": 55.0,
-        "M5_Clean_Room_Rebuild": 75.0
+    "inner_loop_regime1_formal_spec_prompt": {
+      "arm_a_baseline": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 2,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 2,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 9,
+        "mutants_total": 15,
+        "mutation_pct": 60.0,
+        "readonly_locks": "0/3"
       },
-      "m1_to_m5_cumulative_pass_pct": 82.0,
-      "spec_contradiction_free_pct": 85.0,
-      "backward_regression_free_pct": 85.0,
-      "logical_git_revert_precision_pct": 50.0,
-      "m5_clean_room_rebuild_pct": 75.0,
-      "context_token_efficiency_pct": 80.0,
-      "primary_bottleneck": "Overwrites `requirements.md` in-place without an archived change-delta audit trail (`openspec/changes/archive/`), lacks `Conductor` 4-phase Git SHA/notes logical revert at M4, and lacks an 8-section `SPEC.md` rebuild blueprint at M5."
+      "arm_b_superpowers": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 4,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 2,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 11,
+        "mutants_total": 15,
+        "mutation_pct": 73.3,
+        "readonly_locks": "0/3"
+      },
+      "arm_c_ooharness_h2": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 4,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 14,
+        "mutants_total": 15,
+        "mutation_pct": 93.3,
+        "readonly_locks": "0/3"
+      },
+      "arm_d_unified_inner": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 4,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 14,
+        "mutants_total": 15,
+        "mutation_pct": 93.3,
+        "readonly_locks": "3/3"
+      }
     },
-    {
-      "framework_id": "outer_5_unified_conductor_openspec_ssot",
-      "framework_name": "Outer-5: Our Unified Outer Loop (`Conductor` + `OpenSpec` Two-Plane Delta + `SPEC.md` SSOT)",
-      "milestone_survival_scores": {
-        "M1_Greenfield": 100.0,
-        "M2_Expansion": 100.0,
-        "M3_Rename_Modify": 100.0,
-        "M4_Logical_Revert": 100.0,
-        "M5_Clean_Room_Rebuild": 100.0
+    "inner_loop_regime2_natural_brownfield_ticket": {
+      "arm_a_baseline": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": false,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {
+              "c8_rate_limit_60s_inclusive": "AssertionError: 5th webhook at exact +60s boundary must raise ValueError"
+            },
+            "passed": 9,
+            "total": 10,
+            "mutants_killed": 4,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 2,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 3,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 29,
+        "oracle_total": 30,
+        "oracle_pct": 96.7,
+        "mutants_killed": 9,
+        "mutants_total": 15,
+        "mutation_pct": 60.0,
+        "readonly_locks": "0/3"
       },
-      "m1_to_m5_cumulative_pass_pct": 100.0,
-      "spec_contradiction_free_pct": 100.0,
-      "backward_regression_free_pct": 100.0,
-      "logical_git_revert_precision_pct": 100.0,
-      "m5_clean_room_rebuild_pct": 100.0,
-      "context_token_efficiency_pct": 92.0,
-      "primary_bottleneck": "None across M1-M5: `OpenSpec` merges M3 deltas into `openspec/specs/`, `Conductor` reverts M4 cleanly via `git notes` & checkpoint SHAs, and 8-section `SPEC.md` passes M5 Clean-Room Rebuild in `/tmp`."
-    }
-  ],
-  "arms": [
-    {
-      "arm_id": "arm1",
-      "arm_name": "Arm 1: Baseline Vibe Coding (Monolithic Prompt, No SDD)",
-      "tasks_evaluated": 12,
-      "strict_pass_at_1_count": 1,
-      "strict_pass_at_1_pct": 8.33,
-      "partial_credit_avg_pct": 58.52,
-      "sprint_spec_sync_pct": 0.0,
-      "mutation_kill_pct": 33.33,
-      "anti_reward_hacking_pct": 0.0,
-      "out_of_scope_guard_pct": 75.0,
-      "avg_readiness_score": 5.08,
-      "task_results": [
-        {
-          "task_id": "AB-01",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "OrderPulse 4-App Transactional Saga & Sliding-Window Rate Limiter",
-          "routed_harness_class": "MonolithicHarness",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 8,
-          "objective_checks_total": 15,
-          "partial_credit_score": 0.5333,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": false,
-          "readiness_score": 3.0,
-          "failure_modes": [
-            "C08_vip_exact_boundary_100000_channel: 100k channel=#orders",
-            "C09_vip_exact_boundary_100000_priority_promotion: 100k priority=LOW",
-            "C11_rate_limit_inclusive_60s_boundary_rejected: rate_limited_at_60=False",
-            "C12_rate_limit_sliding_window_expires_at_61s: order at t=161 should succeed"
-          ]
+      "arm_b_superpowers": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": false,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {
+              "c8_rate_limit_60s_inclusive": "AssertionError: 5th webhook at exact +60s boundary must raise ValueError"
+            },
+            "passed": 9,
+            "total": 10,
+            "mutants_killed": 4,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 2,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 2,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
         },
-        {
-          "task_id": "AB-02",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "IncidentBridge PagerDuty-Jira-Slack Deduplication & Auto-Escalation",
-          "routed_harness_class": "None (Ad-Hoc Prompt)",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 7,
-          "objective_checks_total": 12,
-          "partial_credit_score": 0.5833,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 5.0,
-          "failure_modes": [
-            "Boundary drift (> vs >= / < vs <=)",
-            "No living spec synchronization (Spec Rot)",
-            "Unlocked tests vulnerable to self-modification"
-          ]
+        "oracle_passed": 29,
+        "oracle_total": 30,
+        "oracle_pct": 96.7,
+        "mutants_killed": 8,
+        "mutants_total": 15,
+        "mutation_pct": 53.3,
+        "readonly_locks": "0/3"
+      },
+      "arm_c_ooharness_h2": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 3,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 3,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
         },
-        {
-          "task_id": "AB-03",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "BillingSync Multi-Currency Invoice Reconciliation & Dead-Letter Queue",
-          "routed_harness_class": "None (Ad-Hoc Prompt)",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 6,
-          "objective_checks_total": 12,
-          "partial_credit_score": 0.5,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 0,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.0,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 5.0,
-          "failure_modes": [
-            "Boundary drift (> vs >= / < vs <=)",
-            "No living spec synchronization (Spec Rot)",
-            "Unlocked tests vulnerable to self-modification"
-          ]
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 11,
+        "mutants_total": 15,
+        "mutation_pct": 73.3,
+        "readonly_locks": "0/3"
+      },
+      "arm_d_unified_inner": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 3,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 3,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          }
         },
-        {
-          "task_id": "C0-01",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "TodoList Greenfield Contract Synthesis (Lab 01 Spec Triangle)",
-          "routed_harness_class": "None (Ad-Hoc Prompt)",
-          "archetype": "greenfield_spec",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 8.0,
-          "failure_modes": []
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 11,
+        "mutants_total": 15,
+        "mutation_pct": 73.3,
+        "readonly_locks": "3/3"
+      }
+    },
+    "outer_loop": {
+      "outer_a_dated_docs": {
+        "m4_evolved": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12
         },
-        {
-          "task_id": "C0-02",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "TaskFlowBoard 8-Section SPEC.md Clean-Room Rebuild (Lab 06 WIP=2)",
-          "routed_harness_class": "None (Ad-Hoc Prompt)",
-          "archetype": "clean_room_rebuild",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 7,
-          "objective_checks_total": 12,
-          "partial_credit_score": 0.5833,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 5.0,
-          "failure_modes": [
-            "Boundary drift (> vs >= / < vs <=)",
-            "No living spec synchronization (Spec Rot)",
-            "Unlocked tests vulnerable to self-modification"
-          ]
+        "m4_pct": 100.0,
+        "m5_all_docs_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12
         },
-        {
-          "task_id": "C0-03",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "DagTaskRunner Topological Dependency Executor & Cycle Detector",
-          "routed_harness_class": "None (Ad-Hoc Prompt)",
-          "archetype": "clean_room_rebuild",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 7,
-          "objective_checks_total": 12,
-          "partial_credit_score": 0.5833,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 5.0,
-          "failure_modes": [
-            "Boundary drift (> vs >= / < vs <=)",
-            "No living spec synchronization (Spec Rot)",
-            "Unlocked tests vulnerable to self-modification"
-          ]
+        "m5_all_docs_pct": 100.0,
+        "m5_primary_spec_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": false,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": false,
+            "c6_m3_clear_transfer_and_alias": false,
+            "c7_m3_idempotency_and_conflict": false,
+            "c8_m2_statement_ordering": false,
+            "c9_m4_reverse_awaiting_clearing": false,
+            "c10_m4_reverse_settled_and_guard": false,
+            "c11_m4_total_collected_fees": false,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {
+            "c3_m3_10_cent_floor_fee": "AssertionError: Expected 10-cent floor fee, got 5",
+            "c5_m3_exact_100k_awaiting_clearing_50bps": "AssertionError: Expected AWAITING_CLEARING at 100000, got SETTLED",
+            "c6_m3_clear_transfer_and_alias": "AttributeError: 'LedgerFlow' object has no attribute 'clear_transfer'",
+            "c7_m3_idempotency_and_conflict": "ValueError: Duplicate tx_id: dup_tx",
+            "c8_m2_statement_ordering": "AttributeError: 'LedgerFlow' object has no attribute 'account_statement'",
+            "c9_m4_reverse_awaiting_clearing": "AssertionError: ",
+            "c10_m4_reverse_settled_and_guard": "AttributeError: 'LedgerFlow' object has no attribute 'reverse_transfer'",
+            "c11_m4_total_collected_fees": "AttributeError: 'LedgerFlow' object has no attribute 'total_collected_fees'"
+          },
+          "passed": 4,
+          "total": 12
         },
-        {
-          "task_id": "FB-01",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "TaskOrganizer Brownfield Reverse-Engineering & Priority/Tag Delta (Lab 02)",
-          "routed_harness_class": "None (Ad-Hoc Prompt)",
-          "archetype": "brownfield_sync",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 6,
-          "objective_checks_total": 10,
-          "partial_credit_score": 0.6,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 5.0,
-          "failure_modes": [
-            "Boundary drift (> vs >= / < vs <=)",
-            "No living spec synchronization (Spec Rot)",
-            "Unlocked tests vulnerable to self-modification"
-          ]
-        },
-        {
-          "task_id": "FB-02",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "DailyPlanner '>' vs '<' Time-Budget Drift & 5-Step Scorecard (Lab 04)",
-          "routed_harness_class": "None (Ad-Hoc Prompt)",
-          "archetype": "drift_remediation",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 6,
-          "objective_checks_total": 10,
-          "partial_credit_score": 0.6,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 0,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.0,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": false,
-          "readiness_score": 5.0,
-          "failure_modes": [
-            "Boundary drift (> vs >= / < vs <=)",
-            "No living spec synchronization (Spec Rot)",
-            "Unlocked tests vulnerable to self-modification"
-          ]
-        },
-        {
-          "task_id": "FB-03",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "NotesBoard Reversed-Order Bug, REQ-0004 Spec Sync & Stacked PRs (Lab 05)",
-          "routed_harness_class": "None (Ad-Hoc Prompt)",
-          "archetype": "drift_remediation",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 5,
-          "objective_checks_total": 10,
-          "partial_credit_score": 0.5,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": false,
-          "readiness_score": 5.0,
-          "failure_modes": [
-            "Boundary drift (> vs >= / < vs <=)",
-            "No living spec synchronization (Spec Rot)",
-            "Unlocked tests vulnerable to self-modification"
-          ]
-        },
-        {
-          "task_id": "SB-01",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "HabitTracker Temporal Streak Gap Equivalence Classes (Lab 03 TDD)",
-          "routed_harness_class": "None (Ad-Hoc Prompt)",
-          "archetype": "tdd_actuation",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 6,
-          "objective_checks_total": 10,
-          "partial_credit_score": 0.6,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 5.0,
-          "failure_modes": [
-            "Boundary drift (> vs >= / < vs <=)",
-            "No living spec synchronization (Spec Rot)",
-            "Unlocked tests vulnerable to self-modification"
-          ]
-        },
-        {
-          "task_id": "SB-02",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "SlidingWindowQuota Enforcer Boundary & Clock-Skew Mutation Suite",
-          "routed_harness_class": "None (Ad-Hoc Prompt)",
-          "archetype": "tdd_actuation",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 6,
-          "objective_checks_total": 10,
-          "partial_credit_score": 0.6,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 0,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.0,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 5.0,
-          "failure_modes": [
-            "Boundary drift (> vs >= / < vs <=)",
-            "No living spec synchronization (Spec Rot)",
-            "Unlocked tests vulnerable to self-modification"
-          ]
-        },
-        {
-          "task_id": "SB-03",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "OpenSpec Deterministic 5-Step Delta Merge Engine (RENAMED->REMOVED->MODIFIED->ADDED)",
-          "routed_harness_class": "None (Ad-Hoc Prompt)",
-          "archetype": "brownfield_sync",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 5,
-          "objective_checks_total": 12,
-          "partial_credit_score": 0.4167,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 0,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.0,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 5.0,
-          "failure_modes": [
-            "Boundary drift (> vs >= / < vs <=)",
-            "No living spec synchronization (Spec Rot)",
-            "Unlocked tests vulnerable to self-modification"
-          ]
+        "m5_primary_spec_pct": 33.3,
+        "spec_hygiene": {
+          "active_spec_files": [
+            "docs/specs/2026-10-01-milestone-1.md",
+            "docs/specs/2026-10-02-milestone-2.md",
+            "docs/specs/2026-10-03-milestone-3.md",
+            "docs/specs/2026-10-04-milestone-4.md"
+          ],
+          "active_spec_file_count": 4,
+          "spec_contradictions": 2,
+          "has_clean_room_spec_md": false,
+          "has_openspec_ssot": false
         }
-      ]
-    },
-    {
-      "arm_id": "arm2",
-      "arm_name": "Arm 2: Standalone Claude Superpowers (Inner-Loop Only, Dated Docs)",
-      "tasks_evaluated": 12,
-      "strict_pass_at_1_count": 3,
-      "strict_pass_at_1_pct": 25.0,
-      "partial_credit_avg_pct": 83.7,
-      "sprint_spec_sync_pct": 0.0,
-      "mutation_kill_pct": 70.83,
-      "anti_reward_hacking_pct": 0.0,
-      "out_of_scope_guard_pct": 91.67,
-      "avg_readiness_score": 7.92,
-      "task_results": [
-        {
-          "task_id": "AB-01",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "OrderPulse 4-App Transactional Saga & Sliding-Window Rate Limiter",
-          "routed_harness_class": "MonolithicHarness",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 13,
-          "objective_checks_total": 15,
-          "partial_credit_score": 0.8667,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 4.0,
-          "failure_modes": [
-            "C07_rollback_audit_log_recorded: audit_log=[{'event_id': 'evt-1', 'status': 'CONFIRMED'}]",
-            "C15_living_spec_and_readonly_test_lock: has_living_spec=False, test_locked=False"
-          ]
+      },
+      "outer_b_speckit_folders": {
+        "m4_evolved": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12
         },
-        {
-          "task_id": "AB-02",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "IncidentBridge PagerDuty-Jira-Slack Deduplication & Auto-Escalation",
-          "routed_harness_class": "SuperpowersDatedDocWorkflow",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 12,
-          "partial_credit_score": 0.8333,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 8.0,
-          "failure_modes": [
-            "Level-1 dated docs (YYYY-MM-DD-*.md) contradict across Sprints 1-3",
-            "Missing 8-section SPEC.md SSOT for clean-room /tmp rebuild"
-          ]
+        "m4_pct": 100.0,
+        "m5_all_docs_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12
         },
-        {
-          "task_id": "AB-03",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "BillingSync Multi-Currency Invoice Reconciliation & Dead-Letter Queue",
-          "routed_harness_class": "SuperpowersDatedDocWorkflow",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 12,
-          "partial_credit_score": 0.8333,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 8.0,
-          "failure_modes": [
-            "Level-1 dated docs (YYYY-MM-DD-*.md) contradict across Sprints 1-3",
-            "Missing 8-section SPEC.md SSOT for clean-room /tmp rebuild"
-          ]
+        "m5_all_docs_pct": 100.0,
+        "m5_primary_spec_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": false,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": false,
+            "c6_m3_clear_transfer_and_alias": false,
+            "c7_m3_idempotency_and_conflict": false,
+            "c8_m2_statement_ordering": false,
+            "c9_m4_reverse_awaiting_clearing": false,
+            "c10_m4_reverse_settled_and_guard": false,
+            "c11_m4_total_collected_fees": false,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {
+            "c3_m3_10_cent_floor_fee": "AssertionError: Expected 10-cent floor fee, got 5",
+            "c5_m3_exact_100k_awaiting_clearing_50bps": "AssertionError: Expected AWAITING_CLEARING at 100000, got SETTLED",
+            "c6_m3_clear_transfer_and_alias": "AttributeError: 'LedgerFlow' object has no attribute 'clear_transfer'",
+            "c7_m3_idempotency_and_conflict": "ValueError: Duplicate tx_id: dup_tx",
+            "c8_m2_statement_ordering": "AttributeError: 'LedgerFlow' object has no attribute 'account_statement'",
+            "c9_m4_reverse_awaiting_clearing": "AssertionError: ",
+            "c10_m4_reverse_settled_and_guard": "AttributeError: 'LedgerFlow' object has no attribute 'reverse_transfer'",
+            "c11_m4_total_collected_fees": "AttributeError: 'LedgerFlow' object has no attribute 'total_collected_fees'"
+          },
+          "passed": 4,
+          "total": 12
         },
-        {
-          "task_id": "C0-01",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "TodoList Greenfield Contract Synthesis (Lab 01 Spec Triangle)",
-          "routed_harness_class": "SuperpowersDatedDocWorkflow",
-          "archetype": "greenfield_spec",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 9.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "C0-02",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "TaskFlowBoard 8-Section SPEC.md Clean-Room Rebuild (Lab 06 WIP=2)",
-          "routed_harness_class": "SuperpowersDatedDocWorkflow",
-          "archetype": "clean_room_rebuild",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 9,
-          "objective_checks_total": 12,
-          "partial_credit_score": 0.75,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 8.0,
-          "failure_modes": [
-            "Level-1 dated docs (YYYY-MM-DD-*.md) contradict across Sprints 1-3",
-            "Missing 8-section SPEC.md SSOT for clean-room /tmp rebuild"
-          ]
-        },
-        {
-          "task_id": "C0-03",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "DagTaskRunner Topological Dependency Executor & Cycle Detector",
-          "routed_harness_class": "SuperpowersDatedDocWorkflow",
-          "archetype": "clean_room_rebuild",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 12,
-          "partial_credit_score": 0.8333,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 8.0,
-          "failure_modes": [
-            "Level-1 dated docs (YYYY-MM-DD-*.md) contradict across Sprints 1-3",
-            "Missing 8-section SPEC.md SSOT for clean-room /tmp rebuild"
-          ]
-        },
-        {
-          "task_id": "FB-01",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "TaskOrganizer Brownfield Reverse-Engineering & Priority/Tag Delta (Lab 02)",
-          "routed_harness_class": "SuperpowersDatedDocWorkflow",
-          "archetype": "brownfield_sync",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 8,
-          "objective_checks_total": 10,
-          "partial_credit_score": 0.8,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 8.0,
-          "failure_modes": [
-            "Level-1 dated docs (YYYY-MM-DD-*.md) contradict across Sprints 1-3",
-            "Missing 8-section SPEC.md SSOT for clean-room /tmp rebuild"
-          ]
-        },
-        {
-          "task_id": "FB-02",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "DailyPlanner '>' vs '<' Time-Budget Drift & 5-Step Scorecard (Lab 04)",
-          "routed_harness_class": "SuperpowersDatedDocWorkflow",
-          "archetype": "drift_remediation",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 8,
-          "objective_checks_total": 10,
-          "partial_credit_score": 0.8,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": false,
-          "readiness_score": 8.0,
-          "failure_modes": [
-            "Level-1 dated docs (YYYY-MM-DD-*.md) contradict across Sprints 1-3",
-            "Missing 8-section SPEC.md SSOT for clean-room /tmp rebuild"
-          ]
-        },
-        {
-          "task_id": "FB-03",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "NotesBoard Reversed-Order Bug, REQ-0004 Spec Sync & Stacked PRs (Lab 05)",
-          "routed_harness_class": "SuperpowersDatedDocWorkflow",
-          "archetype": "drift_remediation",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 8,
-          "objective_checks_total": 10,
-          "partial_credit_score": 0.8,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 8.0,
-          "failure_modes": [
-            "Level-1 dated docs (YYYY-MM-DD-*.md) contradict across Sprints 1-3",
-            "Missing 8-section SPEC.md SSOT for clean-room /tmp rebuild"
-          ]
-        },
-        {
-          "task_id": "SB-01",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "HabitTracker Temporal Streak Gap Equivalence Classes (Lab 03 TDD)",
-          "routed_harness_class": "SuperpowersDatedDocWorkflow",
-          "archetype": "tdd_actuation",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 9.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "SB-02",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "SlidingWindowQuota Enforcer Boundary & Clock-Skew Mutation Suite",
-          "routed_harness_class": "SuperpowersDatedDocWorkflow",
-          "archetype": "tdd_actuation",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 9.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "SB-03",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "OpenSpec Deterministic 5-Step Delta Merge Engine (RENAMED->REMOVED->MODIFIED->ADDED)",
-          "routed_harness_class": "SuperpowersDatedDocWorkflow",
-          "archetype": "brownfield_sync",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 7,
-          "objective_checks_total": 12,
-          "partial_credit_score": 0.5833,
-          "sprint_spec_sync_survived": false,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 8.0,
-          "failure_modes": [
-            "Level-1 dated docs (YYYY-MM-DD-*.md) contradict across Sprints 1-3",
-            "Missing 8-section SPEC.md SSOT for clean-room /tmp rebuild"
-          ]
+        "m5_primary_spec_pct": 33.3,
+        "spec_hygiene": {
+          "active_spec_files": [
+            "specs/001-milestone-1/spec.md",
+            "specs/002-milestone-2/spec.md",
+            "specs/003-milestone-3/spec.md",
+            "specs/004-milestone-4/spec.md"
+          ],
+          "active_spec_file_count": 4,
+          "spec_contradictions": 3,
+          "has_clean_room_spec_md": false,
+          "has_openspec_ssot": false
         }
-      ]
-    },
-    {
-      "arm_id": "arm3",
-      "arm_name": "Arm 3: Flat Outer-Loop SDD (Conductor + OpenSpec Monolithic Harness)",
-      "tasks_evaluated": 12,
-      "strict_pass_at_1_count": 8,
-      "strict_pass_at_1_pct": 66.67,
-      "partial_credit_avg_pct": 94.81,
-      "sprint_spec_sync_pct": 100.0,
-      "mutation_kill_pct": 87.5,
-      "anti_reward_hacking_pct": 91.67,
-      "out_of_scope_guard_pct": 100.0,
-      "avg_readiness_score": 9.25,
-      "task_results": [
-        {
-          "task_id": "AB-01",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "OrderPulse 4-App Transactional Saga & Sliding-Window Rate Limiter",
-          "routed_harness_class": "MonolithicHarness",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 11,
-          "objective_checks_total": 15,
-          "partial_credit_score": 0.7333,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 4.0,
-          "failure_modes": [
-            "C11_rate_limit_inclusive_60s_boundary_rejected: rate_limited_at_60=False",
-            "C12_rate_limit_sliding_window_expires_at_61s: order at t=161 should succeed",
-            "C13_priority_queue_high_medium_low_fifo: got ['evt-vip-100k', 'evt-a2', 'evt-99999', 'evt-a3', 'evt-a4-boundary-60', 'evt-1'], expected ['evt-vip-100k', 'evt-a2', 'evt-99999', 'evt-a3', 'evt-1', 'evt-a5-at-161']",
-            "C15_living_spec_and_readonly_test_lock: has_living_spec=True, test_locked=False"
-          ]
+      },
+      "outer_c_kiro_ears": {
+        "m4_evolved": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12
         },
-        {
-          "task_id": "AB-02",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "IncidentBridge PagerDuty-Jira-Slack Deduplication & Auto-Escalation",
-          "routed_harness_class": "MonolithicSDDHarness",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 11,
-          "objective_checks_total": 12,
-          "partial_credit_score": 0.9167,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 9.0,
-          "failure_modes": [
-            "Monolithic harness missed specialized boundary equivalence class without OO-Harness subclass & 4-phase debugging gate"
-          ]
+        "m4_pct": 100.0,
+        "m5_all_docs_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12
         },
-        {
-          "task_id": "AB-03",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "BillingSync Multi-Currency Invoice Reconciliation & Dead-Letter Queue",
-          "routed_harness_class": "MonolithicSDDHarness",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 12,
-          "objective_checks_total": 12,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
+        "m5_all_docs_pct": 100.0,
+        "m5_primary_spec_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12
         },
-        {
-          "task_id": "C0-01",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "TodoList Greenfield Contract Synthesis (Lab 01 Spec Triangle)",
-          "routed_harness_class": "MonolithicSDDHarness",
-          "archetype": "greenfield_spec",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "C0-02",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "TaskFlowBoard 8-Section SPEC.md Clean-Room Rebuild (Lab 06 WIP=2)",
-          "routed_harness_class": "MonolithicSDDHarness",
-          "archetype": "clean_room_rebuild",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 12,
-          "objective_checks_total": 12,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "C0-03",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "DagTaskRunner Topological Dependency Executor & Cycle Detector",
-          "routed_harness_class": "MonolithicSDDHarness",
-          "archetype": "clean_room_rebuild",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 12,
-          "objective_checks_total": 12,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "FB-01",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "TaskOrganizer Brownfield Reverse-Engineering & Priority/Tag Delta (Lab 02)",
-          "routed_harness_class": "MonolithicSDDHarness",
-          "archetype": "brownfield_sync",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "FB-02",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "DailyPlanner '>' vs '<' Time-Budget Drift & 5-Step Scorecard (Lab 04)",
-          "routed_harness_class": "MonolithicSDDHarness",
-          "archetype": "drift_remediation",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "FB-03",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "NotesBoard Reversed-Order Bug, REQ-0004 Spec Sync & Stacked PRs (Lab 05)",
-          "routed_harness_class": "MonolithicSDDHarness",
-          "archetype": "drift_remediation",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "SB-01",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "HabitTracker Temporal Streak Gap Equivalence Classes (Lab 03 TDD)",
-          "routed_harness_class": "MonolithicSDDHarness",
-          "archetype": "tdd_actuation",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 9,
-          "objective_checks_total": 10,
-          "partial_credit_score": 0.9,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 9.0,
-          "failure_modes": [
-            "Monolithic harness missed specialized boundary equivalence class without OO-Harness subclass & 4-phase debugging gate"
-          ]
-        },
-        {
-          "task_id": "SB-02",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "SlidingWindowQuota Enforcer Boundary & Clock-Skew Mutation Suite",
-          "routed_harness_class": "MonolithicSDDHarness",
-          "archetype": "tdd_actuation",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 9,
-          "objective_checks_total": 10,
-          "partial_credit_score": 0.9,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 1,
-          "mutants_total": 2,
-          "mutation_kill_rate": 0.5,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 9.0,
-          "failure_modes": [
-            "Monolithic harness missed specialized boundary equivalence class without OO-Harness subclass & 4-phase debugging gate"
-          ]
-        },
-        {
-          "task_id": "SB-03",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "OpenSpec Deterministic 5-Step Delta Merge Engine (RENAMED->REMOVED->MODIFIED->ADDED)",
-          "routed_harness_class": "MonolithicSDDHarness",
-          "archetype": "brownfield_sync",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 12,
-          "objective_checks_total": 12,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
+        "m5_primary_spec_pct": 100.0,
+        "spec_hygiene": {
+          "active_spec_files": [
+            "requirements.md"
+          ],
+          "active_spec_file_count": 1,
+          "spec_contradictions": 0,
+          "has_clean_room_spec_md": false,
+          "has_openspec_ssot": false
         }
-      ]
-    },
-    {
-      "arm_id": "arm4",
-      "arm_name": "Arm 4: Unified Outer-Loop SDD x Inner-Loop Superpowers/OO-Harness/H^2",
-      "tasks_evaluated": 12,
-      "strict_pass_at_1_count": 11,
-      "strict_pass_at_1_pct": 91.67,
-      "partial_credit_avg_pct": 99.26,
-      "sprint_spec_sync_pct": 100.0,
-      "mutation_kill_pct": 100.0,
-      "anti_reward_hacking_pct": 91.67,
-      "out_of_scope_guard_pct": 100.0,
-      "avg_readiness_score": 9.5,
-      "task_results": [
-        {
-          "task_id": "AB-01",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "OrderPulse 4-App Transactional Saga & Sliding-Window Rate Limiter",
-          "routed_harness_class": "MultiAppWorkflowHarness",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": false,
-          "objective_checks_passed": 14,
-          "objective_checks_total": 15,
-          "partial_credit_score": 0.9333,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": false,
-          "out_of_scope_clean": true,
-          "readiness_score": 4.0,
-          "failure_modes": [
-            "C15_living_spec_and_readonly_test_lock: has_living_spec=True, test_locked=False"
-          ]
+      },
+      "outer_d_unified_outer": {
+        "m4_evolved": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12
         },
-        {
-          "task_id": "AB-02",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "IncidentBridge PagerDuty-Jira-Slack Deduplication & Auto-Escalation",
-          "routed_harness_class": "MultiAppWorkflowHarness",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 12,
-          "objective_checks_total": 12,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
+        "m4_pct": 100.0,
+        "m5_all_docs_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12
         },
-        {
-          "task_id": "AB-03",
-          "track": "Track A: AutomationBench Multi-App State Machines",
-          "title": "BillingSync Multi-Currency Invoice Reconciliation & Dead-Letter Queue",
-          "routed_harness_class": "MultiAppWorkflowHarness",
-          "archetype": "multi_app_workflow",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 12,
-          "objective_checks_total": 12,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
+        "m5_all_docs_pct": 100.0,
+        "m5_primary_spec_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12
         },
-        {
-          "task_id": "C0-01",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "TodoList Greenfield Contract Synthesis (Lab 01 Spec Triangle)",
-          "routed_harness_class": "GreenfieldSpecHarness",
-          "archetype": "greenfield_spec",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "C0-02",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "TaskFlowBoard 8-Section SPEC.md Clean-Room Rebuild (Lab 06 WIP=2)",
-          "routed_harness_class": "CleanRoomRebuildHarness",
-          "archetype": "clean_room_rebuild",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 12,
-          "objective_checks_total": 12,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "C0-03",
-          "track": "Track B: Commit0 Spec-to-Library Clean-Room Rebuild",
-          "title": "DagTaskRunner Topological Dependency Executor & Cycle Detector",
-          "routed_harness_class": "CleanRoomRebuildHarness",
-          "archetype": "clean_room_rebuild",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 12,
-          "objective_checks_total": 12,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "FB-01",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "TaskOrganizer Brownfield Reverse-Engineering & Priority/Tag Delta (Lab 02)",
-          "routed_harness_class": "BrownfieldSyncHarness",
-          "archetype": "brownfield_sync",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "FB-02",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "DailyPlanner '>' vs '<' Time-Budget Drift & 5-Step Scorecard (Lab 04)",
-          "routed_harness_class": "DriftRemediationHarness",
-          "archetype": "drift_remediation",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "FB-03",
-          "track": "Track C: FeatureBench & SWE-bench 3-Sprint Evolution & Drift",
-          "title": "NotesBoard Reversed-Order Bug, REQ-0004 Spec Sync & Stacked PRs (Lab 05)",
-          "routed_harness_class": "DriftRemediationHarness",
-          "archetype": "drift_remediation",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "SB-01",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "HabitTracker Temporal Streak Gap Equivalence Classes (Lab 03 TDD)",
-          "routed_harness_class": "TDDActuationHarness",
-          "archetype": "tdd_actuation",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "SB-02",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "SlidingWindowQuota Enforcer Boundary & Clock-Skew Mutation Suite",
-          "routed_harness_class": "TDDActuationHarness",
-          "archetype": "tdd_actuation",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 10,
-          "objective_checks_total": 10,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
-        },
-        {
-          "task_id": "SB-03",
-          "track": "Track D: SkillsBench Paired Skill Lift & Mutation Oracle Audit",
-          "title": "OpenSpec Deterministic 5-Step Delta Merge Engine (RENAMED->REMOVED->MODIFIED->ADDED)",
-          "routed_harness_class": "BrownfieldSyncHarness",
-          "archetype": "brownfield_sync",
-          "strict_pass_at_1": true,
-          "objective_checks_passed": 12,
-          "objective_checks_total": 12,
-          "partial_credit_score": 1.0,
-          "sprint_spec_sync_survived": true,
-          "mutants_killed": 2,
-          "mutants_total": 2,
-          "mutation_kill_rate": 1.0,
-          "anti_reward_hacking_passed": true,
-          "out_of_scope_clean": true,
-          "readiness_score": 10.0,
-          "failure_modes": []
+        "m5_primary_spec_pct": 100.0,
+        "spec_hygiene": {
+          "active_spec_files": [
+            "SPEC.md",
+            "openspec/specs/ledger-flow/spec.md"
+          ],
+          "active_spec_file_count": 2,
+          "spec_contradictions": 0,
+          "has_clean_room_spec_md": true,
+          "has_openspec_ssot": true
         }
-      ]
-    }
-  ],
-  "live_subagent_trial_ab01": {
-    "arm1": {
-      "exists": true,
-      "objective_passed": 8,
-      "objective_total": 15,
-      "partial_credit_score": 0.5333,
-      "strict_pass_at_1": false,
-      "mutants_killed": 3,
-      "mutants_total": 6,
-      "mutation_kill_rate": 0.5,
-      "spec_sync_survived": false,
-      "test_locked": false,
-      "out_of_scope_clean": false,
-      "failures": [
-        "C08_vip_exact_boundary_100000_channel: 100k channel=#orders",
-        "C09_vip_exact_boundary_100000_priority_promotion: 100k priority=LOW",
-        "C11_rate_limit_inclusive_60s_boundary_rejected: rate_limited_at_60=False",
-        "C12_rate_limit_sliding_window_expires_at_61s: order at t=161 should succeed",
-        "C13_priority_queue_high_medium_low_fifo: got ['evt-a2', 'evt-99999', 'evt-a3', 'evt-a4-boundary-60', 'evt-1', 'evt-vip-100k'], expected ['evt-vip-100k', 'evt-a2', 'evt-99999', 'evt-a3', 'evt-1', 'evt-a5-at-161']",
-        "C14_out_of_scope_guard_clean: has_scope_creep=True",
-        "C15_living_spec_and_readonly_test_lock: has_living_spec=False, test_locked=False"
-      ]
-    },
-    "arm2": {
-      "exists": true,
-      "objective_passed": 13,
-      "objective_total": 15,
-      "partial_credit_score": 0.8667,
-      "strict_pass_at_1": false,
-      "mutants_killed": 5,
-      "mutants_total": 6,
-      "mutation_kill_rate": 0.8333,
-      "spec_sync_survived": false,
-      "test_locked": false,
-      "out_of_scope_clean": true,
-      "failures": [
-        "C07_rollback_audit_log_recorded: audit_log=[{'event_id': 'evt-1', 'status': 'CONFIRMED'}]",
-        "C15_living_spec_and_readonly_test_lock: has_living_spec=False, test_locked=False"
-      ]
-    },
-    "arm3": {
-      "exists": true,
-      "objective_passed": 11,
-      "objective_total": 15,
-      "partial_credit_score": 0.7333,
-      "strict_pass_at_1": false,
-      "mutants_killed": 5,
-      "mutants_total": 6,
-      "mutation_kill_rate": 0.8333,
-      "spec_sync_survived": true,
-      "test_locked": false,
-      "out_of_scope_clean": true,
-      "failures": [
-        "C11_rate_limit_inclusive_60s_boundary_rejected: rate_limited_at_60=False",
-        "C12_rate_limit_sliding_window_expires_at_61s: order at t=161 should succeed",
-        "C13_priority_queue_high_medium_low_fifo: got ['evt-vip-100k', 'evt-a2', 'evt-99999', 'evt-a3', 'evt-a4-boundary-60', 'evt-1'], expected ['evt-vip-100k', 'evt-a2', 'evt-99999', 'evt-a3', 'evt-1', 'evt-a5-at-161']",
-        "C15_living_spec_and_readonly_test_lock: has_living_spec=True, test_locked=False"
-      ]
-    },
-    "arm4": {
-      "exists": true,
-      "objective_passed": 14,
-      "objective_total": 15,
-      "partial_credit_score": 0.9333,
-      "strict_pass_at_1": false,
-      "mutants_killed": 6,
-      "mutants_total": 6,
-      "mutation_kill_rate": 1.0,
-      "spec_sync_survived": true,
-      "test_locked": false,
-      "out_of_scope_clean": true,
-      "failures": [
-        "C15_living_spec_and_readonly_test_lock: has_living_spec=True, test_locked=False"
-      ]
+      }
     }
   }
 }
