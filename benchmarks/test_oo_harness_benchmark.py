@@ -114,13 +114,13 @@ class TestDualLoopBenchmarkSuite(unittest.TestCase):
         measured = report["measured_results"]
         comb = measured["inner_loop_combined_24_runs"]
 
-        # Verify Arm D (Unified Inner Loop) achieves 100% functional oracle (60/60),
-        # beats Baseline and Vanilla Superpowers on mutation kill rate, and locks 6/6 test files
+        # Verify Arm D (Contract-Locked Dual-Stage Harness) achieves 100% functional oracle (60/60),
+        # beats Baseline and Procedural TDD Skill Harness on mutation kill rate, and locks 6/6 test files
         self.assertEqual(comb["arm_d_unified_inner"]["oracle_passed"], 60)
         self.assertEqual(comb["arm_d_unified_inner"]["readonly_locks"], "6/6")
         self.assertGreater(
             comb["arm_d_unified_inner"]["mutation_pct"],
-            comb["arm_b_superpowers"]["mutation_pct"],
+            comb["arm_b_procedural_tdd"]["mutation_pct"],
         )
         self.assertGreater(
             comb["arm_d_unified_inner"]["mutation_pct"],
@@ -128,10 +128,10 @@ class TestDualLoopBenchmarkSuite(unittest.TestCase):
         )
 
         # Verify Outer-Loop M5-Primary-Spec Clean-Room Rebuild results:
-        # Dated Docs and Spec Kit drop to 33.3% (4/12), while Unified Conductor+OpenSpec achieves 100% (12/12)
+        # Append-Only Ephemeral Specs and Feature-Isolated Folders drop to 33.3% (4/12), while Two-Plane Delta-Merged SSOT achieves 100% (12/12)
         ol = measured["outer_loop"]
         self.assertEqual(ol["outer_a_dated_docs"]["m5_primary_spec_pct"], 33.3)
-        self.assertEqual(ol["outer_b_speckit_folders"]["m5_primary_spec_pct"], 33.3)
+        self.assertEqual(ol["outer_b_feature_folders"]["m5_primary_spec_pct"], 33.3)
         self.assertEqual(ol["outer_d_unified_outer"]["m5_primary_spec_pct"], 100.0)
         self.assertEqual(ol["outer_d_unified_outer"]["spec_hygiene"]["spec_contradictions"], 0)
         self.assertTrue(ol["outer_d_unified_outer"]["spec_hygiene"]["has_clean_room_spec_md"])

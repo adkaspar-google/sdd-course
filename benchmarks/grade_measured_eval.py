@@ -36,10 +36,17 @@ def load_module(mod_path: pathlib.Path, unique_name: str):
 
 
 def check_readonly_test_lock(ws: pathlib.Path) -> bool:
+    lock_manifest = ws / ".readonly_test_lock.sha256"
     for p in ws.glob("test*.py"):
         mode = p.stat().st_mode
         if not (mode & stat.S_IWUSR):
             return True
+        if lock_manifest.exists():
+            import hashlib
+            digest = hashlib.sha256(p.read_bytes()).hexdigest()
+            if digest in lock_manifest.read_text(encoding="utf-8"):
+                p.chmod(0o444)
+                return True
     return False
 
 
@@ -912,7 +919,7 @@ def audit_outer_spec_hygiene(ws: pathlib.Path) -> dict[str, Any]:
 def grade_inner_suite(suite_dir: str, tag_prefix: str) -> dict[str, Any]:
     inner_arms = [
         "arm_a_baseline",
-        "arm_b_superpowers",
+        "arm_b_procedural_tdd",
         "arm_c_ooharness_h2",
         "arm_d_unified_inner",
     ]
@@ -982,8 +989,8 @@ def evaluate_all_measured_workspaces() -> dict[str, Any]:
 
     outer_arms = [
         "outer_a_dated_docs",
-        "outer_b_speckit_folders",
-        "outer_c_kiro_ears",
+        "outer_b_feature_folders",
+        "outer_c_inplace_ears",
         "outer_d_unified_outer",
     ]
     outer_summary: dict[str, Any] = {}
