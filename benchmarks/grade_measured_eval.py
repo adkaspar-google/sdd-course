@@ -896,7 +896,9 @@ def audit_outer_spec_hygiene(ws: pathlib.Path) -> dict[str, Any]:
             has_stale_gt_100k = True
         if ">= 100000" in txt:
             has_new_gte_100k = True
-        if "amount_cents // 100 (flat" in txt or "flat `1%`" in txt:
+        if ("amount_cents // 100" in txt and ("flat 1%" in txt or "flat `1%`" in txt)) and (
+            "001" in str(p) or "milestone-1" in str(p)
+        ):
             has_stale_flat_1pct = True
         if "50 bps" in txt or "0.5%" in txt or "* 50" in txt:
             has_new_50bps = True
@@ -907,12 +909,25 @@ def audit_outer_spec_hygiene(ws: pathlib.Path) -> dict[str, Any]:
         bool(has_stale_flat_1pct and has_new_50bps),
     ])
 
+    # Audit historical delta-archive recoverability (d1..d4) across archive/changes files
+    archive_files = sorted((ws / "openspec" / "changes" / "archive").rglob("*.md")) if (ws / "openspec" / "changes" / "archive").exists() else []
+    archive_text = "\n".join(p.read_text(encoding="utf-8") for p in archive_files)
+    delta_audit_checks = {
+        "d1_archived_m1_pending_status": ("'PENDING'" in archive_text and contradictions == 0),
+        "d2_archived_m1_strict_100k_bound": ("> 100000" in archive_text and contradictions == 0),
+        "d3_archived_m1_unfloored_1pct_fee": ("amount_cents // 100" in archive_text and contradictions == 0),
+        "d4_explicit_removed_renamed_headers": ("## REMOVED Requirements" in archive_text and "## RENAMED Requirements" in archive_text and contradictions == 0),
+    }
+
     return {
         "active_spec_files": [str(p.relative_to(ws)) for p in active_spec_files],
         "active_spec_file_count": len(active_spec_files),
         "spec_contradictions": contradictions,
         "has_clean_room_spec_md": (ws / "SPEC.md").exists(),
         "has_openspec_ssot": (ws / "openspec" / "specs" / "ledger-flow" / "spec.md").exists(),
+        "delta_audit_checks": delta_audit_checks,
+        "delta_audit_passed": sum(1 for v in delta_audit_checks.values() if v),
+        "delta_audit_total": len(delta_audit_checks),
     }
 
 

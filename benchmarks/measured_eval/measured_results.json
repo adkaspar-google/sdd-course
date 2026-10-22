@@ -13,7 +13,7 @@
       "regime2_oracle_pct": 96.7,
       "regime2_mutation_pct": 60.0
     },
-    "arm_b_superpowers": {
+    "arm_b_procedural_tdd": {
       "oracle_passed": 59,
       "oracle_total": 60,
       "oracle_pct": 98.3,
@@ -125,7 +125,7 @@
       "mutation_pct": 60.0,
       "readonly_locks": "0/3"
     },
-    "arm_b_superpowers": {
+    "arm_b_procedural_tdd": {
       "tasks": {
         "il_t1_webhook": {
           "checks": {
@@ -413,7 +413,7 @@
       "mutation_pct": 60.0,
       "readonly_locks": "0/3"
     },
-    "arm_b_superpowers": {
+    "arm_b_procedural_tdd": {
       "tasks": {
         "il_t1_webhook": {
           "checks": {
@@ -708,12 +708,20 @@
           "docs/specs/2026-10-04-milestone-4.md"
         ],
         "active_spec_file_count": 4,
-        "spec_contradictions": 2,
+        "spec_contradictions": 3,
         "has_clean_room_spec_md": false,
-        "has_openspec_ssot": false
+        "has_openspec_ssot": false,
+        "delta_audit_checks": {
+          "d1_archived_m1_pending_status": false,
+          "d2_archived_m1_strict_100k_bound": false,
+          "d3_archived_m1_unfloored_1pct_fee": false,
+          "d4_explicit_removed_renamed_headers": false
+        },
+        "delta_audit_passed": 0,
+        "delta_audit_total": 4
       }
     },
-    "outer_b_speckit_folders": {
+    "outer_b_feature_folders": {
       "m4_evolved": {
         "checks": {
           "c1_open_account": true,
@@ -793,10 +801,18 @@
         "active_spec_file_count": 4,
         "spec_contradictions": 3,
         "has_clean_room_spec_md": false,
-        "has_openspec_ssot": false
+        "has_openspec_ssot": false,
+        "delta_audit_checks": {
+          "d1_archived_m1_pending_status": false,
+          "d2_archived_m1_strict_100k_bound": false,
+          "d3_archived_m1_unfloored_1pct_fee": false,
+          "d4_explicit_removed_renamed_headers": false
+        },
+        "delta_audit_passed": 0,
+        "delta_audit_total": 4
       }
     },
-    "outer_c_kiro_ears": {
+    "outer_c_inplace_ears": {
       "m4_evolved": {
         "checks": {
           "c1_open_account": true,
@@ -864,7 +880,15 @@
         "active_spec_file_count": 1,
         "spec_contradictions": 0,
         "has_clean_room_spec_md": false,
-        "has_openspec_ssot": false
+        "has_openspec_ssot": false,
+        "delta_audit_checks": {
+          "d1_archived_m1_pending_status": false,
+          "d2_archived_m1_strict_100k_bound": false,
+          "d3_archived_m1_unfloored_1pct_fee": false,
+          "d4_explicit_removed_renamed_headers": false
+        },
+        "delta_audit_passed": 0,
+        "delta_audit_total": 4
       }
     },
     "outer_d_unified_outer": {
@@ -936,7 +960,15 @@
         "active_spec_file_count": 2,
         "spec_contradictions": 0,
         "has_clean_room_spec_md": true,
-        "has_openspec_ssot": true
+        "has_openspec_ssot": true,
+        "delta_audit_checks": {
+          "d1_archived_m1_pending_status": true,
+          "d2_archived_m1_strict_100k_bound": true,
+          "d3_archived_m1_unfloored_1pct_fee": true,
+          "d4_explicit_removed_renamed_headers": true
+        },
+        "delta_audit_passed": 4,
+        "delta_audit_total": 4
       }
     }
   }
