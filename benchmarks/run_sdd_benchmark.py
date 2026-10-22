@@ -22,12 +22,12 @@ hygiene checks against real agent-generated workspaces on disk in
        one-way speaker cooldown, `failed_services` checked before upstream
        `BLOCKED` state) and `# TODO` helper stubs.
    Harnesses compared:
-     - `arm_a_baseline`: Baseline ReAct / Vibe Loop (no skills)
-     - `arm_b_superpowers`: Vanilla `Claude Superpowers` (`obra/superpowers`)
+     - `arm_a_baseline`: Unconstrained ReAct Baseline (no skills)
+     - `arm_b_procedural_tdd`: Procedural TDD Skill Harness (`SKILL.md` / `SkillsBench` `arXiv:2602.12670`)
      - `arm_c_ooharness_h2`: `OO-Harness` (`arXiv:2610.28380`) + `Harness^2`
        (`google-research/harness2` `Propose-Probe-Compose`)
-     - `arm_d_unified_inner`: Our Unified Inner Loop (`Hardened Superpowers`
-       `.agents/skills/` x `OO-Harness` Subclass Router x `Harness^2` Prober
+     - `arm_d_unified_inner`: Contract-Locked Dual-Stage Harness (Ours: `.agents/skills/`
+       x `OO-Harness` Subclass Router x `Harness^2` Prober
        + 5-Step Scorecard `Out of Scope` Lock + `chmod 444` Test Lock)
 
 2. SUITE 2 — OUTER-LOOP MULTI-MILESTONE & CLEAN-ROOM REBUILD BENCHMARK
@@ -131,10 +131,10 @@ def main() -> None:
     )
     print("-" * 98)
     labels = {
-        "arm_a_baseline": "Arm A: Baseline ReAct (No Skills)",
-        "arm_b_superpowers": "Arm B: Vanilla Claude Superpowers",
+        "arm_a_baseline": "Arm A: Unconstrained ReAct Baseline",
+        "arm_b_procedural_tdd": "Arm B: Procedural TDD Skill Harness",
         "arm_c_ooharness_h2": "Arm C: OO-Harness + Harness^2",
-        "arm_d_unified_inner": "Arm D: Unified Inner Loop (Ours)",
+        "arm_d_unified_inner": "Arm D: Contract-Locked Dual-Stage (Ours)",
     }
     comb = measured["inner_loop_combined_24_runs"]
     r1 = measured["inner_loop_regime1_formal_spec_prompt"]
@@ -159,10 +159,10 @@ def main() -> None:
     )
     print("-" * 98)
     outer_labels = {
-        "outer_a_dated_docs": "Outer A: Date-Stamped Sprint Docs",
-        "outer_b_speckit_folders": "Outer B: GitHub Spec Kit Folders",
-        "outer_c_kiro_ears": "Outer C: Amazon Kiro In-Place EARS",
-        "outer_d_unified_outer": "Outer D: Unified Conductor+OpenSpec",
+        "outer_a_dated_docs": "Outer A: Append-Only Ephemeral Specs",
+        "outer_b_feature_folders": "Outer B: Feature-Isolated Spec Folders",
+        "outer_c_inplace_ears": "Outer C: Single-File In-Place EARS",
+        "outer_d_unified_outer": "Outer D: Two-Plane Delta-Merged SSOT",
     }
     ol = measured["outer_loop"]
     for arm_id, label in outer_labels.items():

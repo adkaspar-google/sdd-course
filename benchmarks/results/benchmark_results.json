@@ -30,7 +30,7 @@
         "regime2_oracle_pct": 96.7,
         "regime2_mutation_pct": 60.0
       },
-      "arm_b_superpowers": {
+      "arm_b_procedural_tdd": {
         "oracle_passed": 59,
         "oracle_total": 60,
         "oracle_pct": 98.3,
@@ -142,7 +142,7 @@
         "mutation_pct": 60.0,
         "readonly_locks": "0/3"
       },
-      "arm_b_superpowers": {
+      "arm_b_procedural_tdd": {
         "tasks": {
           "il_t1_webhook": {
             "checks": {
@@ -430,7 +430,7 @@
         "mutation_pct": 60.0,
         "readonly_locks": "0/3"
       },
-      "arm_b_superpowers": {
+      "arm_b_procedural_tdd": {
         "tasks": {
           "il_t1_webhook": {
             "checks": {
@@ -730,7 +730,7 @@
           "has_openspec_ssot": false
         }
       },
-      "outer_b_speckit_folders": {
+      "outer_b_feature_folders": {
         "m4_evolved": {
           "checks": {
             "c1_open_account": true,
@@ -813,7 +813,7 @@
           "has_openspec_ssot": false
         }
       },
-      "outer_c_kiro_ears": {
+      "outer_c_inplace_ears": {
         "m4_evolved": {
           "checks": {
             "c1_open_account": true,

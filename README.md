@@ -115,25 +115,25 @@ python3 benchmarks/test_oo_harness_benchmark.py -v
 
 ## 5. Dual-Loop Measured Benchmark Suite (`benchmarks/`)
 
-To empirically validate our **Outer-Loop SDD (`Conductor` + `OpenSpec` + `SPEC.md`) $\times$ Inner-Loop (`Hardened Superpowers` + `OO-Harness` + `Harness²`)** architecture, [`benchmarks/`](./benchmarks/) contains **36 real agent-generated workspaces** ([`benchmarks/measured_eval/`](./benchmarks/measured_eval/)) and a sealed programmatic oracle grader ([`benchmarks/grade_measured_eval.py`](./benchmarks/grade_measured_eval.py) & [`benchmarks/run_sdd_benchmark.py`](./benchmarks/run_sdd_benchmark.py)):
+To empirically validate our **Outer-Loop SDD (`Conductor` + `OpenSpec` + `SPEC.md`) $\times$ Inner-Loop (`Contract-Locked Behavioral Skills` + `OO-Harness` + `Harness²`)** architecture, [`benchmarks/`](./benchmarks/) contains **36 real agent-generated workspaces** ([`benchmarks/measured_eval/`](./benchmarks/measured_eval/)) and a sealed programmatic oracle grader ([`benchmarks/grade_measured_eval.py`](./benchmarks/grade_measured_eval.py) & [`benchmarks/run_sdd_benchmark.py`](./benchmarks/run_sdd_benchmark.py)):
 
 ### Suite 1 — Measured Inner-Loop Benchmark (`24` Blind Agent Workspaces: `4 Harnesses × 3 Tasks × 2 Regimes`)
 
 | Inner-Loop Execution Harness | Regime 1 (Formal Spec Prompt) Oracle | Regime 2 (Natural Brownfield Ticket) Oracle | Combined Functional Oracle (`60` Checks) | Agent Test Suite Mutation Kill Rate (`30` Mutants) | Read-Only Test Lock (`chmod 444`) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Arm A: Baseline ReAct (No Skills)** | `30 / 30` (`100.0%`) | `29 / 30` (`96.7%`) | `59 / 60` (`98.3%`) | `18 / 30` (`60.0%`) | `0 / 6` (`0.0%`) |
-| **Arm B: Vanilla `Claude Superpowers` (`obra/superpowers`)** | `30 / 30` (`100.0%`) | `29 / 30` (`96.7%`) | `59 / 60` (`98.3%`) | `19 / 30` (`63.3%`) | `0 / 6` (`0.0%`) |
+| **Arm A: Unconstrained ReAct Baseline (No Skills)** | `30 / 30` (`100.0%`) | `29 / 30` (`96.7%`) | `59 / 60` (`98.3%`) | `18 / 30` (`60.0%`) | `0 / 6` (`0.0%`) |
+| **Arm B: Procedural TDD Skill Harness (`SKILL.md` / `SkillsBench`)** | `30 / 30` (`100.0%`) | `29 / 30` (`96.7%`) | `59 / 60` (`98.3%`) | `19 / 30` (`63.3%`) | `0 / 6` (`0.0%`) |
 | **Arm C: `OO-Harness` (`arXiv:2610.28380`) + `Harness²`** | **`30 / 30` (`100.0%`)** | **`30 / 30` (`100.0%`)** | **`60 / 60` (`100.0%`)** | **`25 / 30` (`83.3%`)** | `0 / 6` (`0.0%`) |
-| **Arm D: Our Unified Inner Loop (`Superpowers` $\times$ `OO-Harness` $\times$ `Harness²`)** | **`30 / 30` (`100.0%`)** | **`30 / 30` (`100.0%`)** | **`60 / 60` (`100.0%`)** | **`25 / 30` (`83.3%`)** | **`6 / 6` (`100.0%`)** |
+| **Arm D: Contract-Locked Dual-Stage Harness (Ours: `.agents/skills/` $\times$ `OO-Harness` $\times$ `Harness²`)** | **`30 / 30` (`100.0%`)** | **`30 / 30` (`100.0%`)** | **`60 / 60` (`100.0%`)** | **`25 / 30` (`83.3%`)** | **`6 / 6` (`100.0%`)** |
 
 ### Suite 2 — Measured Outer-Loop Multi-Milestone & Clean-Room Rebuild Benchmark (`12` Workspaces across `M1 -> M4 -> M5`)
 
 | Outer-Loop SDD Framework | `M4` Evolved Code Pass Rate (`.py` in-place) | Active Spec Contradictions (`M1` vs `M3`) | `M5-Primary-Spec` Clean-Room Rebuild (`12` Checks) | `M5-All-Docs` Clean-Room Rebuild (`12` Checks) | Full Delta Archive + 8-Section `SPEC.md` |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Outer A: Date-Stamped Sprint Docs** (`docs/specs/2026-10-01..04.md`) | `12 / 12` (`100.0%`) | **`2` contradictions** in `4` files | **`4 / 12` (`33.3%`)** | `12 / 12` (`100.0%`) | No |
-| **Outer B: `GitHub Spec Kit` Feature Folders** (`specs/001..004/spec.md`) | `12 / 12` (`100.0%`) | **`3` contradictions** in `4` files | **`4 / 12` (`33.3%`)** | `12 / 12` (`100.0%`) | No |
-| **Outer C: `Amazon Kiro` In-Place EARS** (`requirements.md`) | `12 / 12` (`100.0%`) | **`0` contradictions** in `1` file | **`12 / 12` (`100.0%`)** | `12 / 12` (`100.0%`) | No (Overwrites history; no `SPEC.md`) |
-| **Outer D: Our Unified Outer Loop (`Conductor` + `OpenSpec` + `SPEC.md`)** | **`12 / 12` (`100.0%`)** | **`0` contradictions** in `2` SSOT files | **`12 / 12` (`100.0%`)** | **`12 / 12` (`100.0%`)** | **Yes (`openspec/changes/archive/` + `SPEC.md`)** |
+| **Outer A: Append-Only Ephemeral Sprint Specs** (`docs/specs/2026-10-01..04.md`) | `12 / 12` (`100.0%`) | **`2` contradictions** in `4` files | **`4 / 12` (`33.3%`)** | `12 / 12` (`100.0%`) | No |
+| **Outer B: Feature-Isolated Spec Directories** (`specs/001..004/spec.md`) | `12 / 12` (`100.0%`) | **`3` contradictions** in `4` files | **`4 / 12` (`33.3%`)** | `12 / 12` (`100.0%`) | No |
+| **Outer C: Single-File In-Place EARS Requirements** (`requirements.md`) | `12 / 12` (`100.0%`) | **`0` contradictions** in `1` file | **`12 / 12` (`100.0%`)** | `12 / 12` (`100.0%`) | No (Overwrites history; no `SPEC.md`) |
+| **Outer D: Two-Plane Delta-Merged SSOT Architecture (Ours: `Conductor` + `OpenSpec` + `SPEC.md`)** | **`12 / 12` (`100.0%`)** | **`0` contradictions** in `2` SSOT files | **`12 / 12` (`100.0%`)** | **`12 / 12` (`100.0%`)** | **Yes (`openspec/changes/archive/` + `SPEC.md`)** |
 
 See [`benchmarks/BENCHMARK_REPORT.md`](./benchmarks/BENCHMARK_REPORT.md) for the complete empirical methodology and failure traces.
 
