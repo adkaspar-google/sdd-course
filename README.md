@@ -55,6 +55,36 @@ Instead of complicated distributed-systems math, you build and evolve **one simp
 
 ## 3. Unified Architecture: Outer-Loop (`Conductor` + `OpenSpec` + `SPEC.md`) $\times$ Inner-Loop (`Superpowers` Behavioral Skills)
 
+### 3.1 Claude Code Native Track (`claude` branch)
+
+This repository includes a dedicated, first-class native track for **Claude Code** (`claude` CLI) with project-scoped settings, strict security deny rules, and native command aliases.
+
+#### Prerequisites & Versions Tested
+- **Claude Code**: `>= 0.3.0`
+- **Conductor**: `gemini-cli-extensions/conductor` (Claude plugin)
+- **OpenSpec**: `1.14.1` (`@fission-ai/openspec`)
+
+#### Plugin & Permission Disclosure
+- **Third-Party Plugin**: `.claude/settings.json` enables the third-party `conductor@conductor` plugin (`gemini-cli-extensions/conductor`) at project scope, exposing `/conductor:conductor-setup`, `/conductor:conductor-new-track`, `/conductor:conductor-implement`, `/conductor:conductor-review`, `/conductor:conductor-revert`, and `/conductor:conductor-status`.
+- **Permission Rules**: `.claude/settings.json` ships a `permissions.deny` rule (`Edit(**/adversarial_tests/**)`) to keep adversarial test suites read-only, and `.claude/learner.settings.json` ships `Read(**/expected_output/**)` and `Edit(**/adversarial_tests/**)` so learners work without reading reference solutions.
+
+#### Installation & Learner Session Setup
+
+```bash
+# 1. Install the Conductor plugin for Claude Code and OpenSpec CLI
+claude plugin marketplace add gemini-cli-extensions/conductor
+claude plugin install conductor@conductor --scope project
+npm install -g @fission-ai/openspec@latest
+
+# 2. Launch Claude Code in learner mode from the repository root
+claude --settings .claude/learner.settings.json
+
+# 3. Grade your own work in labs/<lab>/work/ using targetable self-diagnosis
+./labs/lab_01_greenfield_proposals_to_specs/self_diagnose.sh work
+```
+
+### 3.2 Dual-Loop Composition
+
 Why combine **Conductor + OpenSpec + `SPEC.md`** with **Claude Superpowers (`obra/superpowers`)**?
 - **Superpowers alone** gives you disciplined inner-loop agent habits (`brainstorming`, `writing-plans`, `subagent-driven-development`, `systematic-debugging`, `verification-before-completion`), but stores specs as chronological date-stamped snapshots (`docs/superpowers/specs/YYYY-MM-DD-*.md`) that quickly rot into a historical graveyard.
 - **Our Unified Stack** keeps all of Superpowers' inner-loop behavioral discipline (in [`.agents/skills/`](./.agents/skills/)) while routing every specification, delta, and TDD task into the living **Two-Plane OpenSpec (`openspec/specs/`) + Conductor (`conductor/tracks/`) + `SPEC.md` SSOT** outer loop:
