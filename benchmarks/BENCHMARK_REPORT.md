@@ -1,119 +1,82 @@
-# Dual-Loop Measured Benchmark Report: Inner-Loop Harnesses vs. Outer-Loop SDD Frameworks
+# Dual-Loop Multi-Subagent Benchmark Report: Inner-Loop Execution Harnesses vs. Outer-Loop Specification State
 
-**Author**: Alejandro Kaspar - AI Forward Deployed Engineer  
+**Authors**: Alejandro Kaspar, Hader Ceron, Joaquin Menendez — Google Cloud Consulting, Google  
 **License**: Creative Commons Attribution 4.0 International (`CC BY 4.0`) & Apache License 2.0 (`Apache-2.0`)  
-**Evaluation Status**: **100% Empirically Measured across 36 Blind Agent Workspaces (`benchmarks/measured_eval/`)**  
-**Benchmark Runner & Oracle Grader**: [`benchmarks/run_sdd_benchmark.py`](run_sdd_benchmark.py) | [`benchmarks/grade_measured_eval.py`](grade_measured_eval.py) | [`benchmarks/oo_harness.py`](oo_harness.py) | [`benchmarks/results/benchmark_results.json`](results/benchmark_results.json)
+**Evaluation Status**: **100% Real, Blind Multi-Subagent Evaluation Across 252 Trials (`360` Subagent Runs) on Untouched Upstream Benchmarks**  
+**Benchmark Orchestrators & Summary**: [`DualLoop_SDD_Research_Paper.pdf`](DualLoop_SDD_Research_Paper.pdf) | [`results/full_benchmark_summary_252_trials.json`](results/full_benchmark_summary_252_trials.json) | [`single_proc_mut_runner.py`](single_proc_mut_runner.py) | [`oo_harness.py`](oo_harness.py)
+
+> [!IMPORTANT]
+> **100% Real, Blind Multi-Subagent Execution Across 252 Trials on Untouched Industry-Standard Benchmarks**: Every metric in this report and in the research paper ([`DualLoop_SDD_Research_Paper.pdf`](DualLoop_SDD_Research_Paper.pdf)) is computed directly from **252 genuine, blind multi-subagent trials (`360` total subagent runs including Stage 2 Cold Independent Auditors)** executing from scratch inside isolated Git workspaces without access to held-out oracle test suites:
+> 1. **240 Inner-Loop Multi-Subagent Trials (`3 Independent Runs × 4 Arms × 20 Tasks` across 4 Upstream Benchmarks)**:
+>    - **`princeton-nlp/SWE-bench_Verified`** (`5` SymPy 1.12 brownfield bug-fix instances $\times$ `4` arms $\times$ `3` runs = `60` trials): `sympy__sympy-24443`, `sympy__sympy-24661`, `sympy__sympy-24539`, `sympy__sympy-23824`, and `sympy__sympy-23950`.
+>    - **`wentingzhao/commit0_combined`** (`5` from-scratch library module synthesis tasks $\times$ `4` arms $\times$ `3` runs = `60` trials): `commit0__tinydb_middlewares`, `commit0__tinydb_storages`, `commit0__tinydb_operations`, `commit0__tinydb_queries`, and `commit0__wcwidth_core`.
+>    - **`bigcode/bigcodebench` (`v0.1.2`)** (`5` multi-library API tasks $\times$ `4` arms $\times$ `3` runs = `60` trials): `bigcodebench__6`, `bigcodebench__10`, `bigcodebench__22`, `bigcodebench__24`, and `bigcodebench__27`.
+>    - **`evalplus/humanevalplus` (`80×` boundary stress suite)** (`5` algorithmic tasks $\times$ `4` arms $\times$ `3` runs = `60` trials): `humaneval__67`, `humaneval__68`, `humaneval__69`, `humaneval__70`, and `humaneval__129`.
+> 2. **12 Longitudinal Outer-Loop `Commit0-Evo` Trials (`3 Independent Runs × 4 Outer Topologies = 60 Sequential Milestone Executions` on `TinyDB`)**:
+>    - Evaluates `Outer A` (Append-Only Sprint Specs `specs/spec_*.md`), `Outer B` (Feature-Isolated Spec Folders `specs/feat_*/spec.md`), `Outer C` (Single-File In-Place EARS `requirements.md`), and `Outer D` (Two-Plane Delta-Merged SSOT `openspec/specs/SPEC.md` + `conductor/tracks/delta_history.md`) across 5 sequential capability milestones (`M1` Core Storage, `M2` Flush Threshold Pivot, `M3` Table Isolation + `QueryInstance.clamp`, `M4` Throughput Pivot + `M4 -> M2` Historical Rollback `M4-RB`, and `M5` Clean-Room Rebuild).
 
 ---
 
-## 1. Experimental Fairness & Blind Evaluation Protocol
+## 1. 240-Trial Inner-Loop Multi-Subagent Benchmark Summary (`Mean ± SD` Across 3 Independent Runs)
 
-Every metric in this report is computed deterministically by [`benchmarks/grade_measured_eval.py`](grade_measured_eval.py) against **36 real agent-generated workspaces** stored in [`benchmarks/measured_eval/`](measured_eval/):
-
-1. **Identical Task & Milestone Prompts**: Within every task and regime, all compared arms received **100% identical natural-language prompts** and **100% identical starter files**.
-2. **Zero Failure Coaching**: No prompt instructed any agent to make an error, skip an edge case, or leave a bug unfixed.
-3. **Task-Agnostic Harness Preambles**: The *only* difference between compared arms was the general methodology preamble of each harness/framework.
-4. **Sealed Programmatic Oracle & Mutation Suite**: None of the 36 evaluated agents had access to [`grade_measured_eval.py`](grade_measured_eval.py). Each workspace is graded by importing the agent's generated Python module, running 10–12 sealed behavioral state assertions, injecting 5 code mutants per task into the agent's module to measure whether the **agent's own unit test suite** catches each boundary regression, and auditing active `.md` specification files for cross-milestone contradictions.
-
-```mermaid
-flowchart TD
-    subgraph S1["Suite 1: Inner-Loop Blind Benchmark (24 Real Agent Workspaces)"]
-        R1["Regime 1: Formal Spec Prompts (12 Runs)<br/>3 Tasks x 4 Inner-Loop Harnesses"]
-        R2["Regime 2: Natural Brownfield Tickets (12 Runs)<br/>3 Buggy Starter Modules x 4 Harnesses"]
-        IG["Sealed Inner-Loop Grader<br/>60 Oracle Checks + 30 Code Mutants + chmod 444 Lock"]
-        R1 --> IG
-        R2 --> IG
-    end
-    subgraph S2["Suite 2: Outer-Loop Multi-Milestone Benchmark (12 Real Agent Workspaces)"]
-        M14["M1 -> M2 -> M3 -> M4 Continuous Evolution<br/>4 SDD Frameworks x 4 Sequential Turns (16 Turns)"]
-        M5P["M5-Primary-Spec Clean-Room Rebuild (4 Runs)<br/>Delete .py -> Rebuild from Primary Capability Spec"]
-        M5A["M5-All-Docs Clean-Room Rebuild (4 Runs)<br/>Delete .py -> Rebuild from All Repository .md Files"]
-        M14 --> M5P
-        M14 --> M5A
-    end
-```
-
----
-
-## 2. Suite 1: Measured Inner-Loop Benchmark Results (`24` Blind Agent Runs)
-
-Suite 1 isolates the **Inner Loop** (how a coding agent executes a single task, probes boundary conditions, writes unit tests, and prevents test tampering) across **3 tasks** (`il_t1_webhook`: `SubscriptionWebhookEngine`, `il_t2_scheduler`: `ConferenceScheduler`, `il_t3_release_dag`: `DependencyReleasePlanner`) under **2 prompt regimes**:
-
-- **Regime 1 — Formal Specification Prompts (`12` runs)**: The user prompt explicitly states all mathematical boundary formulas (`seats >= 50`, `0 <= current_timestamp - prev_timestamp <= 60`, bidirectional `>= 15` min cross-room cooldown, `'BLOCKED'` precedence over `'FAILED'`).
-- **Regime 2 — Natural Brownfield Engineering Tickets (`12` runs)**: The user prompt is a natural product bug ticket against brownfield starter files containing unannotated bugs (`seats > 50`, `0 <= timestamp - ts < 60`, naive `subscriptions.pop()` upgrade rollback, one-directional speaker cooldown, checking `failed_services` before upstream `BLOCKED` state, and `# TODO` helper stubs).
-
-### 2.1 Combined 24-Run Inner-Loop Scorecard (`6` Runs per Harness)
-
-| Inner-Loop Harness | Regime 1 (Formal Spec Prompt) Oracle | Regime 2 (Natural Brownfield Ticket) Oracle | Combined Functional Oracle (`60` checks) | Agent Test Suite Mutation Kill Rate (`30` mutants) | Read-Only Test Lock (`chmod 444`) |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Arm A: Unconstrained ReAct Baseline (`arm_a_baseline`)** | `30 / 30` (`100.0%`) | `29 / 30` (`96.7%`) | `59 / 60` (`98.3%`) | `18 / 30` (`60.0%`) | `0 / 6` (`0.0%`) |
-| **Arm B: Procedural TDD Skill Harness (`SKILL.md` / `SkillsBench`, `arm_b_procedural_tdd`)** | `30 / 30` (`100.0%`) | `29 / 30` (`96.7%`) | `59 / 60` (`98.3%`) | `19 / 30` (`63.3%`) | `0 / 6` (`0.0%`) |
-| **Arm C: `OO-Harness` (`arXiv:2610.28380`) + `Harness²` (`arm_c_ooharness_h2`)** | **`30 / 30` (`100.0%`)** | **`30 / 30` (`100.0%`)** | **`60 / 60` (`100.0%`)** | **`25 / 30` (`83.3%`)** | `0 / 6` (`0.0%`) |
-| **Arm D: Contract-Locked Dual-Stage Harness (Ours: `.agents/skills/` $\times$ `OO-Harness` $\times$ `Harness²`, `arm_d_unified_inner`)** | **`30 / 30` (`100.0%`)** | **`30 / 30` (`100.0%`)** | **`60 / 60` (`100.0%`)** | **`25 / 30` (`83.3%`)** | **`6 / 6` (`100.0%`)** |
-
-### 2.2 Per-Task & Per-Regime Breakdown
-
-| Task & Regime | Arm A: Unconstrained ReAct (Oracle / Mutants) | Arm B: Procedural TDD Skill (Oracle / Mutants) | Arm C: `OO-Harness` + `Harness²` (Oracle / Mutants) | Arm D: Contract-Locked Dual-Stage (Oracle / Mutants / Lock) |
-| :--- | :---: | :---: | :---: | :---: |
-| **R1 `il_t1_webhook`** (Formal Spec) | `10/10` \| `5/5` | `10/10` \| `5/5` | `10/10` \| `5/5` | `10/10` \| `5/5` \| Locked |
-| **R1 `il_t2_scheduler`** (Formal Spec) | `10/10` \| `2/5` | `10/10` \| `4/5` | `10/10` \| `4/5` | `10/10` \| `4/5` \| Locked |
-| **R1 `il_t3_release_dag`** (Formal Spec) | `10/10` \| `2/5` | `10/10` \| `2/5` | `10/10` \| `5/5` | `10/10` \| `5/5` \| Locked |
-| **R2 `il_t1_webhook`** (Brownfield Ticket) | `9/10` (Failed `c8`) \| `4/5` | `9/10` (Failed `c8`) \| `4/5` | **`10/10`** \| **`5/5`** | **`10/10`** \| **`5/5`** \| Locked |
-| **R2 `il_t2_scheduler`** (Brownfield Ticket) | `10/10` \| `2/5` | `10/10` \| `2/5` | `10/10` \| `3/5` | `10/10` \| `3/5` \| Locked |
-| **R2 `il_t3_release_dag`** (Brownfield Ticket) | `10/10` \| `3/5` | `10/10` \| `2/5` | `10/10` \| `3/5` | `10/10` \| `3/5` \| Locked |
-
-### 2.3 Key Empirical Insights from Suite 1 (Inner Loop)
-
-1. **Why Formal Specifications Equalize Functional Code Accuracy (`Regime 1`: `30/30` across all 4 arms)**:
-   - When the prompt itself is written as a complete, mathematically unambiguous specification (`Regime 1`), even `Unconstrained ReAct` achieves `30/30 (100.0%)` functional compliance. This directly validates the foundational premise of SDD: **unambiguous specifications eliminate implementation guessing**.
-   - However, in `Regime 1`, `Unconstrained ReAct`'s self-authored unit tests only killed **`9/15 (60.0%)`** of boundary mutants, whereas `Procedural TDD Skill Harness` killed **`11/15 (73.3%)`** (`+13.3%`), and `OO-Harness + Harness²` and our `Contract-Locked Dual-Stage Harness` killed **`14/15 (93.3%)`** (`+33.3%` over ReAct, `+20.0%` over Procedural TDD Skills).
-2. **Why Procedural TDD Skills Missed the Brownfield `60s` Sliding-Window Bug in `Regime 2` (`29/30` vs `30/30`)**:
-   - In `Regime 2` (`il_t1_webhook`), the brownfield starter code contained `recent = [ts for ts in history if 0 <= timestamp - ts < 60]` and the natural ticket stated *"tenants are limited to 4 successful webhooks within a 60-second window"*.
-   - Both `Unconstrained ReAct` and `Procedural TDD Skill Harness` fixed the `seats >= 50` and `amount_cents >= 500000` checks and fixed upgrade rollback, **but both left `< 60` untouched** (`AssertionError: 5th webhook at exact +60s boundary must raise ValueError`).
-   - Why? Because `Procedural TDD Skill Harness` enforces standard TDD (`RED -> GREEN -> REFACTOR`), but without `Harness²` **Contrastive Boundary Probing (`Propose-Probe-Compose`)**, the agent wrote unit tests that only tested timestamps well inside `< 60` (`t=100..130`) and `> 60` (`t=170`), never probing the exact `delta == 60` boundary.
-   - Both `Arm C (OO-Harness + Harness²)` and `Arm D (Contract-Locked Dual-Stage Harness)` probed `delta == 60`, updated `< 60` to `<= 60`, and achieved **`30/30 (100.0%)`** in `Regime 2` (`60/60 = 100.0%` combined).
-
----
-
-## 3. Suite 2: Measured Outer-Loop Multi-Milestone Benchmark (`M1 -> M2 -> M3 -> M4 -> M5`)
-
-Suite 2 isolates the **Outer Loop** (how a framework maintains specification state across multi-sprint requirement mutations and clean-room rebuilds) on `LedgerFlow` across 4 consecutive milestones without resetting the workspace:
-- **Milestone 1 (`M1` — Greenfield Core Ledger)**: `open_account`, `get_balance`, `post_transfer` with flat `1%` fee (`amount_cents // 100`) and `status = 'PENDING'` when `amount_cents > 100000`.
-- **Milestone 2 (`M2` — Clearing & Statements)**: Adds `settle_pending(tx_id)` and `account_statement(account_id)`.
-- **Milestone 3 (`M3` — Requirement Rename & Tiered Fee Mutation)**: Renames `'PENDING'` $\to$ `'AWAITING_CLEARING'`, renames `settle_pending` $\to$ `clear_transfer` (keeping `settle_pending` as alias), mutates threshold from `> 100000` $\to$ `>= 100000`, mutates fee to tiered `50 bps` (`>= 100000`) / `100 bps` (`< 100000`) with a **`10`-cent minimum floor**, and adds replay-safe idempotency.
-- **Milestone 4 (`M4` — Reversals & Constitutional Scope Governance)**: Adds `reverse_transfer(tx_id)`, `total_collected_fees(currency)`, and enforces strict no-overdraft governance.
-- **Milestone 5 (`M5` — Blind Clean-Room Rebuilds from Surviving `.md` Specs Alone)**: All `.py` files are deleted after `M4`, and fresh Clean-Room Rebuild Agents rebuild `ledger_flow.py` under two regimes:
-  1. **`M5-Primary-Spec` Rebuild**: The rebuild agent receives ONLY the **primary core capability specification file** of that framework (`docs/specs/2026-10-01-milestone-1.md` for Append-Only Ephemeral Specs; `specs/001-milestone-1/spec.md` for Feature-Isolated Spec Directories; `requirements.md` for Single-File In-Place EARS; `openspec/specs/ledger-flow/spec.md` + `SPEC.md` for Two-Plane Delta-Merged SSOT).
-  2. **`M5-All-Docs` Rebuild**: The rebuild agent receives all `.md` files in the workspace simultaneously.
-
-### 3.1 Measured Outer-Loop Scorecard (`12` Evaluated Workspaces)
-
-| Outer-Loop SDD Framework | `M4` Evolved Code Pass Rate (`.py` in-place) | Active Spec Files (`Non-Archived`) | Active Spec Contradictions (`M1` vs `M3`) | `M5-Primary-Spec` Clean-Room Rebuild (`12` checks) | `M5-All-Docs` Clean-Room Rebuild (`12` checks) | Full Delta Archive + 8-Section `SPEC.md` |
+| Benchmark Suite & Inner-Loop Harness | Raw Oracle Pass (%) | Tamper-Free Strict Pass (%) ($\text{Oracle} \land \neg\text{Tamper}$) | Baseline Test Tamper (%) ($\downarrow$) | False Completion Rate (%) ($\downarrow$) | Patched-Function Offutt AST MutKill (%) ($\uparrow$) | Mean Trajectory Steps (`PLANNER_RESPONSE`) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Outer A: Append-Only Ephemeral Sprint Specs** (`docs/specs/2026-10-01..04.md`) | `12 / 12` (`100.0%`) | `4` files | **`2` contradictions** (`PENDING`, `> 100000`, flat `1%` in `01.md`) | **`4 / 12` (`33.3%`)** | `12 / 12` (`100.0%`) | No |
-| **Outer B: Feature-Isolated Spec Directories** (`specs/001..004/spec.md`) | `12 / 12` (`100.0%`) | `4` files | **`3` contradictions** (`PENDING`, `> 100000`, flat `1%` in `001/spec.md`) | **`4 / 12` (`33.3%`)** | `12 / 12` (`100.0%`) | No |
-| **Outer C: Single-File In-Place EARS Requirements** (`requirements.md`) | `12 / 12` (`100.0%`) | `1` file | **`0` contradictions** (overwritten in-place) | **`12 / 12` (`100.0%`)** | `12 / 12` (`100.0%`) | No (Overwrites history; no `SPEC.md`) |
-| **Outer D: Two-Plane Delta-Merged SSOT Architecture (Ours: `Conductor` + `OpenSpec` + `SPEC.md`)** | **`12 / 12` (`100.0%`)** | `2` SSOT files (`+4` archived) | **`0` contradictions** (Two-Plane Delta Merge) | **`12 / 12` (`100.0%`)** | **`12 / 12` (`100.0%`)** | **Yes (`openspec/changes/archive/` + `SPEC.md`)** |
-
-### 3.2 Exact Measured Failure Trace on `M5-Primary-Spec` Rebuild (`33.3%` vs `100.0%`)
-
-When a Clean-Room Rebuild Agent rebuilds `LedgerFlow` from the primary capability specification of **Outer A (`Append-Only Ephemeral Specs`: `2026-10-01-milestone-1.md`)** or **Outer B (`Feature-Isolated Spec Directories`: `specs/001-milestone-1/spec.md`)**, [`grade_measured_eval.py`](grade_measured_eval.py) records the exact same **8 oracle failures (`4/12 = 33.3%`)**:
-
-- `c3_m3_10_cent_floor_fee`: `AssertionError: Expected 10-cent floor fee, got 5` — The agent implemented the stale `M1` formula (`amount_cents // 100`) because `001-milestone-1/spec.md` and `2026-10-01-milestone-1.md` were never updated when `M3` introduced the `10`-cent floor.
-- `c5_m3_exact_100k_awaiting_clearing_50bps`: `AssertionError: Expected AWAITING_CLEARING at 100000, got SETTLED` — The agent implemented the stale `M1` strict inequality (`> 100000` $\to$ `'PENDING'`, `<= 100000` $\to$ `'SETTLED'`) instead of `M3`'s `>= 100000` $\to$ `'AWAITING_CLEARING'`.
-- `c6_m3_clear_transfer_and_alias`: `AttributeError: 'LedgerFlow' object has no attribute 'clear_transfer'`
-- `c7_m3_idempotency_and_conflict`: `ValueError: Duplicate tx_id: dup_tx` — Rebuilt `M1`'s duplicate rejection instead of `M3`'s replay-safe idempotency.
-- `c8_m2_statement_ordering` through `c11_m4_total_collected_fees`: `AttributeError` on `account_statement`, `reverse_transfer`, and `total_collected_fees` because those requirements remained fragmented across separate sprint/feature files (`002`, `003`, `004`).
-
-In contrast, both **Outer C (`Single-File In-Place EARS` `requirements.md`)** and **Outer D (`Two-Plane Delta-Merged SSOT` `openspec/specs/ledger-flow/spec.md` + `SPEC.md`)** achieved **`12/12 (100.0%)`** on `M5-Primary-Spec` because their primary specification is continuously synchronized in-place, with **Outer D** additionally preserving the complete per-milestone delta history in `openspec/changes/archive/m1..m4/` and per-milestone TDD execution plans in `conductor/tracks/milestone_1..4/`.
+| **240-Trial Overall Aggregate (`60` Trials / Arm)** | | | | | | |
+| **Arm A: Unconstrained Baseline** | `88.3 ± 2.9%` (`53/60`) | `83.3 ± 2.9%` (`50/60`) | `5.0 ± 0.0%` (`3/60`) | `11.7 ± 2.9%` | `59.6 ± 6.3%` | `21.1 ± 3.4` |
+| **Arm B: Procedural TDD (`SKILL.md`)** | `86.7 ± 2.9%` (`52/60`) | `68.3 ± 5.8%` (`41/60`) | **`18.3 ± 2.9%` (`11/60`)** | `13.3 ± 2.9%` | `66.9 ± 2.1%` | `22.3 ± 2.1` |
+| **Arm C: `OO-Harness` + `Harness²`** | **`91.7 ± 2.9%` (`55/60`)** | `70.0 ± 0.0%` (`42/60`) | **`23.3 ± 2.9%` (`14/60`)** | **`8.3 ± 2.9%`** | `61.7 ± 3.8%` | `25.9 ± 3.1` |
+| **Arm D: Contract-Locked Dual-Stage (`Ours`)** | **`91.7 ± 2.9%` (`55/60`)** | **`91.7 ± 2.9%` (`55/60`, `+21.7 pp` vs. C)** | **`0.0 ± 0.0%` (`0/60`)** | **`8.3 ± 2.9%`** | **`70.6 ± 4.6%`** | `32.2 ± 3.4` |
+| **`SWE-bench Verified` (`15` Trials / Arm)** | | | | | | |
+| **Arm A: Unconstrained Baseline** | `93.3 ± 11.5%` (`14/15`) | `93.3 ± 11.5%` (`14/15`) | `0.0 ± 0.0%` | `6.7 ± 11.5%` | `35.6 ± 1.9%` | `42.6 ± 6.6` |
+| **Arm B: Procedural TDD (`SKILL.md`)** | `86.7 ± 11.5%` (`13/15`) | `86.7 ± 11.5%` (`13/15`) | `0.0 ± 0.0%` | `13.3 ± 11.5%` | `20.0 ± 0.0%` | `39.6 ± 6.1` |
+| **Arm C: `OO-Harness` + `Harness²`** | **`100.0 ± 0.0%` (`15/15`)** | **`100.0 ± 0.0%` (`15/15`)** | `0.0 ± 0.0%` | **`0.0 ± 0.0%`** | `13.3 ± 11.5%` | `46.2 ± 4.4` |
+| **Arm D: Contract-Locked Dual-Stage (`Ours`)** | **`100.0 ± 0.0%` (`15/15`)** | **`100.0 ± 0.0%` (`15/15`)** | **`0.0 ± 0.0%`** | **`0.0 ± 0.0%`** | **`37.8 ± 3.8%`** | `59.2 ± 8.0` |
+| **`Commit0` (`15` Trials / Arm)** | | | | | | |
+| **Arm A: Unconstrained Baseline** | `80.0 ± 0.0%` (`12/15`) | `60.0 ± 0.0%` (`9/15`) | `20.0 ± 0.0%` (`3/15`) | `20.0 ± 0.0%` | `76.7 ± 8.8%` | `21.3 ± 6.1` |
+| **Arm B: Procedural TDD (`SKILL.md`)** | `80.0 ± 0.0%` (`12/15`) | `33.3 ± 23.1%` (`5/15`) | **`46.7 ± 23.1%` (`7/15`)** | `20.0 ± 0.0%` | `80.0 ± 3.3%` | `26.7 ± 2.8` |
+| **Arm C: `OO-Harness` + `Harness²`** | `80.0 ± 0.0%` (`12/15`) | `33.3 ± 11.5%` (`5/15`) | **`53.3 ± 11.5%` (`8/15`)** | `20.0 ± 0.0%` | `80.0 ± 8.8%` | `27.5 ± 6.8` |
+| **Arm D: Contract-Locked Dual-Stage (`Ours`)** | **`86.7 ± 11.5%` (`13/15`)** | **`86.7 ± 11.5%` (`13/15`, `+53.4 pp` vs. B/C)** | **`0.0 ± 0.0%` (`0/15`)** | **`13.3 ± 11.5%`** | **`83.3 ± 5.8%`** | `31.9 ± 7.7` |
+| **`BigCodeBench v0.1.2` (`15` Trials / Arm)** | | | | | | |
+| **Arm A: Unconstrained Baseline** | `80.0 ± 0.0%` (`12/15`) | **`80.0 ± 0.0%` (`12/15`)** | `0.0 ± 0.0%` | `20.0 ± 0.0%` | `39.3 ± 11.7%` | `12.3 ± 0.5` |
+| **Arm B: Procedural TDD (`SKILL.md`)** | `80.0 ± 0.0%` (`12/15`) | `53.3 ± 11.5%` (`8/15`) | **`26.7 ± 11.5%` (`4/15`)** | `20.0 ± 0.0%` | **`75.6 ± 1.9%`** | `13.4 ± 0.9` |
+| **Arm C: `OO-Harness` + `Harness²`** | **`86.7 ± 11.5%` (`13/15`)** | `60.0 ± 0.0%` (`9/15`) | **`26.7 ± 11.5%` (`4/15`)** | **`13.3 ± 11.5%`** | `68.9 ± 13.9%` | `16.7 ± 1.7` |
+| **Arm D: Contract-Locked Dual-Stage (`Ours`)** | `80.0 ± 0.0%` (`12/15`) | **`80.0 ± 0.0%` (`12/15`, `+20.0 pp` vs. C)** | **`0.0 ± 0.0%` (`0/15`)** | `20.0 ± 0.0%` | `74.4 ± 10.2%` | `24.1 ± 1.0` |
+| **`EvalPlus HumanEval+` (`80×`, `15` Trials / Arm)** | | | | | | |
+| **Arm A: Unconstrained Baseline** | **`100.0 ± 0.0%` (`15/15`)** | **`100.0 ± 0.0%` (`15/15`)** | `0.0 ± 0.0%` | **`0.0 ± 0.0%`** | `86.7 ± 11.5%` | `8.3 ± 0.5` |
+| **Arm B: Procedural TDD (`SKILL.md`)** | **`100.0 ± 0.0%` (`15/15`)** | **`100.0 ± 0.0%` (`15/15`)** | `0.0 ± 0.0%` | **`0.0 ± 0.0%`** | **`92.2 ± 10.7%`** | `9.4 ± 0.7` |
+| **Arm C: `OO-Harness` + `Harness²`** | **`100.0 ± 0.0%` (`15/15`)** | `86.7 ± 11.5%` (`13/15`) | **`13.3 ± 11.5%` (`2/15`)** | **`0.0 ± 0.0%`** | `84.4 ± 5.1%` | `13.1 ± 0.5` |
+| **Arm D: Contract-Locked Dual-Stage (`Ours`)** | **`100.0 ± 0.0%` (`15/15`)** | **`100.0 ± 0.0%` (`15/15`, `+13.3 pp` vs. C)** | **`0.0 ± 0.0%` (`0/15`)** | **`0.0 ± 0.0%`** | `86.7 ± 23.1%` | `13.6 ± 0.5` |
 
 ---
 
-## 4. Reproducing the Benchmark Locally
+## 2. Per-Task Oracle Failure & Baseline Test-Tampering Breakdown (`240` Inner-Loop Trials)
 
-Run the sealed programmatic oracle grader across all 36 measured workspaces in `< 15` seconds:
+| Upstream Task ID | Arm A (`Pass/3` \| `Tamper/3`) | Arm B (`Pass/3` \| `Tamper/3`) | Arm C (`Pass/3` \| `Tamper/3`) | Arm D (`Pass/3` \| `Tamper/3`) | Primary Failure / Test-Tampering Mechanism |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| `sympy__sympy-24443` | **`3/3` (`0`)** | `2/3` (`0`) | **`3/3` (`0`)** | **`3/3` (`0`)** | Inverted group generator relator indexing in R1 Arm B (`homomorphisms.py`). |
+| `sympy__sympy-23950` | `2/3` (`0`) | `2/3` (`0`) | **`3/3` (`0`)** | **`3/3` (`0`)** | Incomplete `Contains.as_set()` domain return in R3 Arms A & B (`contains.py`). |
+| `sympy-24661, 24539, 23824` | **`9/9` (`0`)** | **`9/9` (`0`)** | **`9/9` (`0`)** | **`9/9` (`0`)** | All 4 arms pass all 3 runs with 0 test tampering. |
+| `commit0__tinydb_queries` | `0/3` (`0`) | `1/3` (**`1` tamper**) | `0/3` (**`1` tamper**) | **`1/3` (`0` tamper)** | Recursive `QueryInstance` hash; Arm B R1 & Arm C R1 tamper (`0/3` strict); Arm D passes R1. |
+| `commit0__wcwidth_core` | `3/3` (**`1` tamper**) | `2/3` (**`1` tamper**) | `3/3` (**`2` tamper**) | **`3/3` (`0` tamper)** | Arm A (R2), Arm B (R3), and Arm C (R1, R2) overwrite `test_wcwidth.py`. |
+| `commit0__tinydb_middlewares` | **`3/3` (`0`)** | `3/3` (**`2` tamper**) | `3/3` (**`1` tamper**) | **`3/3` (`0` tamper)** | Arm B (R1, R3) and Arm C (R2) overwrite `test_middlewares.py`. |
+| `commit0__tinydb_storages` | `3/3` (**`1` tamper**) | `3/3` (**`1` tamper**) | `3/3` (**`3` tamper**) | **`3/3` (`0` tamper)** | Arm A (R1), Arm B (R2), and Arm C (R1–R3) overwrite `test_storages.py`. |
+| `commit0__tinydb_operations` | `3/3` (**`1` tamper**) | `3/3` (**`2` tamper**) | `3/3` (**`1` tamper**) | **`3/3` (`0` tamper)** | Arm A (R3), Arm B (R1, R3), and Arm C (R2) overwrite `test_operations.py`. |
+| `bigcodebench__6` | `0/3` (`0`) | `0/3` (`0`) | `1/3` (`0`) | `0/3` (`0`) | Regex `/var/log` basename vs. full-path ambiguity in held-out oracle. |
+| `bigcodebench__10` | **`3/3` (`0`)** | `3/3` (**`1` tamper**) | `3/3` (**`3` tamper**) | **`3/3` (`0` tamper)** | Arm B (R3) and Arm C (R1–R3) overwrite `TestBaselineContract` in `test_solution.py`. |
+| `bigcodebench__22` | **`3/3` (`0`)** | `3/3` (**`1` tamper**) | **`3/3` (`0`)** | **`3/3` (`0` tamper)** | Arm B (R2) overwrites starter `test_solution.py` (`2/3` strict). |
+| `bigcodebench__24` | **`3/3` (`0`)** | `3/3` (**`2` tamper**) | **`3/3` (`0`)** | **`3/3` (`0` tamper)** | Arm B (R1, R3) overwrites starter `test_solution.py` (`1/3` strict). |
+| `bigcodebench__27` | **`3/3` (`0`)** | **`3/3` (`0`)** | `3/3` (**`1` tamper**) | **`3/3` (`0` tamper)** | Arm C (R3) overwrites starter `test_solution.py` (`2/3` strict). |
+| `humaneval__67` | **`3/3` (`0`)** | **`3/3` (`0`)** | `3/3` (**`1` tamper**) | **`3/3` (`0` tamper)** | Arm C (R2) deletes starter `test_baseline_docstring_examples`. |
+| `humaneval__129` | **`3/3` (`0`)** | **`3/3` (`0`)** | `3/3` (**`1` tamper**) | **`3/3` (`0` tamper)** | Arm C (R2) alters starter docstring assertion in `test_solution.py`. |
+| `humaneval__68, 69, 70` | **`9/9` (`0`)** | **`9/9` (`0`)** | **`9/9` (`0`)** | **`9/9` (`0`)** | All 4 arms pass all `80×` boundary stress checks with 0 test tampering. |
 
-```bash
-python3 benchmarks/run_sdd_benchmark.py
-```
+---
+
+## 3. Longitudinal `Commit0-Evo` Outer-Loop Benchmark (`12` Trials = `3 Runs × 4 Topologies = 60 Milestone Builds` on `TinyDB`)
+
+| Outer-Loop Specification Topology (`TinyDB`) | `M1 / M3` Forward Pass (%) | `M2` Cache Pivot Pass (%) | `M4-RB` Historical Rollback (`M4 → M2`) (%) | `M5` Clean-Room Rebuild (%) | 1-File SSOT Consolidation Coverage (%) | Active Clause Contradiction Density (%) ($\downarrow$) | Behavioral Entropy $\hat{H}$ (bits) ($\downarrow$) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Outer A: Append-Only Sprint Specs (`specs/spec_*.md`)** | `100.0 ± 0.0%` | `100.0 ± 0.0%` | `100.0 ± 0.0%` | `100.0 ± 0.0%` | **`20.0%` (`1/5`)** | **`41.7%` (`5.0 / 12.0`)** | `0.00 bits` |
+| **Outer B: Feature-Isolated Spec Folders (`specs/feat_*/spec.md`)** | `100.0 ± 0.0%` | **`66.7 ± 57.7%`** | **`66.7 ± 57.7%`** | **`66.7 ± 57.7%`** | **`20.0%` (`1/5`)** | **`36.4%` (`4.0 / 11.0`)** | **`0.92 bits`** |
+| **Outer C: Single-File In-Place EARS (`requirements.md`)** | `100.0 ± 0.0%` | **`0.0 ± 0.0%`** | **`0.0 ± 0.0%` (Erased)** | **`0.0 ± 0.0%`** | **`100.0%` (`1/1`)** | **`0.0%` (`0.0 / 6.0`)** | `0.00 bits` (at `0%` pass) |
+| **Outer D: Two-Plane Delta-Merged SSOT (`Ours`)** | **`100.0 ± 0.0%`** | **`100.0 ± 0.0%`** | **`100.0 ± 0.0%` (`+100 pp` vs. C)** | **`100.0 ± 0.0%` (`+33.3 pp` vs. B)** | **`100.0%` (`1/1`)** | **`0.0%` (`0.0 / 12.0`)** | **`0.00 bits` (at `100%` pass)** |
