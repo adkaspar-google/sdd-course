@@ -1,3 +1,16 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 """Unit tests for ConferenceScheduler."""
 
 import unittest
@@ -112,9 +125,16 @@ class TestConferenceScheduler(unittest.TestCase):
             ["R1", "R3", "R2"],
         )
 
+
     def test_out_of_scope_todos_not_implemented(self) -> None:
         self.assertFalse(hasattr(self.sched, "auto_assign_catering"))
         self.assertFalse(hasattr(self.sched, "export_ical_feed"))
+
+    def test_zz_audit_get_room_utilization(self) -> None:
+        self.assertEqual(self.sched.get_room_utilization("R1"), 0.0)
+        self.sched.schedule_talk("U1", "Talk 1", "Alice", "R1", 60, 120, 50)
+        self.sched.schedule_talk("U2", "Talk 2", "Bob", "R1", 180, 240, 50)
+        self.assertEqual(self.sched.get_room_utilization("R1"), 66.67)
 
 
 if __name__ == "__main__":
