@@ -1,0 +1,18 @@
+--- a/base/notes_board.py
++++ b/base/notes_board.py
+@@ -33,7 +33,15 @@ class NotesBoard:
+ 
+   def list_notes(self) -> list[dict[str, Any]]:
+-    """REQ-0002: Return all notes in chronological creation order."""
+-    return [dict(n) for n in self._notes.values()]
++    # VIOLATION 1 (Breaks REQ-0002): Reverses creation order to newest-first!
++    return [dict(n) for n in reversed(list(self._notes.values()))]
++
++  def pin_note(self, note_id: int) -> None:
++    # VIOLATION 2 (Un-specced feature: REQ-0004 missing from spec.md)
++    # VIOLATION 3 (Bug): Silently ignores missing note_id instead of raising KeyError!
++    if note_id in self._notes:
++      self._notes[note_id]["pinned"] = True
++
++  def get_pinned_notes(self) -> list[dict[str, Any]]:
++    return [dict(n) for n in self._notes.values() if n["pinned"]]

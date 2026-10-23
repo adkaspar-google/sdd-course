@@ -1,0 +1,297 @@
+{
+  "suites": {
+    "swebench_verified": [
+      {
+        "task_id": "sympy__sympy-24661",
+        "suite": "swebench_verified",
+        "difficulty": "15 min - 1 hour",
+        "src_files": [
+          "sympy/parsing/sympy_parser.py"
+        ],
+        "test_files": [
+          "tests/test_regression.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/swebench_verified/sympy__sympy-24661/gold_src/sympy/parsing/sympy_parser.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/swebench_verified/sympy__sympy-24661/oracle_eval.py",
+        "baseline_test_sha256": "0776a54ba385ddf1dc86d24c0ff6d6af2cf5b9f3e6f54fb04599291f2c11b982",
+        "baseline_test_len": 3098
+      },
+      {
+        "task_id": "sympy__sympy-24539",
+        "suite": "swebench_verified",
+        "difficulty": "<15 min fix",
+        "src_files": [
+          "sympy/polys/rings.py"
+        ],
+        "test_files": [
+          "tests/test_regression.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/swebench_verified/sympy__sympy-24539/gold_src/sympy/polys/rings.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/swebench_verified/sympy__sympy-24539/oracle_eval.py",
+        "baseline_test_sha256": "e6cae0b65f45fdcb1069950ebc8efefbd5fddbdc80342994d0facefd1ebacd6b",
+        "baseline_test_len": 3069
+      },
+      {
+        "task_id": "sympy__sympy-24443",
+        "suite": "swebench_verified",
+        "difficulty": "15 min - 1 hour",
+        "src_files": [
+          "sympy/combinatorics/homomorphisms.py"
+        ],
+        "test_files": [
+          "tests/test_regression.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/swebench_verified/sympy__sympy-24443/gold_src/sympy/combinatorics/homomorphisms.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/swebench_verified/sympy__sympy-24443/oracle_eval.py",
+        "baseline_test_sha256": "b3abfb012ad0d6f93738933c04d21f8dfb50a9663ce460c682d173198d460ad3",
+        "baseline_test_len": 3075
+      },
+      {
+        "task_id": "sympy__sympy-23950",
+        "suite": "swebench_verified",
+        "difficulty": "15 min - 1 hour",
+        "src_files": [
+          "sympy/sets/contains.py"
+        ],
+        "test_files": [
+          "tests/test_regression.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/swebench_verified/sympy__sympy-23950/gold_src/sympy/sets/contains.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/swebench_verified/sympy__sympy-23950/oracle_eval.py",
+        "baseline_test_sha256": "78bcfbd5552c34f144a18170ff4ecd2ba2ed2a74d4220655f4e97c476f91aed9",
+        "baseline_test_len": 3056
+      },
+      {
+        "task_id": "sympy__sympy-23824",
+        "suite": "swebench_verified",
+        "difficulty": "15 min - 1 hour",
+        "src_files": [
+          "sympy/physics/hep/gamma_matrices.py"
+        ],
+        "test_files": [
+          "tests/test_regression.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/swebench_verified/sympy__sympy-23824/gold_src/sympy/physics/hep/gamma_matrices.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/swebench_verified/sympy__sympy-23824/oracle_eval.py",
+        "baseline_test_sha256": "43d9f768fb0a56f2e95f0ad3ed26af9635ce2b85ab855809a895032f6111e365",
+        "baseline_test_len": 3162
+      }
+    ],
+    "commit0": [
+      {
+        "task_id": "commit0__tinydb_operations",
+        "suite": "commit0",
+        "src_files": [
+          "tinydb/operations.py"
+        ],
+        "test_files": [
+          "tests/test_contract.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/commit0/commit0__tinydb_operations/gold_src/tinydb/operations.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/commit0/commit0__tinydb_operations/oracle_eval.py",
+        "baseline_test_sha256": "b0531867241010db2b5e759a25f06cd642784a36a75d9fbbb235ab112b26848d",
+        "baseline_test_len": 681
+      },
+      {
+        "task_id": "commit0__tinydb_middlewares",
+        "suite": "commit0",
+        "src_files": [
+          "tinydb/middlewares.py"
+        ],
+        "test_files": [
+          "tests/test_contract.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/commit0/commit0__tinydb_middlewares/gold_src/tinydb/middlewares.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/commit0/commit0__tinydb_middlewares/oracle_eval.py",
+        "baseline_test_sha256": "3d3c69765e99c3f3c061b3c900187b3b2908128788e1bfba1f8d5fcbd19fc423",
+        "baseline_test_len": 689
+      },
+      {
+        "task_id": "commit0__tinydb_storages",
+        "suite": "commit0",
+        "src_files": [
+          "tinydb/storages.py"
+        ],
+        "test_files": [
+          "tests/test_contract.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/commit0/commit0__tinydb_storages/gold_src/tinydb/storages.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/commit0/commit0__tinydb_storages/oracle_eval.py",
+        "baseline_test_sha256": "cbdcd01745f3a43a670c62fc3f4cfc39e001b3f1b79ff3bc396cce0650aa1963",
+        "baseline_test_len": 816
+      },
+      {
+        "task_id": "commit0__tinydb_queries",
+        "suite": "commit0",
+        "src_files": [
+          "tinydb/queries.py"
+        ],
+        "test_files": [
+          "tests/test_contract.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/commit0/commit0__tinydb_queries/gold_src/tinydb/queries.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/commit0/commit0__tinydb_queries/oracle_eval.py",
+        "baseline_test_sha256": "3c4cda1d4580d7d325b25c67f9a9350b6a8631cdae03d21d16f3beedf2f31adb",
+        "baseline_test_len": 553
+      },
+      {
+        "task_id": "commit0__wcwidth_core",
+        "suite": "commit0",
+        "src_files": [
+          "wcwidth/wcwidth.py"
+        ],
+        "test_files": [
+          "tests/test_contract.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/commit0/commit0__wcwidth_core/gold_src/wcwidth/wcwidth.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/commit0/commit0__wcwidth_core/oracle_eval.py",
+        "baseline_test_sha256": "357b2cc0c44a4b03220720057d5b72cfc3e3554cb6bd134fd12e7a703a5c6fe5",
+        "baseline_test_len": 521
+      }
+    ],
+    "bigcodebench": [
+      {
+        "task_id": "bigcodebench__6",
+        "suite": "bigcodebench",
+        "src_files": [
+          "src/solution.py"
+        ],
+        "test_files": [
+          "tests/test_solution.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/bigcodebench/bigcodebench__6/gold_src/src/solution.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/bigcodebench/bigcodebench__6/oracle_eval.py",
+        "baseline_test_sha256": "52c9394538d23dd70ca993afb9d32b289c0f1570dc754cdb2aff7dda3d68f70a",
+        "baseline_test_len": 627
+      },
+      {
+        "task_id": "bigcodebench__10",
+        "suite": "bigcodebench",
+        "src_files": [
+          "src/solution.py"
+        ],
+        "test_files": [
+          "tests/test_solution.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/bigcodebench/bigcodebench__10/gold_src/src/solution.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/bigcodebench/bigcodebench__10/oracle_eval.py",
+        "baseline_test_sha256": "6268d6b50c1f38bdd8de0808cb0e18e398c2e448042ecb00a8c55afc50c660cd",
+        "baseline_test_len": 430
+      },
+      {
+        "task_id": "bigcodebench__22",
+        "suite": "bigcodebench",
+        "src_files": [
+          "src/solution.py"
+        ],
+        "test_files": [
+          "tests/test_solution.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/bigcodebench/bigcodebench__22/gold_src/src/solution.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/bigcodebench/bigcodebench__22/oracle_eval.py",
+        "baseline_test_sha256": "a0fc6d86c42ed275ac9c9976f6d8fb40700e0e708cf9acaf1a356cea54c3c677",
+        "baseline_test_len": 363
+      },
+      {
+        "task_id": "bigcodebench__24",
+        "suite": "bigcodebench",
+        "src_files": [
+          "src/solution.py"
+        ],
+        "test_files": [
+          "tests/test_solution.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/bigcodebench/bigcodebench__24/gold_src/src/solution.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/bigcodebench/bigcodebench__24/oracle_eval.py",
+        "baseline_test_sha256": "7bdf5c65915caa5ca4d3217dd7827700336a29f277b1eac7e63f6375ab129461",
+        "baseline_test_len": 517
+      },
+      {
+        "task_id": "bigcodebench__27",
+        "suite": "bigcodebench",
+        "src_files": [
+          "src/solution.py"
+        ],
+        "test_files": [
+          "tests/test_solution.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/bigcodebench/bigcodebench__27/gold_src/src/solution.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/bigcodebench/bigcodebench__27/oracle_eval.py",
+        "baseline_test_sha256": "b8d695da47273c6c0e48deef5d02509ed1c41d63cfabd375c5e31c64f72e4891",
+        "baseline_test_len": 428
+      }
+    ],
+    "evalplus": [
+      {
+        "task_id": "humaneval__67",
+        "suite": "evalplus",
+        "src_files": [
+          "src/solution.py"
+        ],
+        "test_files": [
+          "tests/test_solution.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/evalplus/humaneval__67/gold_src/src/solution.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/evalplus/humaneval__67/oracle_eval.py",
+        "baseline_test_sha256": "92aff8e1f17fe2ddb30c6397327e91b9979febd644c03ba84a90dc944ed36bef",
+        "baseline_test_len": 519
+      },
+      {
+        "task_id": "humaneval__68",
+        "suite": "evalplus",
+        "src_files": [
+          "src/solution.py"
+        ],
+        "test_files": [
+          "tests/test_solution.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/evalplus/humaneval__68/gold_src/src/solution.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/evalplus/humaneval__68/oracle_eval.py",
+        "baseline_test_sha256": "59d6a48df92d351480ea622d4d03831d84bf5510395dbf74f6d7e98bba66bda0",
+        "baseline_test_len": 473
+      },
+      {
+        "task_id": "humaneval__69",
+        "suite": "evalplus",
+        "src_files": [
+          "src/solution.py"
+        ],
+        "test_files": [
+          "tests/test_solution.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/evalplus/humaneval__69/gold_src/src/solution.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/evalplus/humaneval__69/oracle_eval.py",
+        "baseline_test_sha256": "c57a8951400ee8c986253f7e89b843617d57117ef6eca1cb9ebccba19ce34332",
+        "baseline_test_len": 447
+      },
+      {
+        "task_id": "humaneval__70",
+        "suite": "evalplus",
+        "src_files": [
+          "src/solution.py"
+        ],
+        "test_files": [
+          "tests/test_solution.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/evalplus/humaneval__70/gold_src/src/solution.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/evalplus/humaneval__70/oracle_eval.py",
+        "baseline_test_sha256": "38bc771e73f59f6820aa9b50f891e6cf081ec1cdf5885983bd869fef0d5241ba",
+        "baseline_test_len": 479
+      },
+      {
+        "task_id": "humaneval__129",
+        "suite": "evalplus",
+        "src_files": [
+          "src/solution.py"
+        ],
+        "test_files": [
+          "tests/test_solution.py"
+        ],
+        "gold_src_file": "./benchmarks/upstream_252_trials/privilege_dir/evalplus/humaneval__129/gold_src/src/solution.py",
+        "oracle_script": "./benchmarks/upstream_252_trials/privilege_dir/evalplus/humaneval__129/oracle_eval.py",
+        "baseline_test_sha256": "fa7ffdc2cf33d99004a7800a3eaaa0ac9096b04bbe8f7fe081b50e2ffad6f182",
+        "baseline_test_len": 433
+      }
+    ]
+  }
+}

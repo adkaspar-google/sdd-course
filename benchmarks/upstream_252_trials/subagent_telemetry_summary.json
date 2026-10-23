@@ -1,0 +1,2504 @@
+{
+  "schema_version": "1.0",
+  "description": "Anonymized subagent execution telemetry (wall-clock durations and planner steps) for all 252 upstream benchmark trials (240 inner-loop trials = 301 subagent invocations across Builder, ColdAuditor, and Repair; 12 outer-loop trajectories).",
+  "inner_subagent_invocations": [
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 129.0,
+      "steps": 15
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 62.0,
+      "steps": 10
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 81.0,
+      "steps": 12
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 67.0,
+      "steps": 10
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 78.0,
+      "steps": 12
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 134.0,
+      "steps": 22
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 64.0,
+      "steps": 8
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 58.0,
+      "steps": 7
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 95.0,
+      "steps": 16
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 116.0,
+      "steps": 18
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__129",
+      "duration_sec": 66.0,
+      "steps": 10
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__67",
+      "duration_sec": 61.0,
+      "steps": 10
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__68",
+      "duration_sec": 33.0,
+      "steps": 7
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__69",
+      "duration_sec": 40.0,
+      "steps": 6
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__70",
+      "duration_sec": 40.0,
+      "steps": 6
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 179.0,
+      "steps": 25
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 281.0,
+      "steps": 43
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 505.0,
+      "steps": 65
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 152.0,
+      "steps": 20
+    },
+    {
+      "run": 1,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 158.0,
+      "steps": 22
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 189.0,
+      "steps": 21
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 121.0,
+      "steps": 16
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 78.0,
+      "steps": 14
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 77.0,
+      "steps": 11
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 76.0,
+      "steps": 9
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 130.0,
+      "steps": 17
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 107.0,
+      "steps": 14
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 260.0,
+      "steps": 33
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 144.0,
+      "steps": 24
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 219.0,
+      "steps": 31
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__129",
+      "duration_sec": 88.0,
+      "steps": 8
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__67",
+      "duration_sec": 55.0,
+      "steps": 11
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__68",
+      "duration_sec": 85.0,
+      "steps": 8
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__69",
+      "duration_sec": 64.0,
+      "steps": 11
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__70",
+      "duration_sec": 53.0,
+      "steps": 8
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 158.0,
+      "steps": 18
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 183.0,
+      "steps": 35
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 444.0,
+      "steps": 68
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 170.0,
+      "steps": 21
+    },
+    {
+      "run": 1,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 168.0,
+      "steps": 21
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 171.0,
+      "steps": 23
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 87.0,
+      "steps": 13
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 119.0,
+      "steps": 12
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 68.0,
+      "steps": 12
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 118.0,
+      "steps": 14
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 156.0,
+      "steps": 22
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 82.0,
+      "steps": 13
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 225.0,
+      "steps": 27
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 165.0,
+      "steps": 21
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 158.0,
+      "steps": 21
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__129",
+      "duration_sec": 101.0,
+      "steps": 13
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__67",
+      "duration_sec": 76.0,
+      "steps": 12
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__68",
+      "duration_sec": 108.0,
+      "steps": 13
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__69",
+      "duration_sec": 93.0,
+      "steps": 13
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__70",
+      "duration_sec": 63.0,
+      "steps": 12
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 237.0,
+      "steps": 33
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 511.0,
+      "steps": 59
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 426.0,
+      "steps": 60
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 240.0,
+      "steps": 32
+    },
+    {
+      "run": 1,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 157.0,
+      "steps": 22
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 257.0,
+      "steps": 26
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 71.0,
+      "steps": 10
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 84.0,
+      "steps": 11
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 70.0,
+      "steps": 10
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 104.0,
+      "steps": 11
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 80.0,
+      "steps": 13
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 53.0,
+      "steps": 9
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 75.0,
+      "steps": 11
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 91.0,
+      "steps": 12
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 108.0,
+      "steps": 13
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__129",
+      "duration_sec": 79.0,
+      "steps": 6
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__67",
+      "duration_sec": 48.0,
+      "steps": 8
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__68",
+      "duration_sec": 72.0,
+      "steps": 8
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__69",
+      "duration_sec": 47.0,
+      "steps": 6
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__70",
+      "duration_sec": 44.0,
+      "steps": 8
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 176.0,
+      "steps": 20
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 219.0,
+      "steps": 32
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 411.0,
+      "steps": 53
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 168.0,
+      "steps": 25
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 152.0,
+      "steps": 19
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 50.0,
+      "steps": 8
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 34.0,
+      "steps": 5
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 23.0,
+      "steps": 6
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 31.0,
+      "steps": 7
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 39.0,
+      "steps": 5
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 50.0,
+      "steps": 9
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 72.0,
+      "steps": 12
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 134.0,
+      "steps": 18
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 47.0,
+      "steps": 8
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 66.0,
+      "steps": 12
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__129",
+      "duration_sec": 42.0,
+      "steps": 7
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__67",
+      "duration_sec": 31.0,
+      "steps": 5
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__68",
+      "duration_sec": 41.0,
+      "steps": 7
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__69",
+      "duration_sec": 47.0,
+      "steps": 5
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__70",
+      "duration_sec": 21.0,
+      "steps": 5
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 117.0,
+      "steps": 16
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 187.0,
+      "steps": 26
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 209.0,
+      "steps": 27
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 132.0,
+      "steps": 27
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 97.0,
+      "steps": 15
+    },
+    {
+      "run": 1,
+      "arm": "arm_d",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 202.0,
+      "steps": 27
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 155.0,
+      "steps": 20
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 68.0,
+      "steps": 13
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 78.0,
+      "steps": 13
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 44.0,
+      "steps": 10
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 53.0,
+      "steps": 7
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 225.0,
+      "steps": 29
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 93.0,
+      "steps": 19
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 278.0,
+      "steps": 31
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 135.0,
+      "steps": 21
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 240.0,
+      "steps": 22
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__129",
+      "duration_sec": 68.0,
+      "steps": 11
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__67",
+      "duration_sec": 39.0,
+      "steps": 7
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__68",
+      "duration_sec": 40.0,
+      "steps": 7
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__69",
+      "duration_sec": 55.0,
+      "steps": 9
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__70",
+      "duration_sec": 39.0,
+      "steps": 7
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 206.0,
+      "steps": 32
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 268.0,
+      "steps": 43
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 434.0,
+      "steps": 59
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 195.0,
+      "steps": 32
+    },
+    {
+      "run": 2,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 384.0,
+      "steps": 63
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 166.0,
+      "steps": 20
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 92.0,
+      "steps": 15
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 59.0,
+      "steps": 9
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 48.0,
+      "steps": 8
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 61.0,
+      "steps": 10
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 180.0,
+      "steps": 30
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 103.0,
+      "steps": 18
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 315.0,
+      "steps": 37
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 134.0,
+      "steps": 22
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 258.0,
+      "steps": 27
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__129",
+      "duration_sec": 77.0,
+      "steps": 10
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__67",
+      "duration_sec": 43.0,
+      "steps": 9
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__68",
+      "duration_sec": 79.0,
+      "steps": 8
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__69",
+      "duration_sec": 62.0,
+      "steps": 9
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__70",
+      "duration_sec": 61.0,
+      "steps": 8
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 201.0,
+      "steps": 24
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 297.0,
+      "steps": 46
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 396.0,
+      "steps": 51
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 231.0,
+      "steps": 39
+    },
+    {
+      "run": 2,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 361.0,
+      "steps": 55
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 198.0,
+      "steps": 24
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 140.0,
+      "steps": 20
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 97.0,
+      "steps": 15
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 73.0,
+      "steps": 14
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 93.0,
+      "steps": 12
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 227.0,
+      "steps": 31
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 143.0,
+      "steps": 28
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 398.0,
+      "steps": 41
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 206.0,
+      "steps": 30
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 374.0,
+      "steps": 42
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__129",
+      "duration_sec": 100.0,
+      "steps": 14
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__67",
+      "duration_sec": 106.0,
+      "steps": 15
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__68",
+      "duration_sec": 91.0,
+      "steps": 13
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__69",
+      "duration_sec": 86.0,
+      "steps": 13
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__70",
+      "duration_sec": 71.0,
+      "steps": 13
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 184.0,
+      "steps": 24
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 631.0,
+      "steps": 66
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 575.0,
+      "steps": 71
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 158.0,
+      "steps": 28
+    },
+    {
+      "run": 2,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 339.0,
+      "steps": 52
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 187.0,
+      "steps": 24
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 57.0,
+      "steps": 10
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 63.0,
+      "steps": 9
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 61.0,
+      "steps": 10
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 90.0,
+      "steps": 9
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 177.0,
+      "steps": 22
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 87.0,
+      "steps": 16
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 361.0,
+      "steps": 43
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 140.0,
+      "steps": 19
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 284.0,
+      "steps": 29
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__129",
+      "duration_sec": 71.0,
+      "steps": 10
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__67",
+      "duration_sec": 40.0,
+      "steps": 8
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__68",
+      "duration_sec": 51.0,
+      "steps": 7
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__69",
+      "duration_sec": 55.0,
+      "steps": 8
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__70",
+      "duration_sec": 48.0,
+      "steps": 7
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 243.0,
+      "steps": 29
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 220.0,
+      "steps": 32
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 485.0,
+      "steps": 60
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 197.0,
+      "steps": 32
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 348.0,
+      "steps": 53
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 44.0,
+      "steps": 7
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 39.0,
+      "steps": 6
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 27.0,
+      "steps": 7
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 40.0,
+      "steps": 6
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 32.0,
+      "steps": 5
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 44.0,
+      "steps": 8
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 65.0,
+      "steps": 14
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 129.0,
+      "steps": 20
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 49.0,
+      "steps": 9
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 100.0,
+      "steps": 13
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__129",
+      "duration_sec": 35.0,
+      "steps": 7
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__67",
+      "duration_sec": 34.0,
+      "steps": 6
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__68",
+      "duration_sec": 40.0,
+      "steps": 5
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__69",
+      "duration_sec": 36.0,
+      "steps": 6
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__70",
+      "duration_sec": 25.0,
+      "steps": 5
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 102.0,
+      "steps": 16
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 142.0,
+      "steps": 21
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 103.0,
+      "steps": 11
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 112.0,
+      "steps": 18
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 91.0,
+      "steps": 17
+    },
+    {
+      "run": 2,
+      "arm": "arm_d",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 200.0,
+      "steps": 23
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 114.0,
+      "steps": 16
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 63.0,
+      "steps": 9
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 107.0,
+      "steps": 13
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 74.0,
+      "steps": 12
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 88.0,
+      "steps": 13
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 166.0,
+      "steps": 23
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 93.0,
+      "steps": 17
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 285.0,
+      "steps": 27
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 171.0,
+      "steps": 23
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 325.0,
+      "steps": 36
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__129",
+      "duration_sec": 59.0,
+      "steps": 9
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__67",
+      "duration_sec": 29.0,
+      "steps": 7
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__68",
+      "duration_sec": 61.0,
+      "steps": 11
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__69",
+      "duration_sec": 47.0,
+      "steps": 8
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "humaneval__70",
+      "duration_sec": 63.0,
+      "steps": 9
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 235.0,
+      "steps": 34
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 387.0,
+      "steps": 49
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 587.0,
+      "steps": 76
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 111.0,
+      "steps": 19
+    },
+    {
+      "run": 3,
+      "arm": "arm_a",
+      "role": "single",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 370.0,
+      "steps": 57
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 183.0,
+      "steps": 20
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 105.0,
+      "steps": 13
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 134.0,
+      "steps": 12
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 66.0,
+      "steps": 11
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 74.0,
+      "steps": 12
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 151.0,
+      "steps": 26
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 96.0,
+      "steps": 20
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 440.0,
+      "steps": 54
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 147.0,
+      "steps": 23
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 211.0,
+      "steps": 24
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__129",
+      "duration_sec": 58.0,
+      "steps": 8
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__67",
+      "duration_sec": 56.0,
+      "steps": 11
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__68",
+      "duration_sec": 85.0,
+      "steps": 13
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__69",
+      "duration_sec": 70.0,
+      "steps": 11
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "humaneval__70",
+      "duration_sec": 52.0,
+      "steps": 8
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 171.0,
+      "steps": 25
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 573.0,
+      "steps": 71
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 422.0,
+      "steps": 52
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 120.0,
+      "steps": 21
+    },
+    {
+      "run": 3,
+      "arm": "arm_b",
+      "role": "single",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 315.0,
+      "steps": 47
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 212.0,
+      "steps": 25
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 109.0,
+      "steps": 15
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 124.0,
+      "steps": 16
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 120.0,
+      "steps": 18
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 119.0,
+      "steps": 17
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 187.0,
+      "steps": 28
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 107.0,
+      "steps": 18
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 389.0,
+      "steps": 40
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 164.0,
+      "steps": 21
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 264.0,
+      "steps": 30
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__129",
+      "duration_sec": 97.0,
+      "steps": 14
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__67",
+      "duration_sec": 63.0,
+      "steps": 12
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__68",
+      "duration_sec": 58.0,
+      "steps": 11
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__69",
+      "duration_sec": 72.0,
+      "steps": 14
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "humaneval__70",
+      "duration_sec": 92.0,
+      "steps": 14
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 297.0,
+      "steps": 43
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 477.0,
+      "steps": 61
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 452.0,
+      "steps": 62
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 241.0,
+      "steps": 39
+    },
+    {
+      "run": 3,
+      "arm": "arm_c",
+      "role": "single",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 264.0,
+      "steps": 41
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 249.0,
+      "steps": 28
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 88.0,
+      "steps": 12
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 76.0,
+      "steps": 9
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 92.0,
+      "steps": 8
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 54.0,
+      "steps": 6
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 157.0,
+      "steps": 21
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 116.0,
+      "steps": 20
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 236.0,
+      "steps": 21
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 159.0,
+      "steps": 19
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 262.0,
+      "steps": 24
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__129",
+      "duration_sec": 66.0,
+      "steps": 8
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__67",
+      "duration_sec": 41.0,
+      "steps": 6
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__68",
+      "duration_sec": 49.0,
+      "steps": 8
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__69",
+      "duration_sec": 93.0,
+      "steps": 10
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "humaneval__70",
+      "duration_sec": 48.0,
+      "steps": 8
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 286.0,
+      "steps": 32
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 370.0,
+      "steps": 53
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 614.0,
+      "steps": 78
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 177.0,
+      "steps": 29
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "Builder",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 276.0,
+      "steps": 36
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 107.0,
+      "steps": 13
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__22",
+      "duration_sec": 28.0,
+      "steps": 5
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__24",
+      "duration_sec": 23.0,
+      "steps": 5
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__27",
+      "duration_sec": 53.0,
+      "steps": 6
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "bigcodebench__6",
+      "duration_sec": 39.0,
+      "steps": 7
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_middlewares",
+      "duration_sec": 63.0,
+      "steps": 13
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_operations",
+      "duration_sec": 94.0,
+      "steps": 12
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_queries",
+      "duration_sec": 50.0,
+      "steps": 11
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__tinydb_storages",
+      "duration_sec": 65.0,
+      "steps": 12
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "commit0__wcwidth_core",
+      "duration_sec": 114.0,
+      "steps": 15
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__129",
+      "duration_sec": 40.0,
+      "steps": 5
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__67",
+      "duration_sec": 27.0,
+      "steps": 6
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__68",
+      "duration_sec": 25.0,
+      "steps": 6
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__69",
+      "duration_sec": 41.0,
+      "steps": 7
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "humaneval__70",
+      "duration_sec": 36.0,
+      "steps": 6
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-23824",
+      "duration_sec": 68.0,
+      "steps": 12
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-23950",
+      "duration_sec": 258.0,
+      "steps": 32
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-24443",
+      "duration_sec": 242.0,
+      "steps": 35
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-24539",
+      "duration_sec": 77.0,
+      "steps": 12
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "ColdAuditor",
+      "task_id": "sympy__sympy-24661",
+      "duration_sec": 109.0,
+      "steps": 20
+    },
+    {
+      "run": 3,
+      "arm": "arm_d",
+      "role": "single",
+      "task_id": "bigcodebench__10",
+      "duration_sec": 167.0,
+      "steps": 20
+    }
+  ],
+  "outer_subagent_invocations": [
+    {
+      "run": 1,
+      "outer_arm": "outer_a",
+      "duration_sec": 183.0,
+      "steps": 27
+    },
+    {
+      "run": 1,
+      "outer_arm": "outer_b",
+      "duration_sec": 252.0,
+      "steps": 35
+    },
+    {
+      "run": 1,
+      "outer_arm": "outer_c",
+      "duration_sec": 224.0,
+      "steps": 30
+    },
+    {
+      "run": 1,
+      "outer_arm": "outer_d",
+      "duration_sec": 168.0,
+      "steps": 23
+    },
+    {
+      "run": 2,
+      "outer_arm": "outer_a",
+      "duration_sec": 221.0,
+      "steps": 34
+    },
+    {
+      "run": 2,
+      "outer_arm": "outer_b",
+      "duration_sec": 234.0,
+      "steps": 42
+    },
+    {
+      "run": 2,
+      "outer_arm": "outer_c",
+      "duration_sec": 176.0,
+      "steps": 28
+    },
+    {
+      "run": 2,
+      "outer_arm": "outer_d",
+      "duration_sec": 151.0,
+      "steps": 33
+    },
+    {
+      "run": 3,
+      "outer_arm": "outer_a",
+      "duration_sec": 215.0,
+      "steps": 35
+    },
+    {
+      "run": 3,
+      "outer_arm": "outer_b",
+      "duration_sec": 198.0,
+      "steps": 35
+    },
+    {
+      "run": 3,
+      "outer_arm": "outer_c",
+      "duration_sec": 200.0,
+      "steps": 32
+    },
+    {
+      "run": 3,
+      "outer_arm": "outer_d",
+      "duration_sec": 217.0,
+      "steps": 41
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+[
+  {
+    "arm": "arm_a",
+    "task_id": "bigcodebench__6",
+    "builder": {
+      "status": "success",
+      "summary": "Implemented task_func in src/solution.py to scan the specified directory for files matching the given regex pattern and return the latest file by modification time (or None if no matching files exist, directory is empty, or directory is not found/accessible). Verified using unit tests in tests/test_solution.py.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_b",
+    "task_id": "bigcodebench__6",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Successfully solved task bigcodebench__6 following the Procedural TDD Skill workflow. Implemented task_func in src/solution.py to find the latest log file matching a regex pattern using os.path.getmtime, handling empty/missing directories and filtering out non-matching files and subdirectories. Verified with comprehensive unit tests in tests/test_solution.py passing 100%.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_c",
+    "task_id": "bigcodebench__6",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Implemented task_func in solution.py to search a directory for log files matching a regex pattern, filter out subdirectories, and return the path of the most recently modified file based on mtime, returning None if no files match or if the directory is empty or inaccessible. Expanded tests/test_solution.py with unit tests covering regex filtering, mtime comparison, empty directories, nonexistent directories, subdirectories, ties, fallback log_dir, and mocked filesystems. Verified 11/11 tests pass and confirmed directory cleanliness.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_d",
+    "task_id": "bigcodebench__6",
+    "builder": {
+      "status": "success",
+      "summary": "Successfully implemented `task_func` in `src/solution.py` to find the latest log file matching a given regex pattern based on modification time, handled edge cases (empty directory, non-existent directory, directory names matching pattern, no matching files), and verified with both baseline test suite `tests/test_solution.py` and comprehensive contract test suite `tests/test_unit_contract.py`, both passing with exit code 0.",
+      "tests_passed_locally": true
+    },
+    "auditor": {
+      "audit_summary": "The implementation in `src/solution.py` completely and cleanly satisfies all requirements of the specification in `prompt.md`. It properly searches the specified directory for files, filters by the regex pattern, handles empty/nonexistent directories and non-matching scenarios returning None, and returns the path to the most recent log file based on modification time (`os.path.getmtime`). All unit and baseline tests execute cleanly and pass with zero defects or reward-hacking.",
+      "defects": [],
+      "verdict": "APPROVE"
+    },
+    "repair": null
+  },
+  {
+    "arm": "arm_a",
+    "task_id": "bigcodebench__10",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Successfully implemented task_func in src/solution.py. The function extracts integers from the input tuple of tuples, generates a list of random integers up to RANGE whose length equals the sum of the extracted numbers, and returns the mean (float), median (float), and mode (int). Verified against all docstring examples and ran unit tests cleanly.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_b",
+    "task_id": "bigcodebench__10",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Successfully executed the Procedural TDD workflow (RED -> GREEN -> REFACTOR) for task bigcodebench__10 in ./benchmarks/upstream_252_trials/trials/run_3/arm_b/bigcodebench__bigcodebench__10. Expanded unit tests in tests/test_solution.py to test the baseline contract, doctest values across sequential calls, empty inputs raising StatisticsError, value bounds, and single elements (RED phase confirmed). Implemented the production task_func solution in src/solution.py using itertools, random.randint, numpy.mean, numpy.median, and statistics.mode (GREEN phase passed all 5 tests). Verified clean directory state and code quality.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_c",
+    "task_id": "bigcodebench__10",
+    "builder": {
+      "status": "success",
+      "summary": "Successfully implemented task_func in src/solution.py and comprehensive unit tests in tests/test_solution.py following the SpecToTestCompiler -> BuilderExecutor -> LifecycleCleanupManager pattern. All unit tests pass cleanly.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_d",
+    "task_id": "bigcodebench__10",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Implemented task_func in src/solution.py to convert elements in T1 to integers, generate a list of random integers of size equal to the sum of the integers, and return the mean (float), median (float), and mode (int). Verified contract, doctests, and error handling with comprehensive unit tests in tests/test_unit_contract.py.",
+      "tests_passed_locally": true
+    },
+    "auditor": {
+      "audit_summary": "The implementation of task_func in BigCodeBench/10 satisfies all specification requirements and invariants:\n1. Return types: mean is float, median is float, mode is int.\n2. Invariant verification: raises statistics.StatisticsError when T1 is empty (including empty tuples or collections of empty sub-tuples).\n3. Random generation: list size equals the sum of converted integers from T1, sampled from [0, RANGE].\n4. Doctest compliance: all doctests pass with 0 failures, matching the exact numerical and type expectations.\n5. All required dependencies (numpy, itertools, random, statistics) are imported and correctly utilized.",
+      "defects": [],
+      "verdict": "APPROVE"
+    },
+    "repair": null
+  },
+  {
+    "arm": "arm_a",
+    "task_id": "bigcodebench__22",
+    "builder": {
+      "status": "success",
+      "summary": "Implemented task_func in src/solution.py by alternating elements from two lists using itertools.zip_longest, sampling K elements with random.choices, and returning a collections.Counter of their frequencies. Verified all unit tests pass.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_b",
+    "task_id": "bigcodebench__22",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Completed task bigcodebench__22 following Procedural TDD workflow. In the RED phase, enhanced tests/test_solution.py with test cases covering docstring specification, sample frequency sums, different length lists, custom K, single elements, and None elements, observing valid failure. In the GREEN phase, implemented task_func using zip_longest with a sentinel to alternate list elements, random.choices for sampling, and collections.Counter for element frequencies. In the REFACTOR & SELF-REVIEW phase, verified all 7 unit tests pass.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_c",
+    "task_id": "bigcodebench__22",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Successfully implemented task BigCodeBench/22 following the OO-Harness protocol. Parsed prompt specifications and boundary invariants into comprehensive unit tests in tests/test_solution.py, implemented the alternating list combination with sentinel preservation and random sampling in src/solution.py, verified all 10 unit tests pass hermetically, and ensured no temporary files or cache artifacts remain.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_d",
+    "task_id": "bigcodebench__22",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Implemented task_func in src/solution.py combining two lists by alternating their elements using itertools.zip_longest and sampling K elements using random.choices with collections.Counter frequency calculation. Created comprehensive unit test suite in tests/test_unit_contract.py covering all requirements, edge cases, and docstring examples. Both tests/test_solution.py and tests/test_unit_contract.py pass with exit code 0.",
+      "tests_passed_locally": true
+    },
+    "auditor": {
+      "audit_summary": "The implementation of task_func in src/solution.py completely and accurately satisfies all requirements and edge cases specified in prompt.md. It uses itertools.zip_longest with a unique sentinel object (correctly preserving None if present in input lists), alternates elements from l1 and l2, samples K items via random.choices, and returns a collections.Counter. Edge cases including empty lists, disparate lengths, hashable types, and docstring example matching under random.seed(32) have all been verified and pass unit test execution.",
+      "defects": [],
+      "verdict": "APPROVE"
+    },
+    "repair": null
+  },
+  {
+    "arm": "arm_a",
+    "task_id": "bigcodebench__24",
+    "builder": {
+      "status": "success",
+      "summary": "Implemented `task_func` in `src/solution.py` to hash a password using PBKDF2 HMAC SHA-256 with 100,000 iterations and a randomly generated salt of specified length (default 32 bytes), returning both the salt and hashed password as base64-encoded bytes. Added comprehensive validation ensuring ValueError is raised for None or empty passwords. Verified all tests pass via python3 tests/test_solution.py.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_b",
+    "task_id": "bigcodebench__24",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Completed task bigcodebench__24 adhering strictly to Procedural TDD (SKILL.md) workflow. Authored comprehensive unit tests in tests/test_solution.py, observed expected failure (VALID_RED), implemented task_func using os.urandom and hashlib.pbkdf2_hmac with sha256 and base64 encoding in src/solution.py, and verified that all tests pass (GREEN).",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_c",
+    "task_id": "bigcodebench__24",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Implemented task_func for BigCodeBench/24 to hash passwords using PBKDF2 HMAC-SHA256 with a randomly generated salt of specified length (default 32), returning base64-encoded salt and hashed password byte strings. Handled ValueError for None or empty passwords. Verified all invariants with 8 unit tests in tests/test_solution.py and cleaned up all temporary files.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_d",
+    "task_id": "bigcodebench__24",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Implemented task_func for BigCodeBench/24: password hashing using PBKDF2 HMAC SHA-256 with random salt generation and base64 encoding. Created comprehensive unit contract tests and verified all tests pass with exit code 0.",
+      "tests_passed_locally": true
+    },
+    "auditor": {
+      "audit_summary": "Task BigCodeBench/24 implementation in `src/solution.py` completely and accurately fulfills all requirements specified in `prompt.md`. It validates password presence (raising ValueError on None or empty string), generates cryptographically secure random salt of length SALT_LENGTH using os.urandom, computes the PBKDF2 HMAC hash with SHA-256 using hashlib.pbkdf2_hmac with 100,000 iterations, and returns the salt and hash as base64-encoded byte strings in a tuple. All unit tests in `tests/test_solution.py` and `tests/test_unit_contract.py` pass cleanly with zero defects or reward hacking.",
+      "defects": [],
+      "verdict": "APPROVE"
+    },
+    "repair": null
+  },
+  {
+    "arm": "arm_a",
+    "task_id": "bigcodebench__27",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Implemented task_func in src/solution.py to add the current timestamp to the input dictionary in-place using DATE_FORMAT, serialize it to JSON, encode it using base64 ASCII encoding, and return the base64 string. Verified that all unit tests pass.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_b",
+    "task_id": "bigcodebench__27",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Successfully followed the Procedural TDD Skill workflow to solve bigcodebench__27. Added comprehensive unit tests in tests/test_solution.py, observed failure in the RED phase, implemented minimal fix in src/solution.py, and verified that all tests passed cleanly in the GREEN phase.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_c",
+    "task_id": "bigcodebench__27",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Task bigcodebench__27 resolved successfully adhering to OO-Harness and Harness^2 verification protocols. SpecToTestCompiler extracted invariants and generated comprehensive unit tests covering roundtrip decoding, in-place dictionary modification, custom date formats, empty dicts, and diverse value types. BuilderExecutor implemented task_func using datetime.now(), strftime, json.dumps, and base64.b64encode with ASCII decoding. All tests pass with zero failures and the workspace is clean.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_d",
+    "task_id": "bigcodebench__27",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Implemented task_func in src/solution.py to add current timestamp to a dictionary in-place, serialize to JSON, and encode via base64 in ASCII. Created comprehensive test suite in tests/test_unit_contract.py. Both baseline and contract test suites passed with exit code 0.",
+      "tests_passed_locally": true
+    },
+    "auditor": {
+      "audit_summary": "The implementation in `src/solution.py` adheres strictly and completely to the specification in `prompt.md`. It modifies the input dictionary in-place by adding a 'timestamp' key formatted with DATE_FORMAT (defaulting to '%Y-%m-%d %H:%M:%S'), serializes to JSON, encodes the string to base64 using ASCII encoding, and returns an ASCII string. There is no reward hacking or hardcoding, all contract tests pass, and edge cases (custom date formats, empty dictionary, nested structures) are properly handled.",
+      "defects": [],
+      "verdict": "APPROVE"
+    },
+    "repair": null
+  }
+]

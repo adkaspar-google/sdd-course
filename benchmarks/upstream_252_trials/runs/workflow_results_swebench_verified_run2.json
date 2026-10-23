@@ -1,0 +1,227 @@
+[
+  {
+    "arm": "arm_a",
+    "task_id": "sympy__sympy-24661",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Resolved sympy issue 24661 where evaluate=False was ignored for relationals (inequalities and equalities). Added support for ast.Compare in EvaluateFalseTransformer by mapping comparison operators (Lt, Gt, Le, Ge, Eq, Ne) to their SymPy relational class equivalents with evaluate=False, and chained comparisons to And with evaluate=False. Also supported Python 3.12+ '!' tokenization in factorial_notation, and added regression test test_issue_24661. Verified tests/test_regression.py passes.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_b",
+    "task_id": "sympy__sympy-24661",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Resolved sympy__sympy-24661 by extending EvaluateFalseTransformer in sympy/parsing/sympy_parser.py to support relational comparison operators (ast.Lt, ast.LtE, ast.Gt, ast.GtE, ast.Eq, ast.NotEq) via visit_Compare, preventing automatic evaluation of relations when evaluate=False is supplied to parse_expr. All regression and edge-case unit tests pass.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_c",
+    "task_id": "sympy__sympy-24661",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Resolved sympy__sympy-24661 by extending EvaluateFalseTransformer in sympy/parsing/sympy_parser.py to support ast.Compare with relational operators (Lt, Le, Gt, Ge, Eq, Ne) and chained comparisons, ensuring evaluate=False is respected for inequalities and equations. Also added Python 3.12+ compatibility for factorial notation tokenization when exclamation marks are emitted as OP. All regression tests and sympy_parser tests pass.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_d",
+    "task_id": "sympy__sympy-24661",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Resolved sympy__sympy-24661: Added relational comparison operators (ast.Lt, ast.Gt, ast.LtE, ast.GtE, ast.Eq, ast.NotEq) and visit_Compare to EvaluateFalseTransformer in sympy/parsing/sympy_parser.py so that evaluate=False correctly generates unevaluated relational expressions (e.g. Lt(1, 2, evaluate=False)) rather than evaluating to boolean values. Also ensured compatibility with Python 3.12+ tokenizer for factorial tokens. Both tests/test_regression.py and tests/test_unit_contract.py pass with exit code 0.",
+      "tests_passed_locally": true
+    },
+    "auditor": {
+      "audit_summary": "All requirements from prompt.md are fully satisfied. In sympy/parsing/sympy_parser.py, relational operators (Lt, Gt, Le, Ge, Eq, Ne) were added to EvaluateFalseTransformer.operators and EvaluateFalseTransformer.functions. EvaluateFalseTransformer.visit_Compare was implemented to transform comparison operations (including chained comparisons like a < b < c) into SymPy relational calls with evaluate=False keyword arguments, and EvaluateFalseTransformer.visit_Call ensures function calls to relational classes also preserve evaluate=False unless already specified. Both regression and unit contract tests pass with exit code 0. No reward-hacking, hardcoding, or unimplemented requirements were found.",
+      "defects": [],
+      "verdict": "APPROVE"
+    },
+    "repair": null
+  },
+  {
+    "arm": "arm_a",
+    "task_id": "sympy__sympy-24539",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Fixed `PolyElement.as_expr(*symbols)` in `sympy/polys/rings.py` to use the provided `symbols` argument when supplied and validate `len(symbols) == self.ring.ngens`. Previously, passing the correct number of symbols caused the `if symbols and len(symbols) != self.ring.ngens` condition to evaluate to False, triggering the `else` block which incorrectly overwrote `symbols` with `self.ring.symbols`. Verified fix with `tests/test_regression.py` and test cases in `sympy/polys/tests/test_rings.py`.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_b",
+    "task_id": "sympy__sympy-24539",
+    "builder": {
+      "status": "success",
+      "summary": "Fixed PolyElement.as_expr() in sympy/polys/rings.py to properly use user-provided symbols instead of unconditionally overwriting them with self.ring.symbols. Added comprehensive regression tests in tests/test_regression.py covering user-specified symbols, default ring symbols, invalid symbol length errors, univariate rings, and zero/constant/empty polynomials. All unit and regression tests pass locally.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_c",
+    "task_id": "sympy__sympy-24539",
+    "builder": {
+      "status": "success",
+      "summary": "Fixed PolyElement.as_expr() in sympy/polys/rings.py to respect caller-provided symbols when the correct number of symbols is passed instead of unconditionally overwriting symbols with self.ring.symbols. Expanded tests/test_regression.py with full invariant coverage (custom distinct symbols, default ring symbols, identity, arity validation, zero/constant polynomials, single-variable rings, 0-generator rings, and domain variations) and verified that all tests pass.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_d",
+    "task_id": "sympy__sympy-24539",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Fixed PolyElement.as_expr() in sympy/polys/rings.py to respect custom symbols passed to the method by replacing 'else: symbols = self.ring.symbols' with 'elif not symbols: symbols = self.ring.symbols'. Added unit contract tests in tests/test_unit_contract.py and verified both tests/test_regression.py and tests/test_unit_contract.py pass with exit code 0.",
+      "tests_passed_locally": true
+    },
+    "auditor": {
+      "audit_summary": "The implementation in sympy/polys/rings.py correctly resolves the issue described in prompt.md. In `PolyElement.as_expr(self, *symbols)`, the previously erroneous `else: symbols = self.ring.symbols` (which ignored any user-provided symbols and unconditionally reset them to `self.ring.symbols`) was replaced with `elif not symbols: symbols = self.ring.symbols`. This ensures that when the user passes generator symbols matching `self.ring.ngens`, those symbols are forwarded to `expr_from_dict(self.as_expr_dict(), *symbols)`. Default invocation without arguments (`as_expr()`), symbol count validation, zero-generator rings, univariate/multivariate rings, and all regression and unit contract tests pass cleanly with zero failures or reward hacking.",
+      "defects": [],
+      "verdict": "APPROVE"
+    },
+    "repair": null
+  },
+  {
+    "arm": "arm_a",
+    "task_id": "sympy__sympy-24443",
+    "builder": {
+      "status": "success",
+      "summary": "Fixed `_check_homomorphism` for `PermutationGroup` domains in `sympy/combinatorics/homomorphisms.py`. Specifically, when `domain` is a `PermutationGroup`, its presentation generators `gens` in the underlying free group are mapped to the images of the corresponding `domain.generators` in `images`. This resolves the issue where inverted generators in relators failed the `in gens` check and were omitted from the relator image evaluation. Verified against existing tests and the regression test in `tests/test_regression.py`.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_b",
+    "task_id": "sympy__sympy-24443",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Fixed `_check_homomorphism` in `sympy/combinatorics/homomorphisms.py` for `PermutationGroup` when relators contain inverted generators by properly checking `r[i]**-1 in gens` and mapping to the corresponding generator in `domain.generators`. Verified regression test with `DihedralGroup(3)` and other permutation groups via RED-GREEN-REFACTOR TDD cycle.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_c",
+    "task_id": "sympy__sympy-24443",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Fixed bug in `_check_homomorphism` in `sympy/combinatorics/homomorphisms.py` where homomorphisms on `PermutationGroup` domains failed when presentation relators contained inverted generators (`r[i]**-1 in gens`). Expanded unit tests in `tests/test_regression.py` covering all preconditions, postconditions, and boundary invariants. All regression tests passed locally with zero failures.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_d",
+    "task_id": "sympy__sympy-24443",
+    "builder": {
+      "status": "success",
+      "summary": "Fixed `_check_homomorphism` in `sympy/combinatorics/homomorphisms.py` by mapping presentation generator symbols to their codomain images via `r.array_form`, correctly handling inverted generators (negative powers) for PermutationGroups as well as FpGroups. Both `test_regression.py` and `test_unit_contract.py` pass with exit code 0.",
+      "tests_passed_locally": true
+    },
+    "auditor": {
+      "audit_summary": "The implementation in `sympy/combinatorics/homomorphisms.py` cleanly and mathematically resolves the issue with `_check_homomorphism` on `PermutationGroup` instances. Specifically, by using `r.array_form` to iterate over generator symbols and signed integer powers (`indices[sym]**power`), it correctly computes the image of each relator even when relators contain inverted generators or higher powers. Furthermore, it cleanly supports both `FpGroup` and `PermutationGroup` domains and codomains without hardcoding or reward-hacking. Both `test_regression.py` and `test_unit_contract.py` pass without errors.",
+      "defects": [],
+      "verdict": "APPROVE"
+    },
+    "repair": null
+  },
+  {
+    "arm": "arm_a",
+    "task_id": "sympy__sympy-23950",
+    "builder": {
+      "status": "success",
+      "summary": "Fixed `Contains.as_set()` in `sympy/sets/contains.py` to return the underlying set `self.args[1]` instead of raising `NotImplementedError`, updated the unit test in `sympy/sets/tests/test_contains.py`, and verified that `tests/test_regression.py` passes all test cases including Piecewise evaluation with Contains conditions.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_b",
+    "task_id": "sympy__sympy-23950",
+    "builder": {
+      "status": "success",
+      "summary": "Successfully solved sympy__sympy-23950 using the Procedural TDD workflow:\n1. RED PHASE: Read `prompt.md` and added regression tests in `tests/test_regression.py` covering `Contains(x, s).as_set()` and `Piecewise` with `Contains`, observing the expected `NotImplementedError` failure.\n2. GREEN PHASE: Updated `Contains.as_set()` in `sympy/sets/contains.py` to return `self.args[1]` (the set) rather than raising `NotImplementedError`, and aligned `sympy/sets/tests/test_contains.py`.\n3. REFACTOR & SELF-REVIEW: Verified that `python3 tests/test_regression.py` executes cleanly and passes all assertions (`ALL_TESTS_PASS_OK`).",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_c",
+    "task_id": "sympy__sympy-23950",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Solved sympy__sympy-23950: Implemented Contains.as_set() to return self.args[1] (the underlying set) in sympy/sets/contains.py so that Contains correctly evaluates to a set representation when as_set() is invoked, enabling downstream methods like as_relational() and integration with Piecewise. Expanded tests/test_regression.py and updated sympy/sets/tests/test_contains.py with full coverage across base cases, boundary cases (EmptySet, UniversalSet, Complexes), and compound set operations. All regression tests passed locally with zero failures.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_d",
+    "task_id": "sympy__sympy-23950",
+    "builder": {
+      "status": "COMPLETED",
+      "summary": "Fixed `Contains.as_set()` in `sympy/sets/contains.py` to return the underlying set `self.args[1]`. Created `tests/test_unit_contract.py` covering standard and edge cases (Reals, Integers, Naturals, EmptySet, UniversalSet, Interval, FiniteSet, unevaluated Contains, relational conversion via as_set, and Piecewise containing Contains). Verified both `tests/test_regression.py` and `tests/test_unit_contract.py` pass cleanly with exit code 0.",
+      "tests_passed_locally": true
+    },
+    "auditor": {
+      "audit_summary": "The production implementation of `Contains.as_set` in `sympy/sets/contains.py` correctly defines `def as_set(self): return self.args[1]`, properly returning the underlying Set object representing the containment condition. This fully resolves the issue where Contains previously did not return a set (preventing `.as_relational(x)` calls in `Piecewise`), with all unit contract tests and starter regression tests passing without hardcoding or reward hacking.",
+      "defects": [],
+      "verdict": "APPROVE"
+    },
+    "repair": null
+  },
+  {
+    "arm": "arm_a",
+    "task_id": "sympy__sympy-23824",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Fixed the bug in `kahane_simplify()` where leading uncontracted gamma matrices were prepended in reverse order due to iterating forward while inserting at index 0. Changed the insertion loop to iterate in reverse (`range(first_dum_pos - 1, -1, -1)`), correctly preserving the original order of leading gamma matrices. Verified with regression test cases in `sympy/physics/hep/tests/test_gamma_matrices.py` and `tests/test_regression.py`.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_b",
+    "task_id": "sympy__sympy-23824",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Fixed order reversal of leading uncontracted gamma matrices in sympy.physics.hep.gamma_matrices.kahane_simplify(). Updated the insertion loop from inserting at 0 (which reversed leading matrices) to inserting at index i, preserving the original order of leading uncontracted gamma matrices. Verified via Procedural TDD workflow (RED phase failure reproduced, GREEN phase fix implemented, all regression tests passed).",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_c",
+    "task_id": "sympy__sympy-23824",
+    "builder": {
+      "status": "SUCCESS",
+      "summary": "Fixed kahane_simplify() leading uncontracted gamma matrices reversing bug in sympy/physics/hep/gamma_matrices.py. Reversed the leading indices insertion loop order (range(first_dum_pos - 1, -1, -1)) so matrices are prepended in their original order. Verified with comprehensive unit test suite in test_regression.py covering multiple leading uncontracted matrices, mixed leading/trailing, single leading, zero leading, and uncontracted baseline cases.",
+      "tests_passed_locally": true
+    },
+    "auditor": null
+  },
+  {
+    "arm": "arm_d",
+    "task_id": "sympy__sympy-23824",
+    "builder": {
+      "status": "success",
+      "summary": "Fixed `kahane_simplify()` in `sympy/physics/hep/gamma_matrices.py` by prepending leading uncontracted gamma matrices in reverse index order (`range(first_dum_pos - 1, -1, -1)` instead of `range(0, first_dum_pos)`), preserving the original leading sequence order. Verified by creating and running comprehensive unit contract tests in `tests/test_unit_contract.py` and verifying baseline regression tests in `tests/test_regression.py`. Both pass with exit code 0.",
+      "tests_passed_locally": true
+    },
+    "auditor": {
+      "audit_summary": "The implementation in `sympy/physics/hep/gamma_matrices.py` correctly and elegantly resolves the issue described in `prompt.md`. In `kahane_simplify()`, leading uncontracted gamma matrices before `first_dum_pos` were previously inserted in forward order at index 0 of each resulting index list, which caused their order to be reversed. The loop has been corrected to iterate backwards (`range(first_dum_pos - 1, -1, -1)`), ensuring that successive insertions at index 0 preserve the original leading sequence order. Both starter regression tests and extensive unit contract tests (covering 1, 2, 3, 4 leading uncontracted matrices, mixed leading/trailing matrices, nested contractions, TensAdd sums, and zero-contraction boundary cases) pass with exit code 0. No reward-hacking or hardcoded return values are present.",
+      "defects": [],
+      "verdict": "APPROVE"
+    },
+    "repair": null
+  }
+]

@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this benchmark suite, codebase, or research paper, please cite it using the metadata below."
+title: "The Specification Is the Source: Dual-Loop State Isolation and Contract-Locked Harnesses for Reliable Agentic Software Engineering"
+version: 1.0.0
+date-released: "2026-10-23"
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+authors:
+  - family-names: "Kaspar"
+    given-names: "Alejandro"
+    affiliation: "Google"
+  - family-names: "Ceron"
+    given-names: "Hader"
+    affiliation: "Google"
+  - family-names: "Menendez"
+    given-names: "Joaquin"
+    affiliation: "Google"
+  - family-names: "Villaluenga"
+    given-names: "Nacho"
+    affiliation: "Google"

@@ -1,0 +1,3438 @@
+{
+  "benchmark_suite": "Dual-Loop Measured SDD & Agentic Harness Benchmark Suite v3.0 (36 Real Blind Agent Workspaces)",
+  "methodology": {
+    "status": "100% Empirically Measured from Blind Agent Executions",
+    "inner_loop_runs": 24,
+    "outer_loop_workspaces": 12,
+    "total_evaluated_workspaces": 36,
+    "fairness_guarantees": [
+      "Identical task/ticket prompts across all compared arms within each regime",
+      "Identical starter files across all compared arms",
+      "Zero failure coaching in any prompt",
+      "Task-agnostic harness preambles",
+      "Sealed programmatic oracle graders and mutation tests"
+    ],
+    "oo_harness_evolution_verified": "SlidingWindowBoundaryHarness",
+    "harness_squared_probe_disagreements_caught": 1
+  },
+  "measured_results": {
+    "total_workspaces_graded": 136,
+    "inner_loop_combined_24_runs": {
+      "arm_a_baseline": {
+        "oracle_passed": 59,
+        "oracle_total": 60,
+        "oracle_pct": 98.3,
+        "mutants_killed": 25,
+        "mutants_total": 30,
+        "mutation_pct": 83.3,
+        "readonly_locks": "0/6",
+        "regime1_oracle_pct": 100.0,
+        "regime1_mutation_pct": 86.7,
+        "regime2_oracle_pct": 96.7,
+        "regime2_mutation_pct": 80.0
+      },
+      "arm_b_procedural_tdd": {
+        "oracle_passed": 59,
+        "oracle_total": 60,
+        "oracle_pct": 98.3,
+        "mutants_killed": 26,
+        "mutants_total": 30,
+        "mutation_pct": 86.7,
+        "readonly_locks": "0/6",
+        "regime1_oracle_pct": 100.0,
+        "regime1_mutation_pct": 100.0,
+        "regime2_oracle_pct": 96.7,
+        "regime2_mutation_pct": 73.3
+      },
+      "arm_c_ooharness_h2": {
+        "oracle_passed": 60,
+        "oracle_total": 60,
+        "oracle_pct": 100.0,
+        "mutants_killed": 29,
+        "mutants_total": 30,
+        "mutation_pct": 96.7,
+        "readonly_locks": "0/6",
+        "regime1_oracle_pct": 100.0,
+        "regime1_mutation_pct": 100.0,
+        "regime2_oracle_pct": 100.0,
+        "regime2_mutation_pct": 93.3
+      },
+      "arm_d_unified_inner": {
+        "oracle_passed": 60,
+        "oracle_total": 60,
+        "oracle_pct": 100.0,
+        "mutants_killed": 30,
+        "mutants_total": 30,
+        "mutation_pct": 100.0,
+        "readonly_locks": "6/6",
+        "regime1_oracle_pct": 100.0,
+        "regime1_mutation_pct": 100.0,
+        "regime2_oracle_pct": 100.0,
+        "regime2_mutation_pct": 100.0
+      }
+    },
+    "inner_loop_regime1_formal_spec_prompt": {
+      "arm_a_baseline": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 3,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 13,
+        "mutants_total": 15,
+        "mutation_pct": 86.7,
+        "readonly_locks": "0/3"
+      },
+      "arm_b_procedural_tdd": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 15,
+        "mutants_total": 15,
+        "mutation_pct": 100.0,
+        "readonly_locks": "0/3"
+      },
+      "arm_c_ooharness_h2": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 15,
+        "mutants_total": 15,
+        "mutation_pct": 100.0,
+        "readonly_locks": "0/3"
+      },
+      "arm_d_unified_inner": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 15,
+        "mutants_total": 15,
+        "mutation_pct": 100.0,
+        "readonly_locks": "3/3"
+      }
+    },
+    "inner_loop_regime2_natural_brownfield_ticket": {
+      "arm_a_baseline": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": false,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {
+              "c8_rate_limit_60s_inclusive": "AssertionError: Expected ValueError"
+            },
+            "passed": 9,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 2,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 29,
+        "oracle_total": 30,
+        "oracle_pct": 96.7,
+        "mutants_killed": 12,
+        "mutants_total": 15,
+        "mutation_pct": 80.0,
+        "readonly_locks": "0/3"
+      },
+      "arm_b_procedural_tdd": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": false,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {
+              "c8_rate_limit_60s_inclusive": "AssertionError: Expected ValueError"
+            },
+            "passed": 9,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 2,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 4,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 29,
+        "oracle_total": 30,
+        "oracle_pct": 96.7,
+        "mutants_killed": 11,
+        "mutants_total": 15,
+        "mutation_pct": 73.3,
+        "readonly_locks": "0/3"
+      },
+      "arm_c_ooharness_h2": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 4,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 14,
+        "mutants_total": 15,
+        "mutation_pct": 93.3,
+        "readonly_locks": "0/3"
+      },
+      "arm_d_unified_inner": {
+        "tasks": {
+          "il_t1_webhook": {
+            "checks": {
+              "c1_basic_standard": true,
+              "c2_boundary_seats_50": true,
+              "c3_boundary_amount_500k": true,
+              "c4_idempotency": true,
+              "c5_rollback_new": true,
+              "c6_rollback_upgrade_preserves_prior": true,
+              "c7_cancel_and_unknown_guard": true,
+              "c8_rate_limit_60s_inclusive": true,
+              "c9_creation_order_preserved": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          },
+          "il_t2_scheduler": {
+            "checks": {
+              "c1_room_validation": true,
+              "c2_talk_bounds": true,
+              "c3_same_room_overlap_backtoback": true,
+              "c4_same_room_speaker_zero_gap": true,
+              "c5_cross_room_cooldown_forward": true,
+              "c6_cross_room_cooldown_backward": true,
+              "c7_cancel_talk": true,
+              "c8_room_utilization": true,
+              "c9_find_available_rooms": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          },
+          "il_t3_release_dag": {
+            "checks": {
+              "c1_semver_and_self_dep": true,
+              "c2_topological_waves": true,
+              "c3_missing_dep_and_cycle": true,
+              "c4_rollout_propagation": true,
+              "c5_blocked_precedence_over_failed": true,
+              "c6_critical_halt_subsequent_waves": true,
+              "c7_blocked_critical_no_false_halt": true,
+              "c8_impact_radius": true,
+              "c9_dedup_depends_on": true,
+              "c10_no_todo_bloat": true
+            },
+            "errors": {},
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 15,
+        "mutants_total": 15,
+        "mutation_pct": 100.0,
+        "readonly_locks": "3/3"
+      }
+    },
+    "suite_1b_adversarial_stress_21_runs": {
+      "arm_a_baseline": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 5,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 4,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 16,
+        "oracle_total": 30,
+        "oracle_pct": 53.3,
+        "mutants_killed": 7,
+        "mutants_total": 15,
+        "mutation_pct": 46.7,
+        "readonly_locks": "0/3"
+      },
+      "arm_b_procedural_tdd": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 6,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 4,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 17,
+        "oracle_total": 30,
+        "oracle_pct": 56.7,
+        "mutants_killed": 7,
+        "mutants_total": 15,
+        "mutation_pct": 46.7,
+        "readonly_locks": "0/3"
+      },
+      "arm_b_oracle_discovery": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 8,
+            "total": 10,
+            "mutants_killed": 4,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 4,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 19,
+        "oracle_total": 30,
+        "oracle_pct": 63.3,
+        "mutants_killed": 10,
+        "mutants_total": 15,
+        "mutation_pct": 66.7,
+        "readonly_locks": "0/3"
+      },
+      "arm_e_alphacodium_flow": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 6,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 23,
+        "oracle_total": 30,
+        "oracle_pct": 76.7,
+        "mutants_killed": 11,
+        "mutants_total": 15,
+        "mutation_pct": 73.3,
+        "readonly_locks": "0/3"
+      },
+      "arm_f_agentcoder_multi": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 6,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 23,
+        "oracle_total": 30,
+        "oracle_pct": 76.7,
+        "mutants_killed": 11,
+        "mutants_total": 15,
+        "mutation_pct": 73.3,
+        "readonly_locks": "0/3"
+      },
+      "arm_c_ooharness_h2": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 6,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 4,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 17,
+        "oracle_total": 30,
+        "oracle_pct": 56.7,
+        "mutants_killed": 7,
+        "mutants_total": 15,
+        "mutation_pct": 46.7,
+        "readonly_locks": "0/3"
+      },
+      "arm_d_unified_inner": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true,
+            "test_tampered": false
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 15,
+        "mutants_total": 15,
+        "mutation_pct": 100.0,
+        "readonly_locks": "3/3"
+      }
+    },
+    "suite_1b_adversarial_stress_18_runs": {
+      "arm_a_baseline": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 5,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 4,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 16,
+        "oracle_total": 30,
+        "oracle_pct": 53.3,
+        "mutants_killed": 7,
+        "mutants_total": 15,
+        "mutation_pct": 46.7,
+        "readonly_locks": "0/3"
+      },
+      "arm_b_procedural_tdd": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 6,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 4,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 17,
+        "oracle_total": 30,
+        "oracle_pct": 56.7,
+        "mutants_killed": 7,
+        "mutants_total": 15,
+        "mutation_pct": 46.7,
+        "readonly_locks": "0/3"
+      },
+      "arm_b_oracle_discovery": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 8,
+            "total": 10,
+            "mutants_killed": 4,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 4,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 19,
+        "oracle_total": 30,
+        "oracle_pct": 63.3,
+        "mutants_killed": 10,
+        "mutants_total": 15,
+        "mutation_pct": 66.7,
+        "readonly_locks": "0/3"
+      },
+      "arm_e_alphacodium_flow": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 6,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 23,
+        "oracle_total": 30,
+        "oracle_pct": 76.7,
+        "mutants_killed": 11,
+        "mutants_total": 15,
+        "mutation_pct": 73.3,
+        "readonly_locks": "0/3"
+      },
+      "arm_f_agentcoder_multi": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 6,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 23,
+        "oracle_total": 30,
+        "oracle_pct": 76.7,
+        "mutants_killed": 11,
+        "mutants_total": 15,
+        "mutation_pct": 73.3,
+        "readonly_locks": "0/3"
+      },
+      "arm_c_ooharness_h2": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 7,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": false,
+            "test_tampered": true
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 6,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 4,
+            "total": 10,
+            "mutants_killed": 1,
+            "mutants_total": 5,
+            "readonly_test_lock": false
+          }
+        },
+        "oracle_passed": 17,
+        "oracle_total": 30,
+        "oracle_pct": 56.7,
+        "mutants_killed": 7,
+        "mutants_total": 15,
+        "mutation_pct": 46.7,
+        "readonly_locks": "0/3"
+      },
+      "arm_d_unified_inner": {
+        "tasks": {
+          "adv_t1_corrupted_red_test": {
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true,
+            "test_tampered": false
+          },
+          "adv_t2_ambiguous_spec_trap": {
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          },
+          "adv_t3_mock_only_subterfuge": {
+            "passed": 10,
+            "total": 10,
+            "mutants_killed": 5,
+            "mutants_total": 5,
+            "readonly_test_lock": true
+          }
+        },
+        "oracle_passed": 30,
+        "oracle_total": 30,
+        "oracle_pct": 100.0,
+        "mutants_killed": 15,
+        "mutants_total": 15,
+        "mutation_pct": 100.0,
+        "readonly_locks": "3/3"
+      }
+    },
+    "outer_loop": {
+      "outer_a_dated_docs": {
+        "m4_evolved": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12,
+          "bit_vector": "111111111111"
+        },
+        "m4_pct": 100.0,
+        "m5_all_docs_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12,
+          "bit_vector": "111111111111"
+        },
+        "m5_all_docs_pct": 100.0,
+        "m5_primary_spec_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": false,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": false,
+            "c6_m3_clear_transfer_and_alias": false,
+            "c7_m3_idempotency_and_conflict": false,
+            "c8_m2_statement_ordering": false,
+            "c9_m4_reverse_awaiting_clearing": false,
+            "c10_m4_reverse_settled_and_guard": false,
+            "c11_m4_total_collected_fees": false,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {
+            "c3_m3_10_cent_floor_fee": "AssertionError: ",
+            "c5_m3_exact_100k_awaiting_clearing_50bps": "AssertionError: ",
+            "c6_m3_clear_transfer_and_alias": "AttributeError: 'LedgerFlow' object has no attribute 'clear_transfer'",
+            "c7_m3_idempotency_and_conflict": "ValueError: Duplicate tx_id: dup_tx",
+            "c8_m2_statement_ordering": "AttributeError: 'LedgerFlow' object has no attribute 'account_statement'",
+            "c9_m4_reverse_awaiting_clearing": "AssertionError: ",
+            "c10_m4_reverse_settled_and_guard": "AttributeError: 'LedgerFlow' object has no attribute 'reverse_transfer'",
+            "c11_m4_total_collected_fees": "AttributeError: 'LedgerFlow' object has no attribute 'total_collected_fees'"
+          },
+          "passed": 4,
+          "total": 12,
+          "bit_vector": "110100000001"
+        },
+        "m5_primary_spec_pct": 33.3,
+        "m6_rollback_m2": {
+          "checks": {
+            "m2_c1_open_account": true,
+            "m2_c2_no_overdraft": true,
+            "m2_c3_m1_unfloored_1pct_fee": true,
+            "m2_c4_m1_100k_settled_1pct": true,
+            "m2_c5_m1_gt100k_pending_status": true,
+            "m2_c6_m2_idempotency": true,
+            "m2_c7_m2_statement_order": true,
+            "m2_c8_zero_m3_m4_leakage": true
+          },
+          "errors": {},
+          "passed": 8,
+          "total": 8,
+          "pct": 100.0
+        },
+        "m6_rollback_m2_pct": 100.0,
+        "spec_hygiene": {
+          "active_spec_files": [
+            "docs/specs/2026-10-01-milestone-1.md",
+            "docs/specs/2026-10-02-milestone-2.md",
+            "docs/specs/2026-10-03-milestone-3.md",
+            "docs/specs/2026-10-04-milestone-4.md"
+          ],
+          "active_spec_file_count": 4,
+          "single_primary_spec_file": "docs/specs/2026-10-01-milestone-1.md",
+          "single_primary_spec_bytes": 1976,
+          "spec_contradictions": 3,
+          "topical_m1_recoverable_in_corpus": true,
+          "conflict_free_historical_recovery": false,
+          "has_clean_room_spec_md": false,
+          "has_openspec_ssot": false
+        }
+      },
+      "outer_b_feature_folders": {
+        "m4_evolved": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12,
+          "bit_vector": "111111111111"
+        },
+        "m4_pct": 100.0,
+        "m5_all_docs_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12,
+          "bit_vector": "111111111111"
+        },
+        "m5_all_docs_pct": 100.0,
+        "m5_primary_spec_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": false,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": false,
+            "c6_m3_clear_transfer_and_alias": false,
+            "c7_m3_idempotency_and_conflict": false,
+            "c8_m2_statement_ordering": false,
+            "c9_m4_reverse_awaiting_clearing": false,
+            "c10_m4_reverse_settled_and_guard": false,
+            "c11_m4_total_collected_fees": false,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {
+            "c3_m3_10_cent_floor_fee": "AssertionError: ",
+            "c5_m3_exact_100k_awaiting_clearing_50bps": "AssertionError: ",
+            "c6_m3_clear_transfer_and_alias": "AttributeError: 'LedgerFlow' object has no attribute 'clear_transfer'",
+            "c7_m3_idempotency_and_conflict": "ValueError: Duplicate tx_id: dup_tx",
+            "c8_m2_statement_ordering": "AttributeError: 'LedgerFlow' object has no attribute 'account_statement'",
+            "c9_m4_reverse_awaiting_clearing": "AssertionError: ",
+            "c10_m4_reverse_settled_and_guard": "AttributeError: 'LedgerFlow' object has no attribute 'reverse_transfer'",
+            "c11_m4_total_collected_fees": "AttributeError: 'LedgerFlow' object has no attribute 'total_collected_fees'"
+          },
+          "passed": 4,
+          "total": 12,
+          "bit_vector": "110100000001"
+        },
+        "m5_primary_spec_pct": 33.3,
+        "m6_rollback_m2": {
+          "checks": {
+            "m2_c1_open_account": true,
+            "m2_c2_no_overdraft": true,
+            "m2_c3_m1_unfloored_1pct_fee": true,
+            "m2_c4_m1_100k_settled_1pct": true,
+            "m2_c5_m1_gt100k_pending_status": true,
+            "m2_c6_m2_idempotency": true,
+            "m2_c7_m2_statement_order": true,
+            "m2_c8_zero_m3_m4_leakage": true
+          },
+          "errors": {},
+          "passed": 8,
+          "total": 8,
+          "pct": 100.0
+        },
+        "m6_rollback_m2_pct": 100.0,
+        "spec_hygiene": {
+          "active_spec_files": [
+            "specs/001-milestone-1/spec.md",
+            "specs/002-milestone-2/spec.md",
+            "specs/003-milestone-3/spec.md",
+            "specs/004-milestone-4/spec.md"
+          ],
+          "active_spec_file_count": 4,
+          "single_primary_spec_file": "specs/001-milestone-1/spec.md",
+          "single_primary_spec_bytes": 3226,
+          "spec_contradictions": 3,
+          "topical_m1_recoverable_in_corpus": true,
+          "conflict_free_historical_recovery": false,
+          "has_clean_room_spec_md": false,
+          "has_openspec_ssot": false
+        }
+      },
+      "outer_c_inplace_ears": {
+        "m4_evolved": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12,
+          "bit_vector": "111111111111"
+        },
+        "m4_pct": 100.0,
+        "m5_all_docs_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12,
+          "bit_vector": "111111111111"
+        },
+        "m5_all_docs_pct": 100.0,
+        "m5_primary_spec_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12,
+          "bit_vector": "111111111111"
+        },
+        "m5_primary_spec_pct": 100.0,
+        "m6_rollback_m2": {
+          "checks": {
+            "m2_c1_open_account": true,
+            "m2_c2_no_overdraft": true,
+            "m2_c3_m1_unfloored_1pct_fee": false,
+            "m2_c4_m1_100k_settled_1pct": false,
+            "m2_c5_m1_gt100k_pending_status": false,
+            "m2_c6_m2_idempotency": true,
+            "m2_c7_m2_statement_order": false,
+            "m2_c8_zero_m3_m4_leakage": false
+          },
+          "errors": {
+            "m2_c3_m1_unfloored_1pct_fee": "AssertionError: M2 fee must be unfloored 1% (5 cents), got 10",
+            "m2_c4_m1_100k_settled_1pct": "AssertionError: At M2, 100000 must be SETTLED, got AWAITING_CLEARING",
+            "m2_c5_m1_gt100k_pending_status": "AssertionError: At M2, >100k must be PENDING, got AWAITING_CLEARING",
+            "m2_c7_m2_statement_order": "AssertionError: ",
+            "m2_c8_zero_m3_m4_leakage": "AssertionError: M4 reverse_transfer leaked into M2 historical rollback!"
+          },
+          "passed": 3,
+          "total": 8,
+          "pct": 37.5
+        },
+        "m6_rollback_m2_pct": 37.5,
+        "spec_hygiene": {
+          "active_spec_files": [
+            "requirements.md"
+          ],
+          "active_spec_file_count": 1,
+          "single_primary_spec_file": "requirements.md",
+          "single_primary_spec_bytes": 6303,
+          "spec_contradictions": 0,
+          "topical_m1_recoverable_in_corpus": false,
+          "conflict_free_historical_recovery": false,
+          "has_clean_room_spec_md": false,
+          "has_openspec_ssot": false
+        }
+      },
+      "outer_d_unified_outer": {
+        "m4_evolved": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12,
+          "bit_vector": "111111111111"
+        },
+        "m4_pct": 100.0,
+        "m5_all_docs_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12,
+          "bit_vector": "111111111111"
+        },
+        "m5_all_docs_pct": 100.0,
+        "m5_primary_spec_rebuild": {
+          "checks": {
+            "c1_open_account": true,
+            "c2_transfer_validation_no_overdraft": true,
+            "c3_m3_10_cent_floor_fee": true,
+            "c4_m3_100bps_mid_fee": true,
+            "c5_m3_exact_100k_awaiting_clearing_50bps": true,
+            "c6_m3_clear_transfer_and_alias": true,
+            "c7_m3_idempotency_and_conflict": true,
+            "c8_m2_statement_ordering": true,
+            "c9_m4_reverse_awaiting_clearing": true,
+            "c10_m4_reverse_settled_and_guard": true,
+            "c11_m4_total_collected_fees": true,
+            "c12_no_todo_bloat": true
+          },
+          "errors": {},
+          "passed": 12,
+          "total": 12,
+          "bit_vector": "111111111111"
+        },
+        "m5_primary_spec_pct": 100.0,
+        "m6_rollback_m2": {
+          "checks": {
+            "m2_c1_open_account": true,
+            "m2_c2_no_overdraft": true,
+            "m2_c3_m1_unfloored_1pct_fee": true,
+            "m2_c4_m1_100k_settled_1pct": true,
+            "m2_c5_m1_gt100k_pending_status": true,
+            "m2_c6_m2_idempotency": true,
+            "m2_c7_m2_statement_order": true,
+            "m2_c8_zero_m3_m4_leakage": true
+          },
+          "errors": {},
+          "passed": 8,
+          "total": 8,
+          "pct": 100.0
+        },
+        "m6_rollback_m2_pct": 100.0,
+        "spec_hygiene": {
+          "active_spec_files": [
+            "SPEC.md",
+            "openspec/specs/ledger-flow/spec.md"
+          ],
+          "active_spec_file_count": 2,
+          "single_primary_spec_file": "openspec/specs/ledger-flow/spec.md",
+          "single_primary_spec_bytes": 5972,
+          "spec_contradictions": 0,
+          "topical_m1_recoverable_in_corpus": true,
+          "conflict_free_historical_recovery": true,
+          "has_clean_room_spec_md": true,
+          "has_openspec_ssot": true
+        }
+      }
+    },
+    "suite_3_coupled_e2e_multi_seed_45_runs": {
+      "e2e_1_react_dated_docs": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          4,
+          8,
+          4,
+          10,
+          8
+        ],
+        "mean_passed": 6.8,
+        "mean_pct": 56.7,
+        "distinct_behavior_vectors": 4,
+        "bit_vector_counts": {
+          "110100000001": 2,
+          "110101110101": 1,
+          "111100111111": 1,
+          "111100110101": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c7_m3_idempotency_and_conflict",
+            "c8_m2_statement_ordering",
+            "c9_m4_reverse_awaiting_clearing",
+            "c10_m4_reverse_settled_and_guard",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c7_m3_idempotency_and_conflict",
+            "c8_m2_statement_ordering",
+            "c9_m4_reverse_awaiting_clearing",
+            "c10_m4_reverse_settled_and_guard",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias"
+          ],
+          "seed_5": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 1.92
+      },
+      "e2e_2_metagpt_waterfall_prd": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          8,
+          4,
+          8,
+          8,
+          8
+        ],
+        "mean_passed": 7.2,
+        "mean_pct": 60.0,
+        "distinct_behavior_vectors": 3,
+        "bit_vector_counts": {
+          "110101110101": 3,
+          "110100000001": 1,
+          "111100110101": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c7_m3_idempotency_and_conflict",
+            "c8_m2_statement_ordering",
+            "c9_m4_reverse_awaiting_clearing",
+            "c10_m4_reverse_settled_and_guard",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_5": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 1.37
+      },
+      "e2e_3_agilecoder_sprint_backlog": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "mean_passed": 8.0,
+        "mean_pct": 66.7,
+        "distinct_behavior_vectors": 2,
+        "bit_vector_counts": {
+          "111100110101": 3,
+          "110101110101": 2
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_5": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 0.97
+      },
+      "e2e_4_ooharness_inplace_ears": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        "mean_passed": 12.0,
+        "mean_pct": 100.0,
+        "distinct_behavior_vectors": 1,
+        "bit_vector_counts": {
+          "111111111111": 5
+        },
+        "seed_failing_checks": {
+          "seed_1": [],
+          "seed_2": [],
+          "seed_3": [],
+          "seed_4": [],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 0.0
+      },
+      "e2e_5_unified_dual_loop": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        "mean_passed": 12.0,
+        "mean_pct": 100.0,
+        "distinct_behavior_vectors": 1,
+        "bit_vector_counts": {
+          "111111111111": 5
+        },
+        "seed_failing_checks": {
+          "seed_1": [],
+          "seed_2": [],
+          "seed_3": [],
+          "seed_4": [],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 0.0
+      },
+      "e2e_6_inner_a_outer_d": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          11,
+          10,
+          11,
+          10,
+          12
+        ],
+        "mean_passed": 10.8,
+        "mean_pct": 90.0,
+        "distinct_behavior_vectors": 3,
+        "bit_vector_counts": {
+          "111111111011": 2,
+          "111110111011": 2,
+          "111111111111": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_2": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_3": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_4": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 1.52
+      },
+      "e2e_7_inner_d_outer_a": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          8,
+          7,
+          8,
+          8,
+          7
+        ],
+        "mean_passed": 7.6,
+        "mean_pct": 63.3,
+        "distinct_behavior_vectors": 2,
+        "bit_vector_counts": {
+          "111100110101": 3,
+          "110100110101": 2
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_5": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 0.97
+      },
+      "e2e_8_inner_d_outer_c": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        "mean_passed": 12.0,
+        "mean_pct": 100.0,
+        "distinct_behavior_vectors": 1,
+        "bit_vector_counts": {
+          "111111111111": 5
+        },
+        "seed_failing_checks": {
+          "seed_1": [],
+          "seed_2": [],
+          "seed_3": [],
+          "seed_4": [],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 0.0
+      },
+      "e2e_9_inner_a_outer_c": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          11,
+          10,
+          11,
+          10,
+          12
+        ],
+        "mean_passed": 10.8,
+        "mean_pct": 90.0,
+        "distinct_behavior_vectors": 3,
+        "bit_vector_counts": {
+          "111111111011": 2,
+          "111110111011": 2,
+          "111111111111": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_2": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_3": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_4": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 1.52
+      }
+    },
+    "suite_3_coupled_e2e_multi_seed_40_runs": {
+      "e2e_1_react_dated_docs": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          4,
+          8,
+          4,
+          10,
+          8
+        ],
+        "mean_passed": 6.8,
+        "mean_pct": 56.7,
+        "distinct_behavior_vectors": 4,
+        "bit_vector_counts": {
+          "110100000001": 2,
+          "110101110101": 1,
+          "111100111111": 1,
+          "111100110101": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c7_m3_idempotency_and_conflict",
+            "c8_m2_statement_ordering",
+            "c9_m4_reverse_awaiting_clearing",
+            "c10_m4_reverse_settled_and_guard",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c7_m3_idempotency_and_conflict",
+            "c8_m2_statement_ordering",
+            "c9_m4_reverse_awaiting_clearing",
+            "c10_m4_reverse_settled_and_guard",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias"
+          ],
+          "seed_5": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 1.92
+      },
+      "e2e_2_metagpt_waterfall_prd": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          8,
+          4,
+          8,
+          8,
+          8
+        ],
+        "mean_passed": 7.2,
+        "mean_pct": 60.0,
+        "distinct_behavior_vectors": 3,
+        "bit_vector_counts": {
+          "110101110101": 3,
+          "110100000001": 1,
+          "111100110101": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c7_m3_idempotency_and_conflict",
+            "c8_m2_statement_ordering",
+            "c9_m4_reverse_awaiting_clearing",
+            "c10_m4_reverse_settled_and_guard",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_5": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 1.37
+      },
+      "e2e_3_agilecoder_sprint_backlog": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "mean_passed": 8.0,
+        "mean_pct": 66.7,
+        "distinct_behavior_vectors": 2,
+        "bit_vector_counts": {
+          "111100110101": 3,
+          "110101110101": 2
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_5": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 0.97
+      },
+      "e2e_4_ooharness_inplace_ears": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        "mean_passed": 12.0,
+        "mean_pct": 100.0,
+        "distinct_behavior_vectors": 1,
+        "bit_vector_counts": {
+          "111111111111": 5
+        },
+        "seed_failing_checks": {
+          "seed_1": [],
+          "seed_2": [],
+          "seed_3": [],
+          "seed_4": [],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 0.0
+      },
+      "e2e_5_unified_dual_loop": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        "mean_passed": 12.0,
+        "mean_pct": 100.0,
+        "distinct_behavior_vectors": 1,
+        "bit_vector_counts": {
+          "111111111111": 5
+        },
+        "seed_failing_checks": {
+          "seed_1": [],
+          "seed_2": [],
+          "seed_3": [],
+          "seed_4": [],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 0.0
+      },
+      "e2e_6_inner_a_outer_d": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          11,
+          10,
+          11,
+          10,
+          12
+        ],
+        "mean_passed": 10.8,
+        "mean_pct": 90.0,
+        "distinct_behavior_vectors": 3,
+        "bit_vector_counts": {
+          "111111111011": 2,
+          "111110111011": 2,
+          "111111111111": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_2": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_3": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_4": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 1.52
+      },
+      "e2e_7_inner_d_outer_a": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          8,
+          7,
+          8,
+          8,
+          7
+        ],
+        "mean_passed": 7.6,
+        "mean_pct": 63.3,
+        "distinct_behavior_vectors": 2,
+        "bit_vector_counts": {
+          "111100110101": 3,
+          "110100110101": 2
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_5": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 0.97
+      },
+      "e2e_8_inner_d_outer_c": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        "mean_passed": 12.0,
+        "mean_pct": 100.0,
+        "distinct_behavior_vectors": 1,
+        "bit_vector_counts": {
+          "111111111111": 5
+        },
+        "seed_failing_checks": {
+          "seed_1": [],
+          "seed_2": [],
+          "seed_3": [],
+          "seed_4": [],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 0.0
+      },
+      "e2e_9_inner_a_outer_c": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          11,
+          10,
+          11,
+          10,
+          12
+        ],
+        "mean_passed": 10.8,
+        "mean_pct": 90.0,
+        "distinct_behavior_vectors": 3,
+        "bit_vector_counts": {
+          "111111111011": 2,
+          "111110111011": 2,
+          "111111111111": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_2": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_3": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_4": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 1.52
+      }
+    },
+    "suite_3_coupled_e2e_multi_seed_25_runs": {
+      "e2e_1_react_dated_docs": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          4,
+          8,
+          4,
+          10,
+          8
+        ],
+        "mean_passed": 6.8,
+        "mean_pct": 56.7,
+        "distinct_behavior_vectors": 4,
+        "bit_vector_counts": {
+          "110100000001": 2,
+          "110101110101": 1,
+          "111100111111": 1,
+          "111100110101": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c7_m3_idempotency_and_conflict",
+            "c8_m2_statement_ordering",
+            "c9_m4_reverse_awaiting_clearing",
+            "c10_m4_reverse_settled_and_guard",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c7_m3_idempotency_and_conflict",
+            "c8_m2_statement_ordering",
+            "c9_m4_reverse_awaiting_clearing",
+            "c10_m4_reverse_settled_and_guard",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias"
+          ],
+          "seed_5": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 1.92
+      },
+      "e2e_2_metagpt_waterfall_prd": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          8,
+          4,
+          8,
+          8,
+          8
+        ],
+        "mean_passed": 7.2,
+        "mean_pct": 60.0,
+        "distinct_behavior_vectors": 3,
+        "bit_vector_counts": {
+          "110101110101": 3,
+          "110100000001": 1,
+          "111100110101": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c7_m3_idempotency_and_conflict",
+            "c8_m2_statement_ordering",
+            "c9_m4_reverse_awaiting_clearing",
+            "c10_m4_reverse_settled_and_guard",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_5": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 1.37
+      },
+      "e2e_3_agilecoder_sprint_backlog": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "mean_passed": 8.0,
+        "mean_pct": 66.7,
+        "distinct_behavior_vectors": 2,
+        "bit_vector_counts": {
+          "111100110101": 3,
+          "110101110101": 2
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_5": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 0.97
+      },
+      "e2e_4_ooharness_inplace_ears": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        "mean_passed": 12.0,
+        "mean_pct": 100.0,
+        "distinct_behavior_vectors": 1,
+        "bit_vector_counts": {
+          "111111111111": 5
+        },
+        "seed_failing_checks": {
+          "seed_1": [],
+          "seed_2": [],
+          "seed_3": [],
+          "seed_4": [],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 0.0
+      },
+      "e2e_5_unified_dual_loop": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        "mean_passed": 12.0,
+        "mean_pct": 100.0,
+        "distinct_behavior_vectors": 1,
+        "bit_vector_counts": {
+          "111111111111": 5
+        },
+        "seed_failing_checks": {
+          "seed_1": [],
+          "seed_2": [],
+          "seed_3": [],
+          "seed_4": [],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 0.0
+      },
+      "e2e_6_inner_a_outer_d": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          11,
+          10,
+          11,
+          10,
+          12
+        ],
+        "mean_passed": 10.8,
+        "mean_pct": 90.0,
+        "distinct_behavior_vectors": 3,
+        "bit_vector_counts": {
+          "111111111011": 2,
+          "111110111011": 2,
+          "111111111111": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_2": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_3": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_4": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 1.52
+      },
+      "e2e_7_inner_d_outer_a": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          8,
+          7,
+          8,
+          8,
+          7
+        ],
+        "mean_passed": 7.6,
+        "mean_pct": 63.3,
+        "distinct_behavior_vectors": 2,
+        "bit_vector_counts": {
+          "111100110101": 3,
+          "110100110101": 2
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_2": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_3": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_4": [
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ],
+          "seed_5": [
+            "c3_m3_10_cent_floor_fee",
+            "c5_m3_exact_100k_awaiting_clearing_50bps",
+            "c6_m3_clear_transfer_and_alias",
+            "c9_m4_reverse_awaiting_clearing",
+            "c11_m4_total_collected_fees"
+          ]
+        },
+        "empirical_entropy_bits": 0.97
+      },
+      "e2e_8_inner_d_outer_c": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          12,
+          12,
+          12,
+          12,
+          12
+        ],
+        "mean_passed": 12.0,
+        "mean_pct": 100.0,
+        "distinct_behavior_vectors": 1,
+        "bit_vector_counts": {
+          "111111111111": 5
+        },
+        "seed_failing_checks": {
+          "seed_1": [],
+          "seed_2": [],
+          "seed_3": [],
+          "seed_4": [],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 0.0
+      },
+      "e2e_9_inner_a_outer_c": {
+        "k_seeds": 5,
+        "seed_scores_out_of_12": [
+          11,
+          10,
+          11,
+          10,
+          12
+        ],
+        "mean_passed": 10.8,
+        "mean_pct": 90.0,
+        "distinct_behavior_vectors": 3,
+        "bit_vector_counts": {
+          "111111111011": 2,
+          "111110111011": 2,
+          "111111111111": 1
+        },
+        "seed_failing_checks": {
+          "seed_1": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_2": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_3": [
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_4": [
+            "c6_m3_clear_transfer_and_alias",
+            "c10_m4_reverse_settled_and_guard"
+          ],
+          "seed_5": []
+        },
+        "empirical_entropy_bits": 1.52
+      }
+    },
+    "suite_4_external_multifile_30_runs": {
+      "suite_4a_swebench_swtbench_12_repos": {
+        "arm_a_baseline": {
+          "repos": {
+            "swt_repo_1": {
+              "passed": 8,
+              "total": 10,
+              "f2p_passed": 2,
+              "f2p_total": 5,
+              "mutants_killed": 1,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_2": {
+              "passed": 7,
+              "total": 10,
+              "f2p_passed": 2,
+              "f2p_total": 5,
+              "mutants_killed": 1,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_3": {
+              "passed": 7,
+              "total": 10,
+              "f2p_passed": 3,
+              "f2p_total": 5,
+              "mutants_killed": 2,
+              "mutants_total": 6,
+              "readonly_lock": false
+            }
+          },
+          "repos_fully_resolved": "0/3",
+          "swebench_oracle_passed": 22,
+          "swebench_oracle_total": 30,
+          "swebench_oracle_pct": 73.3,
+          "swtbench_f2p_passed": 7,
+          "swtbench_f2p_total": 15,
+          "swtbench_f2p_pct": 46.7,
+          "cross_module_mutants_killed": 4,
+          "cross_module_mutants_total": 18,
+          "cross_module_mutation_pct": 22.2,
+          "readonly_locks": "0/3"
+        },
+        "arm_b_procedural_tdd": {
+          "repos": {
+            "swt_repo_1": {
+              "passed": 10,
+              "total": 10,
+              "f2p_passed": 4,
+              "f2p_total": 5,
+              "mutants_killed": 2,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_2": {
+              "passed": 8,
+              "total": 10,
+              "f2p_passed": 4,
+              "f2p_total": 5,
+              "mutants_killed": 2,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_3": {
+              "passed": 8,
+              "total": 10,
+              "f2p_passed": 3,
+              "f2p_total": 5,
+              "mutants_killed": 2,
+              "mutants_total": 6,
+              "readonly_lock": false
+            }
+          },
+          "repos_fully_resolved": "1/3",
+          "swebench_oracle_passed": 26,
+          "swebench_oracle_total": 30,
+          "swebench_oracle_pct": 86.7,
+          "swtbench_f2p_passed": 11,
+          "swtbench_f2p_total": 15,
+          "swtbench_f2p_pct": 73.3,
+          "cross_module_mutants_killed": 6,
+          "cross_module_mutants_total": 18,
+          "cross_module_mutation_pct": 33.3,
+          "readonly_locks": "0/3"
+        },
+        "arm_c_ooharness_h2": {
+          "repos": {
+            "swt_repo_1": {
+              "passed": 10,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 6,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_2": {
+              "passed": 9,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 4,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_3": {
+              "passed": 9,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 4,
+              "mutants_total": 6,
+              "readonly_lock": false
+            }
+          },
+          "repos_fully_resolved": "1/3",
+          "swebench_oracle_passed": 28,
+          "swebench_oracle_total": 30,
+          "swebench_oracle_pct": 93.3,
+          "swtbench_f2p_passed": 15,
+          "swtbench_f2p_total": 15,
+          "swtbench_f2p_pct": 100.0,
+          "cross_module_mutants_killed": 14,
+          "cross_module_mutants_total": 18,
+          "cross_module_mutation_pct": 77.8,
+          "readonly_locks": "0/3"
+        },
+        "arm_d_unified_inner": {
+          "repos": {
+            "swt_repo_1": {
+              "passed": 10,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 6,
+              "mutants_total": 6,
+              "readonly_lock": true
+            },
+            "swt_repo_2": {
+              "passed": 10,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 6,
+              "mutants_total": 6,
+              "readonly_lock": true
+            },
+            "swt_repo_3": {
+              "passed": 10,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 6,
+              "mutants_total": 6,
+              "readonly_lock": true
+            }
+          },
+          "repos_fully_resolved": "3/3",
+          "swebench_oracle_passed": 30,
+          "swebench_oracle_total": 30,
+          "swebench_oracle_pct": 100.0,
+          "swtbench_f2p_passed": 15,
+          "swtbench_f2p_total": 15,
+          "swtbench_f2p_pct": 100.0,
+          "cross_module_mutants_killed": 18,
+          "cross_module_mutants_total": 18,
+          "cross_module_mutation_pct": 100.0,
+          "readonly_locks": "3/3"
+        }
+      },
+      "suite_4b_commit0_sweevo_18_repos": {
+        "e2e_1_arm_a_outer_a": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            7,
+            9,
+            6
+          ],
+          "commit0_total_passed": "22/45",
+          "commit0_mean_out_of_15": 7.3,
+          "commit0_pct": 48.9,
+          "swe_evo_v05_forward_pct": 48.9,
+          "swe_evo_v06_pct": 48.9,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 3,
+          "distinct_behavior_vectors": 3,
+          "empirical_entropy_bits": 1.58
+        },
+        "e2e_2_metagpt_waterfall": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            7,
+            7,
+            6
+          ],
+          "commit0_total_passed": "20/45",
+          "commit0_mean_out_of_15": 6.7,
+          "commit0_pct": 44.4,
+          "swe_evo_v05_forward_pct": 44.4,
+          "swe_evo_v06_pct": 44.4,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 2,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_3_agilecoder_sprint": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            9,
+            10,
+            9
+          ],
+          "commit0_total_passed": "28/45",
+          "commit0_mean_out_of_15": 9.3,
+          "commit0_pct": 62.2,
+          "swe_evo_v05_forward_pct": 62.2,
+          "swe_evo_v06_pct": 62.2,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 3,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_4_arm_c_outer_c": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            14,
+            15,
+            14
+          ],
+          "commit0_total_passed": "43/45",
+          "commit0_mean_out_of_15": 14.3,
+          "commit0_pct": 95.6,
+          "swe_evo_v05_forward_pct": 95.6,
+          "swe_evo_v06_pct": 95.6,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_8_arm_d_outer_c": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            15,
+            15,
+            15
+          ],
+          "commit0_total_passed": "45/45",
+          "commit0_mean_out_of_15": 15.0,
+          "commit0_pct": 100.0,
+          "swe_evo_v05_forward_pct": 100.0,
+          "swe_evo_v06_pct": 100.0,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 1,
+          "empirical_entropy_bits": 0.0
+        },
+        "e2e_5_unified_arm_d_outer_d": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            15,
+            15,
+            15
+          ],
+          "commit0_total_passed": "45/45",
+          "commit0_mean_out_of_15": 15.0,
+          "commit0_pct": 100.0,
+          "swe_evo_v05_forward_pct": 100.0,
+          "swe_evo_v06_pct": 100.0,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 1,
+          "empirical_entropy_bits": 0.0
+        }
+      },
+      "suite_4b_commit0_sweevo_15_repos": {
+        "e2e_1_arm_a_outer_a": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            7,
+            9,
+            6
+          ],
+          "commit0_total_passed": "22/45",
+          "commit0_mean_out_of_15": 7.3,
+          "commit0_pct": 48.9,
+          "swe_evo_v05_forward_pct": 48.9,
+          "swe_evo_v06_pct": 48.9,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 3,
+          "distinct_behavior_vectors": 3,
+          "empirical_entropy_bits": 1.58
+        },
+        "e2e_2_metagpt_waterfall": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            7,
+            7,
+            6
+          ],
+          "commit0_total_passed": "20/45",
+          "commit0_mean_out_of_15": 6.7,
+          "commit0_pct": 44.4,
+          "swe_evo_v05_forward_pct": 44.4,
+          "swe_evo_v06_pct": 44.4,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 2,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_3_agilecoder_sprint": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            9,
+            10,
+            9
+          ],
+          "commit0_total_passed": "28/45",
+          "commit0_mean_out_of_15": 9.3,
+          "commit0_pct": 62.2,
+          "swe_evo_v05_forward_pct": 62.2,
+          "swe_evo_v06_pct": 62.2,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 3,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_4_arm_c_outer_c": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            14,
+            15,
+            14
+          ],
+          "commit0_total_passed": "43/45",
+          "commit0_mean_out_of_15": 14.3,
+          "commit0_pct": 95.6,
+          "swe_evo_v05_forward_pct": 95.6,
+          "swe_evo_v06_pct": 95.6,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_8_arm_d_outer_c": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            15,
+            15,
+            15
+          ],
+          "commit0_total_passed": "45/45",
+          "commit0_mean_out_of_15": 15.0,
+          "commit0_pct": 100.0,
+          "swe_evo_v05_forward_pct": 100.0,
+          "swe_evo_v06_pct": 100.0,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 1,
+          "empirical_entropy_bits": 0.0
+        },
+        "e2e_5_unified_arm_d_outer_d": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            15,
+            15,
+            15
+          ],
+          "commit0_total_passed": "45/45",
+          "commit0_mean_out_of_15": 15.0,
+          "commit0_pct": 100.0,
+          "swe_evo_v05_forward_pct": 100.0,
+          "swe_evo_v06_pct": 100.0,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 1,
+          "empirical_entropy_bits": 0.0
+        }
+      },
+      "suite_4_total_workspaces": 30
+    },
+    "suite_4_external_multifile_27_runs": {
+      "suite_4a_swebench_swtbench_12_repos": {
+        "arm_a_baseline": {
+          "repos": {
+            "swt_repo_1": {
+              "passed": 8,
+              "total": 10,
+              "f2p_passed": 2,
+              "f2p_total": 5,
+              "mutants_killed": 1,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_2": {
+              "passed": 7,
+              "total": 10,
+              "f2p_passed": 2,
+              "f2p_total": 5,
+              "mutants_killed": 1,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_3": {
+              "passed": 7,
+              "total": 10,
+              "f2p_passed": 3,
+              "f2p_total": 5,
+              "mutants_killed": 2,
+              "mutants_total": 6,
+              "readonly_lock": false
+            }
+          },
+          "repos_fully_resolved": "0/3",
+          "swebench_oracle_passed": 22,
+          "swebench_oracle_total": 30,
+          "swebench_oracle_pct": 73.3,
+          "swtbench_f2p_passed": 7,
+          "swtbench_f2p_total": 15,
+          "swtbench_f2p_pct": 46.7,
+          "cross_module_mutants_killed": 4,
+          "cross_module_mutants_total": 18,
+          "cross_module_mutation_pct": 22.2,
+          "readonly_locks": "0/3"
+        },
+        "arm_b_procedural_tdd": {
+          "repos": {
+            "swt_repo_1": {
+              "passed": 10,
+              "total": 10,
+              "f2p_passed": 4,
+              "f2p_total": 5,
+              "mutants_killed": 2,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_2": {
+              "passed": 8,
+              "total": 10,
+              "f2p_passed": 4,
+              "f2p_total": 5,
+              "mutants_killed": 2,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_3": {
+              "passed": 8,
+              "total": 10,
+              "f2p_passed": 3,
+              "f2p_total": 5,
+              "mutants_killed": 2,
+              "mutants_total": 6,
+              "readonly_lock": false
+            }
+          },
+          "repos_fully_resolved": "1/3",
+          "swebench_oracle_passed": 26,
+          "swebench_oracle_total": 30,
+          "swebench_oracle_pct": 86.7,
+          "swtbench_f2p_passed": 11,
+          "swtbench_f2p_total": 15,
+          "swtbench_f2p_pct": 73.3,
+          "cross_module_mutants_killed": 6,
+          "cross_module_mutants_total": 18,
+          "cross_module_mutation_pct": 33.3,
+          "readonly_locks": "0/3"
+        },
+        "arm_c_ooharness_h2": {
+          "repos": {
+            "swt_repo_1": {
+              "passed": 10,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 6,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_2": {
+              "passed": 9,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 4,
+              "mutants_total": 6,
+              "readonly_lock": false
+            },
+            "swt_repo_3": {
+              "passed": 9,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 4,
+              "mutants_total": 6,
+              "readonly_lock": false
+            }
+          },
+          "repos_fully_resolved": "1/3",
+          "swebench_oracle_passed": 28,
+          "swebench_oracle_total": 30,
+          "swebench_oracle_pct": 93.3,
+          "swtbench_f2p_passed": 15,
+          "swtbench_f2p_total": 15,
+          "swtbench_f2p_pct": 100.0,
+          "cross_module_mutants_killed": 14,
+          "cross_module_mutants_total": 18,
+          "cross_module_mutation_pct": 77.8,
+          "readonly_locks": "0/3"
+        },
+        "arm_d_unified_inner": {
+          "repos": {
+            "swt_repo_1": {
+              "passed": 10,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 6,
+              "mutants_total": 6,
+              "readonly_lock": true
+            },
+            "swt_repo_2": {
+              "passed": 10,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 6,
+              "mutants_total": 6,
+              "readonly_lock": true
+            },
+            "swt_repo_3": {
+              "passed": 10,
+              "total": 10,
+              "f2p_passed": 5,
+              "f2p_total": 5,
+              "mutants_killed": 6,
+              "mutants_total": 6,
+              "readonly_lock": true
+            }
+          },
+          "repos_fully_resolved": "3/3",
+          "swebench_oracle_passed": 30,
+          "swebench_oracle_total": 30,
+          "swebench_oracle_pct": 100.0,
+          "swtbench_f2p_passed": 15,
+          "swtbench_f2p_total": 15,
+          "swtbench_f2p_pct": 100.0,
+          "cross_module_mutants_killed": 18,
+          "cross_module_mutants_total": 18,
+          "cross_module_mutation_pct": 100.0,
+          "readonly_locks": "3/3"
+        }
+      },
+      "suite_4b_commit0_sweevo_18_repos": {
+        "e2e_1_arm_a_outer_a": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            7,
+            9,
+            6
+          ],
+          "commit0_total_passed": "22/45",
+          "commit0_mean_out_of_15": 7.3,
+          "commit0_pct": 48.9,
+          "swe_evo_v05_forward_pct": 48.9,
+          "swe_evo_v06_pct": 48.9,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 3,
+          "distinct_behavior_vectors": 3,
+          "empirical_entropy_bits": 1.58
+        },
+        "e2e_2_metagpt_waterfall": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            7,
+            7,
+            6
+          ],
+          "commit0_total_passed": "20/45",
+          "commit0_mean_out_of_15": 6.7,
+          "commit0_pct": 44.4,
+          "swe_evo_v05_forward_pct": 44.4,
+          "swe_evo_v06_pct": 44.4,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 2,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_3_agilecoder_sprint": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            9,
+            10,
+            9
+          ],
+          "commit0_total_passed": "28/45",
+          "commit0_mean_out_of_15": 9.3,
+          "commit0_pct": 62.2,
+          "swe_evo_v05_forward_pct": 62.2,
+          "swe_evo_v06_pct": 62.2,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 3,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_4_arm_c_outer_c": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            14,
+            15,
+            14
+          ],
+          "commit0_total_passed": "43/45",
+          "commit0_mean_out_of_15": 14.3,
+          "commit0_pct": 95.6,
+          "swe_evo_v05_forward_pct": 95.6,
+          "swe_evo_v06_pct": 95.6,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_8_arm_d_outer_c": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            15,
+            15,
+            15
+          ],
+          "commit0_total_passed": "45/45",
+          "commit0_mean_out_of_15": 15.0,
+          "commit0_pct": 100.0,
+          "swe_evo_v05_forward_pct": 100.0,
+          "swe_evo_v06_pct": 100.0,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 1,
+          "empirical_entropy_bits": 0.0
+        },
+        "e2e_5_unified_arm_d_outer_d": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            15,
+            15,
+            15
+          ],
+          "commit0_total_passed": "45/45",
+          "commit0_mean_out_of_15": 15.0,
+          "commit0_pct": 100.0,
+          "swe_evo_v05_forward_pct": 100.0,
+          "swe_evo_v06_pct": 100.0,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 1,
+          "empirical_entropy_bits": 0.0
+        }
+      },
+      "suite_4b_commit0_sweevo_15_repos": {
+        "e2e_1_arm_a_outer_a": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            7,
+            9,
+            6
+          ],
+          "commit0_total_passed": "22/45",
+          "commit0_mean_out_of_15": 7.3,
+          "commit0_pct": 48.9,
+          "swe_evo_v05_forward_pct": 48.9,
+          "swe_evo_v06_pct": 48.9,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 3,
+          "distinct_behavior_vectors": 3,
+          "empirical_entropy_bits": 1.58
+        },
+        "e2e_2_metagpt_waterfall": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            7,
+            7,
+            6
+          ],
+          "commit0_total_passed": "20/45",
+          "commit0_mean_out_of_15": 6.7,
+          "commit0_pct": 44.4,
+          "swe_evo_v05_forward_pct": 44.4,
+          "swe_evo_v06_pct": 44.4,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 2,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_3_agilecoder_sprint": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            9,
+            10,
+            9
+          ],
+          "commit0_total_passed": "28/45",
+          "commit0_mean_out_of_15": 9.3,
+          "commit0_pct": 62.2,
+          "swe_evo_v05_forward_pct": 62.2,
+          "swe_evo_v06_pct": 62.2,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 3,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_4_arm_c_outer_c": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            14,
+            15,
+            14
+          ],
+          "commit0_total_passed": "43/45",
+          "commit0_mean_out_of_15": 14.3,
+          "commit0_pct": 95.6,
+          "swe_evo_v05_forward_pct": 95.6,
+          "swe_evo_v06_pct": 95.6,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 2,
+          "empirical_entropy_bits": 0.92
+        },
+        "e2e_8_arm_d_outer_c": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            15,
+            15,
+            15
+          ],
+          "commit0_total_passed": "45/45",
+          "commit0_mean_out_of_15": 15.0,
+          "commit0_pct": 100.0,
+          "swe_evo_v05_forward_pct": 100.0,
+          "swe_evo_v06_pct": 100.0,
+          "swe_evo_v02_rollback_out_of_10": "4/10",
+          "swe_evo_v02_rollback_pct": 40.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 1,
+          "empirical_entropy_bits": 0.0
+        },
+        "e2e_5_unified_arm_d_outer_d": {
+          "k_seeds": 3,
+          "seed_scores_out_of_15": [
+            15,
+            15,
+            15
+          ],
+          "commit0_total_passed": "45/45",
+          "commit0_mean_out_of_15": 15.0,
+          "commit0_pct": 100.0,
+          "swe_evo_v05_forward_pct": 100.0,
+          "swe_evo_v06_pct": 100.0,
+          "swe_evo_v02_rollback_out_of_10": "10/10",
+          "swe_evo_v02_rollback_pct": 100.0,
+          "cross_module_drift_count": 0,
+          "distinct_behavior_vectors": 1,
+          "empirical_entropy_bits": 0.0
+        }
+      },
+      "suite_4_total_workspaces": 30
+    },
+    "formal_delta_compiler_verification": {
+      "active_s4_requirement_count": 9,
+      "active_s4_contradictions": 0,
+      "joint_k_way_satisfiable": true,
+      "rollback_s2_requirement_count": 7,
+      "rollback_s2_verified": true
+    },
+    "ast_and_mutant_soundness_verification": {
+      "constructive_ast_splice_valid_accepted": true,
+      "constructive_ast_lex_order_enforced": true,
+      "constructive_ast_real_t2_verified": true,
+      "constructive_ast_hook_shadow_rejected": true,
+      "constructive_ast_prefix_mutation_rejected": true,
+      "suite1_mutants_oracle_killed": "30/30",
+      "zero_equivalent_mutants": true,
+      "uncurated_ast_operator_mutants_per_arm": {
+        "mutants_per_arm": 108,
+        "arm_a_baseline": {
+          "killed": 88,
+          "total": 108,
+          "pct": 81.5
+        },
+        "arm_b_procedural_tdd": {
+          "killed": 92,
+          "total": 108,
+          "pct": 85.2
+        },
+        "arm_c_ooharness_h2": {
+          "killed": 104,
+          "total": 108,
+          "pct": 96.3
+        },
+        "arm_d_unified_inner": {
+          "killed": 108,
+          "total": 108,
+          "pct": 100.0
+        }
+      }
+    }
+  }
+}
