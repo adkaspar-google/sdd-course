@@ -93,6 +93,36 @@ flowchart LR
 
 ---
 
+## Install in Google Antigravity (`agy`), Claude Code (`claude`), & Gemini CLI (`gemini`)
+
+This repository ships a complete, ready-to-install **Dual-Loop SDD + OO-Harness Plugin & Extension Bundle** containing:
+- **6 Skills (`.agents/skills/` & `.claude/skills/`)**: `@writing-arch-specs`, `@socratic-brainstorming`, `@subagent-two-stage-review`, `@systematic-debugging-gate`, `@verification-before-completion`, and `@sdd-contract-lock` (4-Step `Arm D` + `Outer D` $\Phi$ / $\Phi_{\text{seq}}^{-1}$ Delta Compiler).
+- **3 Subagents (`.agents/agents/` & `.claude/agents/`)**: `goldfish-builder` (stateless TDD builder), `cold-auditor` (strictly read-only independent auditor with write tools disabled), and `repair-agent` (targeted 3-round remediation).
+- **6 Slash Commands / Workflows (`.claude/commands/` & `.agents/workflows/`)**: `/sdd-grill`, `/sdd-lock`, `/sdd-implement`, `/sdd-audit`, `/sdd-archive`, and `/sdd-rollback`.
+- **Cryptographic Test-Lock `PreToolUse` Hook (`.agents/hooks.json`, `.claude/settings.json`, & `scripts/verify_test_lock_hook.py`)**: Physically blocks any attempt to edit or `chmod +w` locked test files listed in `.sdd_test_lock.sha256`.
+- **`bin/sdd-harness` CLI**: Executable CLI for `init`, `lock-tests`, `verify-lock`, `unlock-tests`, `boundary-probe`, `compile-delta` ($\Phi$), `rollback-delta` ($\Phi_{\text{seq}}^{-1}$), and `audit-score`.
+
+```bash
+# Option A — Install Globally into Google Antigravity (~/.gemini/config/), Claude Code (~/.claude/), and ~/.local/bin/sdd-harness:
+./install.sh --global
+
+# Option B — Install into Any Target Project Repository:
+./install.sh --project /path/to/your-repo
+
+# Option C — Native Claude Code Plugin Marketplace Install:
+# Inside Claude Code (`claude`):
+#   /plugin marketplace add adkaspar-google/sdd-course
+#   /plugin install dualloop-sdd
+
+# Option D — Native Gemini CLI / Antigravity Extension Install:
+gemini extensions install https://github.com/adkaspar-google/sdd-course --auto-update
+
+# Verify the complete plugin bundle (6 skills, 3 subagents, 6 commands, PreToolUse hook, and sdd-harness CLI):
+./install.sh --verify
+```
+
+---
+
 ## 4. 2-Minute Quickstart & Running Self-Diagnosis
 
 ```bash

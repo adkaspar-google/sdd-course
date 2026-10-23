@@ -1,0 +1,12 @@
+{
+  "name": "dualloop-sdd",
+  "version": "1.0.0",
+  "description": "Dual-Loop Spec-Driven Development (Two-Plane Delta-Merged SSOT + Contract-Locked Dual-Stage TDD Harness) for Claude Code and Google Antigravity.",
+  "author": {
+    "name": "Alejandro Kaspar, Hader Ceron, Joaquin Menendez, Nacho Villaluenga"
+  },
+  "license": "Apache-2.0",
+  "commands": "./.claude/commands",
+  "agents": "./.claude/agents",
+  "skills": "./.claude/skills"
+}

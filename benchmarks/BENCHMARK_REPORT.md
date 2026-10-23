@@ -1,6 +1,6 @@
 # Dual-Loop Multi-Subagent Benchmark Report: Inner-Loop Execution Harnesses vs. Outer-Loop Specification State
 
-**Authors**: Alejandro Kaspar, Hader Ceron, Joaquin Menendez — Google Cloud Consulting, Google  
+**Authors**: Alejandro Kaspar, Hader Ceron, Joaquin Menendez, Nacho Villaluenga — Google Cloud Consulting, Google  
 **License**: Creative Commons Attribution 4.0 International (`CC BY 4.0`) & Apache License 2.0 (`Apache-2.0`)  
 **Evaluation Status**: **100% Real, Blind Multi-Subagent Evaluation Across 252 Trials (`360` Subagent Runs) on Untouched Upstream Benchmarks**  
 **Benchmark Orchestrators & Summary**: [`DualLoop_SDD_Research_Paper.pdf`](DualLoop_SDD_Research_Paper.pdf) | [`results/full_benchmark_summary_252_trials.json`](results/full_benchmark_summary_252_trials.json) | [`single_proc_mut_runner.py`](single_proc_mut_runner.py) | [`oo_harness.py`](oo_harness.py)

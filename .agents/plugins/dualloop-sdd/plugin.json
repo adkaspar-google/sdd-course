@@ -1,0 +1,11 @@
+{
+  "name": "dualloop-sdd",
+  "displayName": "Dual-Loop SDD & OO-Harness",
+  "version": "1.0.0",
+  "description": "Two-Plane Delta-Merged SSOT (Outer D) and Contract-Locked Dual-Stage Harness (Arm D) with Goldfish Builder and Cold Independent Auditor.",
+  "suggestedPrompts": [
+    "Run /sdd-grill to clarify requirements and author an OpenSpec REQ-XXXX contract",
+    "Run /sdd-lock and /sdd-implement to build the feature with a read-only test lock",
+    "Run /sdd-audit to verify zero test tampering and Stage 1 + Stage 2 compliance"
+  ]
+}
