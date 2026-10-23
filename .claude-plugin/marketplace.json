@@ -1,0 +1,14 @@
+{
+  "name": "dualloop-sdd-marketplace",
+  "owner": {
+    "name": "Alejandro Kaspar"
+  },
+  "plugins": [
+    {
+      "name": "dualloop-sdd",
+      "source": "./",
+      "description": "Dual-Loop SDD + OO-Harness (6 skills, 3 subagents, 6 slash commands, and cryptographic test-lock hook)",
+      "version": "1.0.0"
+    }
+  ]
+}

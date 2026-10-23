@@ -1,0 +1,16 @@
+{
+  "sdd-contract-lock-gate": {
+    "PreToolUse": [
+      {
+        "matcher": "edit_file|write_file|replace_file_content|run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ./scripts/verify_test_lock_hook.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

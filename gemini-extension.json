@@ -1,0 +1,6 @@
+{
+  "name": "dualloop-sdd",
+  "version": "1.0.0",
+  "description": "Dual-Loop Spec-Driven Development (Conductor + OpenSpec + Contract-Locked OO-Harness)",
+  "contextFileName": "GEMINI.md"
+}
